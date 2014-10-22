@@ -42,6 +42,13 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.comboBox5 = new System.Windows.Forms.ComboBox();
+			this.comboBox6 = new System.Windows.Forms.ComboBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
 			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
 			this.parameter1 = new System.Windows.Forms.GroupBox();
@@ -64,12 +71,6 @@
 			this.textBoxTags = new System.Windows.Forms.TextBox();
 			this.labelReturnType = new System.Windows.Forms.Label();
 			this.labelParameters = new System.Windows.Forms.Label();
-			this.panelReturnType = new System.Windows.Forms.Panel();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.comboBox5 = new System.Windows.Forms.ComboBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.comboBox6 = new System.Windows.Forms.ComboBox();
-			this.label5 = new System.Windows.Forms.Label();
 			this.groupBoxConditional = new System.Windows.Forms.GroupBox();
 			this.radioButtonConditionalFalse = new System.Windows.Forms.RadioButton();
 			this.radioButtonConditionalTrue = new System.Windows.Forms.RadioButton();
@@ -85,14 +86,12 @@
 			this.textBoxName = new System.Windows.Forms.TextBox();
 			this.labelAlias = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.flowLayoutPanelParameters.SuspendLayout();
 			this.parameter1.SuspendLayout();
-			this.panelReturnType.SuspendLayout();
-			this.groupBox1.SuspendLayout();
 			this.groupBoxConditional.SuspendLayout();
 			this.groupBoxCallingConvention.SuspendLayout();
 			this.SuspendLayout();
@@ -192,7 +191,7 @@
 			this.listboxFunctionList.Name = "listboxFunctionList";
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
 			this.listboxFunctionList.Size = new System.Drawing.Size(300, 602);
-			this.listboxFunctionList.TabIndex = 2;
+			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
 			// 
 			// groupSelectionEditor
@@ -200,6 +199,7 @@
 			this.groupSelectionEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupSelectionEditor.Controls.Add(this.groupBox1);
 			this.groupSelectionEditor.Controls.Add(this.button1);
 			this.groupSelectionEditor.Controls.Add(this.buttonSaveCurrentChanges);
 			this.groupSelectionEditor.Controls.Add(this.flowLayoutPanelParameters);
@@ -215,7 +215,6 @@
 			this.groupSelectionEditor.Controls.Add(this.textBoxTags);
 			this.groupSelectionEditor.Controls.Add(this.labelReturnType);
 			this.groupSelectionEditor.Controls.Add(this.labelParameters);
-			this.groupSelectionEditor.Controls.Add(this.panelReturnType);
 			this.groupSelectionEditor.Controls.Add(this.groupBoxConditional);
 			this.groupSelectionEditor.Controls.Add(this.groupBoxCallingConvention);
 			this.groupSelectionEditor.Controls.Add(this.labelConditional);
@@ -232,12 +231,102 @@
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
 			// 
+			// groupBox1
+			// 
+			this.groupBox1.AutoSize = true;
+			this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBox1.Controls.Add(this.checkBox1);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.label5);
+			this.groupBox1.Controls.Add(this.comboBox5);
+			this.groupBox1.Controls.Add(this.comboBox6);
+			this.groupBox1.Location = new System.Drawing.Point(190, 382);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(373, 60);
+			this.groupBox1.TabIndex = 29;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Return Type";
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(6, 24);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(15, 14);
+			this.checkBox1.TabIndex = 11;
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Enabled = false;
+			this.label3.Location = new System.Drawing.Point(28, 24);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(29, 13);
+			this.label3.TabIndex = 0;
+			this.label3.Text = "URL";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Enabled = false;
+			this.label5.Location = new System.Drawing.Point(192, 24);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(31, 13);
+			this.label5.TabIndex = 2;
+			this.label5.Text = "Type";
+			// 
+			// comboBox5
+			// 
+			this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBox5.Enabled = false;
+			this.comboBox5.FormattingEnabled = true;
+			this.comboBox5.Items.AddRange(new object[] {
+            "Actor_Flags",
+            "Actor_Value_Codes",
+            "Attack_Animations",
+            "Biped_Path_Codes",
+            "Control_Codes",
+            "DirectX_Scancodes",
+            "Equip_Type",
+            "Equipment_Slot_IDs",
+            "Form_Type_IDs",
+            "Reload_Animations",
+            "Weapon_Flags",
+            "Weapon_Hand_Grips",
+            "Weapon_Mod",
+            "Weapon_Type"});
+			this.comboBox5.Location = new System.Drawing.Point(64, 20);
+			this.comboBox5.Name = "comboBox5";
+			this.comboBox5.Size = new System.Drawing.Size(121, 21);
+			this.comboBox5.Sorted = true;
+			this.comboBox5.TabIndex = 1;
+			// 
+			// comboBox6
+			// 
+			this.comboBox6.Enabled = false;
+			this.comboBox6.FormattingEnabled = true;
+			this.comboBox6.Location = new System.Drawing.Point(230, 20);
+			this.comboBox6.Name = "comboBox6";
+			this.comboBox6.Size = new System.Drawing.Size(137, 21);
+			this.comboBox6.TabIndex = 3;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(108, 502);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(59, 56);
+			this.button1.TabIndex = 501;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
 			// buttonSaveCurrentChanges
 			// 
 			this.buttonSaveCurrentChanges.Location = new System.Drawing.Point(9, 501);
 			this.buttonSaveCurrentChanges.Name = "buttonSaveCurrentChanges";
 			this.buttonSaveCurrentChanges.Size = new System.Drawing.Size(92, 105);
-			this.buttonSaveCurrentChanges.TabIndex = 28;
+			this.buttonSaveCurrentChanges.TabIndex = 500;
 			this.buttonSaveCurrentChanges.Text = "Save\r\nChanges";
 			this.buttonSaveCurrentChanges.UseVisualStyleBackColor = true;
 			this.buttonSaveCurrentChanges.Click += new System.EventHandler(this.buttonSaveCurrentChanges_Click);
@@ -250,7 +339,7 @@
 			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(190, 48);
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
 			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(550, 328);
-			this.flowLayoutPanelParameters.TabIndex = 1;
+			this.flowLayoutPanelParameters.TabIndex = 11;
 			// 
 			// parameter1
 			// 
@@ -361,10 +450,11 @@
 			this.buttonParameterCopy.Location = new System.Drawing.Point(349, 24);
 			this.buttonParameterCopy.Name = "buttonParameterCopy";
 			this.buttonParameterCopy.Size = new System.Drawing.Size(64, 23);
-			this.buttonParameterCopy.TabIndex = 27;
+			this.buttonParameterCopy.TabIndex = 12;
+			this.buttonParameterCopy.TabStop = false;
 			this.buttonParameterCopy.Text = "Copy Last";
 			this.buttonParameterCopy.UseVisualStyleBackColor = true;
-			this.buttonParameterCopy.Click += new System.EventHandler(this.buttonParameterCopy_Click);
+			this.buttonParameterCopy.Click += new System.EventHandler(this.buttonCopyParameter_Click);
 			// 
 			// buttonParametersNew
 			// 
@@ -373,17 +463,17 @@
 			this.buttonParametersNew.Location = new System.Drawing.Point(253, 24);
 			this.buttonParametersNew.Name = "buttonParametersNew";
 			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
-			this.buttonParametersNew.TabIndex = 1;
+			this.buttonParametersNew.TabIndex = 10;
 			this.buttonParametersNew.Text = "New Parameter";
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
-			this.buttonParametersNew.Click += new System.EventHandler(this.buttonParametersNew_Click);
+			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
 			// 
 			// textBoxCategory
 			// 
 			this.textBoxCategory.Location = new System.Drawing.Point(9, 475);
 			this.textBoxCategory.Name = "textBoxCategory";
 			this.textBoxCategory.Size = new System.Drawing.Size(158, 20);
-			this.textBoxCategory.TabIndex = 26;
+			this.textBoxCategory.TabIndex = 9;
 			// 
 			// labelCategory
 			// 
@@ -420,7 +510,7 @@
 			this.textBoxOrigin.Location = new System.Drawing.Point(9, 430);
 			this.textBoxOrigin.Name = "textBoxOrigin";
 			this.textBoxOrigin.Size = new System.Drawing.Size(158, 20);
-			this.textBoxOrigin.TabIndex = 22;
+			this.textBoxOrigin.TabIndex = 8;
 			// 
 			// labelOrigin
 			// 
@@ -447,7 +537,7 @@
 			this.textBoxTags.Name = "textBoxTags";
 			this.textBoxTags.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.textBoxTags.Size = new System.Drawing.Size(158, 60);
-			this.textBoxTags.TabIndex = 19;
+			this.textBoxTags.TabIndex = 7;
 			// 
 			// labelReturnType
 			// 
@@ -458,6 +548,7 @@
 			this.labelReturnType.Size = new System.Drawing.Size(66, 13);
 			this.labelReturnType.TabIndex = 18;
 			this.labelReturnType.Text = "Return Type";
+			this.labelReturnType.Visible = false;
 			// 
 			// labelParameters
 			// 
@@ -467,84 +558,6 @@
 			this.labelParameters.Size = new System.Drawing.Size(60, 13);
 			this.labelParameters.TabIndex = 16;
 			this.labelParameters.Text = "Parameters";
-			// 
-			// panelReturnType
-			// 
-			this.panelReturnType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.panelReturnType.AutoScroll = true;
-			this.panelReturnType.AutoSize = true;
-			this.panelReturnType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panelReturnType.Controls.Add(this.groupBox1);
-			this.panelReturnType.Location = new System.Drawing.Point(190, 400);
-			this.panelReturnType.Name = "panelReturnType";
-			this.panelReturnType.Size = new System.Drawing.Size(550, 72);
-			this.panelReturnType.TabIndex = 17;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.Add(this.comboBox5);
-			this.groupBox1.Controls.Add(this.label4);
-			this.groupBox1.Controls.Add(this.comboBox6);
-			this.groupBox1.Controls.Add(this.label5);
-			this.groupBox1.Location = new System.Drawing.Point(3, 3);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(489, 42);
-			this.groupBox1.TabIndex = 6;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Parameter 1";
-			this.groupBox1.Visible = false;
-			// 
-			// comboBox5
-			// 
-			this.comboBox5.FormattingEnabled = true;
-			this.comboBox5.Location = new System.Drawing.Point(203, 13);
-			this.comboBox5.Name = "comboBox5";
-			this.comboBox5.Size = new System.Drawing.Size(137, 21);
-			this.comboBox5.TabIndex = 3;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(168, 17);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(31, 13);
-			this.label4.TabIndex = 2;
-			this.label4.Text = "Type";
-			// 
-			// comboBox6
-			// 
-			this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox6.FormattingEnabled = true;
-			this.comboBox6.Items.AddRange(new object[] {
-            "Actor_Flags",
-            "Actor_Value_Codes",
-            "Attack_Animations",
-            "Biped_Path_Codes",
-            "Control_Codes",
-            "DirectX_Scancodes",
-            "Equip_Type",
-            "Equipment_Slot_IDs",
-            "Form_Type_IDs",
-            "Reload_Animations",
-            "Weapon_Flags",
-            "Weapon_Hand_Grips",
-            "Weapon_Mod",
-            "Weapon_Type"});
-			this.comboBox6.Location = new System.Drawing.Point(41, 13);
-			this.comboBox6.Name = "comboBox6";
-			this.comboBox6.Size = new System.Drawing.Size(121, 21);
-			this.comboBox6.Sorted = true;
-			this.comboBox6.TabIndex = 1;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(6, 17);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(29, 13);
-			this.label5.TabIndex = 0;
-			this.label5.Text = "URL";
 			// 
 			// groupBoxConditional
 			// 
@@ -557,7 +570,7 @@
 			this.groupBoxConditional.Name = "groupBoxConditional";
 			this.groupBoxConditional.Padding = new System.Windows.Forms.Padding(0);
 			this.groupBoxConditional.Size = new System.Drawing.Size(116, 49);
-			this.groupBoxConditional.TabIndex = 15;
+			this.groupBoxConditional.TabIndex = 6;
 			this.groupBoxConditional.TabStop = false;
 			// 
 			// radioButtonConditionalFalse
@@ -594,7 +607,7 @@
 			this.groupBoxCallingConvention.Name = "groupBoxCallingConvention";
 			this.groupBoxCallingConvention.Padding = new System.Windows.Forms.Padding(0);
 			this.groupBoxCallingConvention.Size = new System.Drawing.Size(103, 97);
-			this.groupBoxCallingConvention.TabIndex = 11;
+			this.groupBoxCallingConvention.TabIndex = 5;
 			this.groupBoxCallingConvention.TabStop = false;
 			// 
 			// radioButtonCallingConventionEither
@@ -695,15 +708,6 @@
 			this.labelName.TabIndex = 0;
 			this.labelName.Text = "Name";
 			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(108, 502);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(59, 56);
-			this.button1.TabIndex = 29;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -726,13 +730,12 @@
 			this.statusStrip1.PerformLayout();
 			this.groupSelectionEditor.ResumeLayout(false);
 			this.groupSelectionEditor.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.flowLayoutPanelParameters.ResumeLayout(false);
 			this.flowLayoutPanelParameters.PerformLayout();
 			this.parameter1.ResumeLayout(false);
 			this.parameter1.PerformLayout();
-			this.panelReturnType.ResumeLayout(false);
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
 			this.groupBoxConditional.ResumeLayout(false);
 			this.groupBoxConditional.PerformLayout();
 			this.groupBoxCallingConvention.ResumeLayout(false);
@@ -778,7 +781,6 @@
 		private System.Windows.Forms.Label labelTags;
 		private System.Windows.Forms.TextBox textBoxTags;
 		private System.Windows.Forms.Label labelReturnType;
-		private System.Windows.Forms.Panel panelReturnType;
 		private System.Windows.Forms.TextBox textBoxCategory;
 		private System.Windows.Forms.Label labelCategory;
 		private System.Windows.Forms.GroupBox groupBoxConditional;
@@ -786,11 +788,6 @@
 		private System.Windows.Forms.Button buttonParameterCopy;
 		private System.Windows.Forms.Label labelExamples;
 		private System.Windows.Forms.Panel panelExamples;
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.ComboBox comboBox5;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.ComboBox comboBox6;
-		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.GroupBox parameter1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.ComboBox comboBox3;
@@ -802,6 +799,12 @@
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.ComboBox comboBox5;
+		private System.Windows.Forms.ComboBox comboBox6;
+		private System.Windows.Forms.CheckBox checkBox1;
 	}
 }
 

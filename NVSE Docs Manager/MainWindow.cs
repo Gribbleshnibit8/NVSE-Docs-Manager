@@ -20,10 +20,14 @@ namespace NVSE_Docs_Manager
 
 		// array for parameters groups for each parameter
 		List<Control> parametersList = new List<Control>();
-		string[] paramaterURLs = new string[] { 
+		List<string> parameterURLList = new List<string>() { 
 			"Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
 			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
 			"Weapon_Mod", "Weapon_Type"
+		};
+		List<string> parameterTypesList = new List<string>()
+		{
+			"scanCode:Integer"
 		};
 
 		// input file
@@ -72,7 +76,6 @@ namespace NVSE_Docs_Manager
 
 			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
 		}
 
 
@@ -161,95 +164,6 @@ namespace NVSE_Docs_Manager
 
 			
 
-		}
-
-
-		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
-		{
-			FunctionDef func = new FunctionDef();
-
-			func.Name = textBoxName.Text;
-			func.Alias = textBoxAlias.Text;
-			func.Version = textBoxVersion.Text;
-			func.FromPlugin = textBoxOrigin.Text;
-			func.Category = textBoxCategory.Text;
-
-			if (textBoxTags.Text != "")
-				func.Tags.AddRange(textBoxTags.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
-			
-
-			if (radioButtonCallingConventionBase.Checked == true)
-				func.Convention = "B";
-			else if (radioButtonCallingConventionEither.Checked == true)
-				func.Convention = "E";
-			else if (radioButtonCallingConventionRef.Checked == true)
-				func.Convention = "R";
-
-			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-			if (radioButtonConditionalFalse.Checked == true)
-				func.Condition = "No";
-			else
-				func.Condition = "Yes";
-
-			foreach (Control c in parametersList)
-			{
-				Parameter newParam = new Parameter();
-
-				System.Windows.Forms.ComboBox cBox;
-
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
-				newParam.url = cBox.SelectedText;
-
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
-				newParam.type = cBox.SelectedText;
-
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxOptional"];
-				newParam.optional = cBox.SelectedText;
-
-				func.Parameters.Add(newParam);
-			}
-
-			functionsList.Add(func);
-			listboxFunctionList.Items.Add(func.Name);
-
-		}
-
-		private void listboxFunctionList_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (listboxFunctionList.SelectedItem != null)
-			{
-				MessageBox.Show(listboxFunctionList.SelectedItem.ToString());
-
-				FunctionDef func = functionsList.ElementAt(listboxFunctionList.SelectedIndex);
-
-				textBoxName.Text = func.Name;
-				textBoxAlias.Text = func.Alias;
-				textBoxVersion.Text = func.Version;
-				textBoxOrigin.Text = func.FromPlugin;
-				textBoxCategory.Text = func.Category;
-
-				if (func.Tags != null)
-					foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
-
-				if (func.Convention == "B")
-					radioButtonCallingConventionBase.Checked = true;
-				else if (func.Convention == "E")
-					radioButtonCallingConventionEither.Checked = true;
-				else if (func.Convention == "R")
-					radioButtonCallingConventionRef.Checked = true;
-
-				// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-				if (func.Condition == "No")
-					radioButtonConditionalFalse.Checked = true;
-				else
-					radioButtonConditionalTrue.Checked = true;
-
-				populateParameterList(func.Parameters);
-				
-				//functionsList.Add(func);
-				//listboxFunctionList.Items.Add(func.Name);
-
-			}
 		}
 
 	}

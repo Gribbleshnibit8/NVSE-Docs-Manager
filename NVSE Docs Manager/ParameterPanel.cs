@@ -14,14 +14,14 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow : Form
 	{
 
-		private void buttonParametersNew_Click(object sender, EventArgs e)
+		private void buttonNewParameter_Click(object sender, EventArgs e)
 		{
 			Control newParam = createNewParameter();
 			parametersList.Add(newParam);
 			flowLayoutPanelParameters.Controls.Add(newParam);
 		}
 
-		private void buttonParameterCopy_Click(object sender, EventArgs e)
+		private void buttonCopyParameter_Click(object sender, EventArgs e)
 		{
 			Control toCopy = parametersList.Last();
 			Control newParam = createNewParameter();
@@ -53,20 +53,21 @@ namespace NVSE_Docs_Manager
 		{
 			System.Windows.Forms.Button clickedButton = (System.Windows.Forms.Button)sender;
 			Control parent = clickedButton.Parent;
-			parent.Visible = false;
+
+			flowLayoutPanelParameters.Controls.Remove(parent);
 			parametersList.Remove(parent);
 			rebuildParamaterPanel();
 		}
 
 		private Control createNewParameter()
 		{
-			Control newParam = createNewParameterForm("Parameter", true);
+			Control newParam = buildNewParameterForm("Parameter", true);
 			return newParam;
 		}
 
 		private Control createNewReturnType()
 		{
-			Control newParam = createNewParameterForm("Return Type", false);
+			Control newParam = buildNewParameterForm("Return Type", false);
 			return newParam;
 		}
 
@@ -78,6 +79,7 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
+		// Populates the parameter panel from a loaded function
 		private void populateParameterList(List<Parameter> paramList)
 		{
 			foreach (Parameter param in paramList)
@@ -87,18 +89,19 @@ namespace NVSE_Docs_Manager
 				System.Windows.Forms.ComboBox cBox;
 
 				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
-				cBox.SelectedText = param.url;
+				cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
 
 				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
-				cBox.SelectedText = param.type;
+				cBox.Text = param.type;
 
 				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxOptional"];
-				cBox.SelectedText = param.optional;
+				cBox.Text = param.optional;
 				flowLayoutPanelParameters.Controls.Add(newParameter);
 			}
 		}
 
-		private Control createNewParameterForm(string title, bool hasOptional)
+		// creates a new parameter groupbox with contents, sets and registers the buttons
+		private Control buildNewParameterForm(string title, bool hasOptional)
 		{
 			// create a new group box for the new parameter
 			System.Windows.Forms.GroupBox newParameter = new System.Windows.Forms.GroupBox();
@@ -125,7 +128,7 @@ namespace NVSE_Docs_Manager
 			// create the URL combobox and add it to the group box
 			System.Windows.Forms.ComboBox urlCombobox = new System.Windows.Forms.ComboBox();
 			urlCombobox.Name = "comboBoxURL";
-			urlCombobox.Items.AddRange(paramaterURLs);
+			urlCombobox.Items.AddRange(parameterURLList.ToArray());
 			urlCombobox.Location = new System.Drawing.Point(71, 20);
 			urlCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
 			newParameter.Controls.Add(urlCombobox);
