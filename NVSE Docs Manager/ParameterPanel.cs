@@ -49,6 +49,55 @@ namespace NVSE_Docs_Manager
 			rebuildParamaterPanel();
 		}
 
+		private void removeParameter_Click(object sender, System.EventArgs e)
+		{
+			System.Windows.Forms.Button clickedButton = (System.Windows.Forms.Button)sender;
+			Control parent = clickedButton.Parent;
+			parent.Visible = false;
+			parametersList.Remove(parent);
+			rebuildParamaterPanel();
+		}
+
+		private Control createNewParameter()
+		{
+			Control newParam = createNewParameterForm("Parameter", true);
+			return newParam;
+		}
+
+		private Control createNewReturnType()
+		{
+			Control newParam = createNewParameterForm("Return Type", false);
+			return newParam;
+		}
+
+		private void rebuildParamaterPanel()
+		{
+			for (int i = 0; i < parametersList.Count(); i++)
+			{
+				parametersList[i].Text = "Parameter " + (i + 1).ToString();
+			}
+		}
+
+		private void populateParameterList(List<Parameter> paramList)
+		{
+			foreach (Parameter param in paramList)
+			{
+				System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
+
+				System.Windows.Forms.ComboBox cBox;
+
+				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
+				cBox.SelectedText = param.url;
+
+				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
+				cBox.SelectedText = param.type;
+
+				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxOptional"];
+				cBox.SelectedText = param.optional;
+				flowLayoutPanelParameters.Controls.Add(newParameter);
+			}
+		}
+
 		private Control createNewParameterForm(string title, bool hasOptional)
 		{
 			// create a new group box for the new parameter
@@ -101,7 +150,7 @@ namespace NVSE_Docs_Manager
 			{
 				// create the Optional label and add it to the group box
 				System.Windows.Forms.Label optionalLabel = new System.Windows.Forms.Label();
-				optionalLabel.Text = "URL";
+				optionalLabel.Text = "Optional";
 				optionalLabel.Location = new System.Drawing.Point(376, 24);
 				optionalLabel.AutoSize = true;
 				newParameter.Controls.Add(optionalLabel);
@@ -116,35 +165,7 @@ namespace NVSE_Docs_Manager
 				newParameter.Controls.Add(optionalCombobox);
 			}
 			return newParameter;
-		}
+		}		
 
-		private void rebuildParamaterPanel()
-		{
-			for (int i = 0; i < parametersList.Count(); i++)
-			{
-				parametersList[i].Text = "Parameter " + (i + 1).ToString();
-			}
-		}
-
-		private Control createNewParameter()
-		{
-			Control newParam = createNewParameterForm("Parameter", true);
-			return newParam;
-		}
-
-		private Control createNewReturnType()
-		{
-			Control newParam = createNewParameterForm("Return Type", false);
-			return newParam;
-		}
-
-		void removeParameter_Click(object sender, System.EventArgs e)
-		{
-			System.Windows.Forms.Button clickedButton = (System.Windows.Forms.Button)sender;
-			Control parent = clickedButton.Parent;
-			parent.Visible = false;
-			parametersList.Remove(parent);
-			rebuildParamaterPanel();
-		}
 	}
 }

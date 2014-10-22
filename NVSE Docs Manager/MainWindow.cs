@@ -80,6 +80,7 @@ namespace NVSE_Docs_Manager
 		{
 			toolStripStatusLabel1.Text = s;
 		}
+
 	// Tool strip handlers
 		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -196,7 +197,7 @@ namespace NVSE_Docs_Manager
 
 				System.Windows.Forms.ComboBox cBox;
 
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboboxURL"];
+				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
 				newParam.url = cBox.SelectedText;
 
 				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
@@ -243,24 +244,8 @@ namespace NVSE_Docs_Manager
 				else
 					radioButtonConditionalTrue.Checked = true;
 
-				//foreach (Control c in parametersList)
-				//{
-				//	Parameter newParam = new Parameter();
-
-				//	System.Windows.Forms.ComboBox cBox;
-
-				//	cBox = (System.Windows.Forms.ComboBox)c.Controls["comboboxURL"];
-				//	newParam.url = cBox.SelectedText;
-
-				//	cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
-				//	newParam.type = cBox.SelectedText;
-
-				//	cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxOptional"];
-				//	newParam.optional = cBox.SelectedText;
-
-				//	func.Parameters.Add(newParam);
-				//}
-
+				populateParameterList(func.Parameters);
+				
 				//functionsList.Add(func);
 				//listboxFunctionList.Items.Add(func.Name);
 
