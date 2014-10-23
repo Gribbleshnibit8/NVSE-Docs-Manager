@@ -1,0 +1,220 @@
+[
+	{
+		"Name": "V3Length",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Vector_x"},
+			{"type": "float:Vector_y"},
+			{"type": "float:Vector_z"}
+		],
+		"ReturnType": [
+			{"type": "float:Length"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Returns length of a vector3."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "V3Normalize",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:Vector_x"},
+			{"type": "float:Vector_y"},
+			{"type": "float:Vector_z"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Returns normalized vector3."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "V3Crossproduct",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:VectorA_x"},
+			{"type": "float:VectorA_y"},
+			{"type": "float:VectorA_z"},
+			{"type": "float:VectorB_x"},
+			{"type": "float:VectorB_y"},
+			{"type": "float:VectorB_z"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Returns crossproduct of two vector3s."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QFromEuler",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_w"},
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:Elevation"},
+			{"type": "float:Bank"},
+			{"type": "float:Heading"},
+			{"type": "bool:Flag", "optional": "true"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Converts euler angles to quaternion (two euler rotation sequences are available, because actors use different sequence than other objects. the default is XYZ, and optionally ZX for actors)."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QFromAxisAngle",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_w"},
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:Axis_x"},
+			{"type": "float:Axis_y"},
+			{"type": "float:Axis_z"},
+			{"type": "float:Angle"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Converts rotation axis and angle to quaternion."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QNormalize",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_w"},
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:Quat_w"},
+			{"type": "float:Quat_x"},
+			{"type": "float:Quat_y"},
+			{"type": "float:Quat_z"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Converts rotation axis and angle to quaternion."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QMultQuat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_w"},
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:QuatA_w"},
+			{"type": "float:QuatA_x"},
+			{"type": "float:QuatA_y"},
+			{"type": "float:QuatA_z"},
+			{"type": "float:QuatB_w"},
+			{"type": "float:QuatB_x"},
+			{"type": "float:QuatB_Y"},
+			{"type": "float:QuatB_z"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Multiplies two quaternions (Grossmann product). The result is the second quaternion rotated by the first."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QMultVector3",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:Quat_w"},
+			{"type": "float:Quat_x"},
+			{"type": "float:Quat_y"},
+			{"type": "float:Quat_z"},
+			{"type": "float:Vector_x"},
+			{"type": "float:Vector_Y"},
+			{"type": "float:Vector_z"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Multiplies a vector3 with a quaternion. The result is the vector rotated by the quaternion."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QInterpolate",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Out_w"},
+			{"type": "string:Out_x"},
+			{"type": "string:Out_y"},
+			{"type": "string:Out_z"},
+			{"type": "float:QuatA_w"},
+			{"type": "float:QuatA_x"},
+			{"type": "float:QuatA_y"},
+			{"type": "float:QuatA_z"},
+			{"type": "float:QuatB_w"},
+			{"type": "float:QuatB_x"},
+			{"type": "float:QuatB_y"},
+			{"type": "float:QuatB_z"},
+			{"type": "float:Ratio"},
+			{"type": "bool:Flag"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Interpolates between two given quaternions (two methods are available: the default is normalized linear interpolation, and optionally spherical linear interpolation)."
+		],
+		"Tags": ["algohol"]
+	},
+	
+	{
+		"Name": "QToEuler",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Elevation"},
+			{"type": "string:Bank"},
+			{"type": "string:Heading"},
+			{"type": "float:Quat_w"},
+			{"type": "float:Quat_x"},
+			{"type": "float:Quat_y"},
+			{"type": "float:Quat_z"},
+			{"type": "bool:Flag", "optional": "true"}
+		],
+		"Version": "4.3",
+		"Convention": "B",
+		"Description": [
+			"Converts a given quaternion to euler angles (again, two different euler rotation sequences available). The quaternion does not need to be normalized."
+		],
+		"Tags": ["algohol"]
+	}
+]

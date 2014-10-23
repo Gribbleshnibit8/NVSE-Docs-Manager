@@ -1,0 +1,744 @@
+[
+	{
+		"Name": "GetBaseObject",
+		"Alias": "gbo",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the base object id of the reference."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetBaseForm",
+		"Alias": "gbf",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "3.1",
+		"Convention": "",
+		"Description": [
+			"Returns the permanent base object id of the reference."
+		],
+		"Examples": [
+			{"Example": [
+				"ref DeathClawBase",
+				"set DeathClawBase to SomeLeveledDeathClawREF.GetBaseForm"
+			]}
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "IsPersistent",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "bool:IsPersistent"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns true if the calling reference is persistent."
+		],
+		"Examples": [
+			{"Example": [
+				"if SomeRef.IsPersistent",
+				"    ; it is safe to proceed",
+				"endif"
+			]}
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetParentCell",
+		"Alias": "gpc",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:Cell"}
+		],
+		"Version": "1.1",
+		"Convention": "",
+		"Description": [
+			"Returns the parent cell of the reference."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetParentWorldspace",
+		"Alias": "gpw",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:ParentWorldspace"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the parent worldspace of the reference."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetTeleportCell",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:Cell"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the cell to which the calling door reference teleports."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetLinkedDoor",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:LinkedDoor"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the door to which the calling reference is linked."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetOwner",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:Owner"}
+		],
+		"Version": "1.9",
+		"Convention": "B",
+		"Description": [
+			"Returns the owner of the calling reference."
+		],
+		"Tags": ["Owner"]
+	},
+
+	{
+		"Name": "GetParentCellOwner",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:Owner"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the owner of the cell of the calling reference."
+		],
+		"Tags": ["Owner"]
+	},
+
+	{
+		"Name": "GetOwningFactionRequiredRank",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Rank"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the required rank for ownership of the calling reference."
+		],
+		"Tags": ["Owner"]
+	},
+
+	{
+		"Name": "GetParentCellOwningFactionRequiredRank",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Rank"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the required rank for ownership of the cell of the calling reference."
+		],
+		"Tags": ["Owner"]
+	},
+
+	{
+		"Name": "GetFirstRef",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Form_Type_IDs", "type": "int:FormType", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs:", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectRef"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the first reference in the current cell. A type can optionally be supplied to return only references matching that type. Additionally, you can pass 200 for actors and 201 for inventory items. This function should be used only within a Label...Goto loop and GetNextRef.",
+			"An optional cell depth can be supplied to specify the number of adjacent cells to scan in exteriors: a cell depth of 1 scans the player's current cell plus 8 adjacent cells, a depth of 2 scans the player's cell plus 25 adjacent cells.",
+			"By default, inactive references to items which were previously picked up by an actor are ignored; passing 1 for the third parameter will force those references to be included."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetNextRef",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:ObjectRef"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the next reference of a given type in the current cell. GetFirstRef or GetFirstRefInCell must be called first; the formType, cellDepth, and boolean arguments passed to GetFirstRef/GetFirstRefInCell are used. This command should only be used within a loop that executes within a single frame."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetNumRefs",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Form_Type_IDs", "type": "int:FormType", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the number of references in the current cell which match the optionally supplied type code. Use 200 for actors and 201 for inventory items. An optional cell depth can be specified for exteriors. By default, inactive references to items which were previously picked up by an actor are ignored; passing 1 for the third parameter will force those references to be included."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetRefs",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Form_Type_IDs", "type": "int:TypeID", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:CellRefs"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Used in place of <a href=\"GetFirstRef\">GetFirstRef</a> to get an array of all the references in the current cell and optionally the surrounding cells.",
+			"Setting cell depth to -1 will use the uGridsToLoad value."
+		],
+		"Examples": [
+			{"Example": [
+				"array_var ar_cellContents",
+				"array_var ar_element",
+				" ",
+				"let ar_cellContents := GetRefs 200 2        ; find actor refs within 2 cells",
+				"ForEach ar_element <- ar_cellContents",
+				"        ; do what needs to be done here",
+				"        ; maybe we have a condition that skips the rest so use",
+				"        Continue",
+				"        ; or another condition that ends the loop, so",
+				"        Break",
+				"Loop"
+			]}
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetFirstRefInCell",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Cell"},
+			{"url": "Form_Type_IDs", "type": "int:FormType", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectRef"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Works the same as GetFirstRef but takes an additional parameter specifying the cell to scan. Note that if the specified is not loaded in memory, this function will only return persistent references. Use GetNextRef to iterate through the rest of the references in the cell."
+		],
+		"Examples": [
+			{"Example": [
+				"let rRef := GetFirstRefInCell 200 2        ; find actor refs within 2 cells",
+				"While (IsFormValid rRef)",
+				"        ; do stuff",
+				"        let rRef := GetNextRef",
+				"Loop"
+			]}
+		],
+		"Tags": ["Reference"]
+	},
+	
+	{
+		"Name": "GetRefsInCell",
+		"Alias": "",
+		"Parameters": [
+			{"type": "cell:TargetCell"},
+			{"url": "Form_Type_IDs", "type": "int:TypeID", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:CellRefs"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Used in place of <a href=\"GetFirstRefInCell\">GetFirstRefInCell</a> to get an array of all the references in a cell (and optional surrounding cells).",
+			"Setting cell depth to -1 will use the uGridsToLoad value."
+		],
+		"Examples": [
+			{"Example": [
+				"array_var ar_cellContents",
+				"array_var ar_element",
+				" ",
+				"let ar_cellContents := GetRefsInCell TargetCell 200        ; find actor refs in TargetCell",
+				"ForEach ar_element <- ar_cellContents",
+				"        ; do what needs to be done here",
+				"Loop"
+			]}
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetNumRefsInCell",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Cell"},
+			{"url": "Form_Type_IDs", "type": "int:FormType", "optional": "true"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs:", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Count"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Works the same as GetNumRefs but takes an additional parameter specifying the cell to scan. Only counts persistent references if the cell is not loaded in memory."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetRefCount",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:RefCount"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the count in a stacked reference."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "SetRefCount",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:NewCount"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Sets the number of items in a stack of items in the world. Note that while this function will change the count of any type of reference, it may have unpredictable results when used on references like NPCs which are not logically stackable."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetOpenKey",
+		"Alias": "GetKey",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.6",
+		"Convention": "R",
+		"Description": [
+			"Returns the key associated with a lockable object."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "SetOpenKey",
+		"Alias": "SetKey",
+		"Parameters": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "3.3",
+		"Convention": "R",
+		"Description": [
+			"Sets the key used to unlock the calling object."
+		],
+		"Tags": ["Input"]
+	},
+
+	{
+		"Name": "ClearOpenKey",
+		"Alias": "ClearKey",
+		"Parameters": [],
+		"Version": "3.4",
+		"Convention": "R",
+		"Description": [
+			"Clears the key used to unlock the calling object."
+		],
+		"Tags": ["Input"]
+	},
+
+	{
+		"Name": "GetActorBaseFlagsLow",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actor base:ActorBase", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Flags", "type": "int:ActorFlagsLow"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Returns a bitfield containing actor base flags."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "SetActorBaseFlagsLow",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Actor_Flags", "type": "int:ActorFlagsLow"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Sets the flags of the actor. Use of unknown bits may cause random behavior."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "GetActorBaseFlagsHigh",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actor base:ActorBase", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Flags", "type": "int:ActorFlagsHigh"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Returns a bitfield containing actor base flags."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "SetActorBaseFlagsHigh",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Actor_Flags", "type": "int:ActorFlagsHigh"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Sets actor base flags."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "HasOwnership",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "",
+		"Description": [
+			"Check if an NPC has direct or indirect ownership."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "IsOwned",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actor reference:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Check if an object is directly or indirectly owned by an NPC."
+		],
+		"Tags": ["Reference"]
+	},
+
+	{
+		"Name": "SetOwningFactionRequiredRank",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Rank"}
+		],
+		"Version": "3.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the required rank for ownership of the calling reference."
+		],
+		"Tags": ["Reference"]
+	},
+	
+	{
+		"Name": "SetEyes",
+		"Alias": "",
+		"Parameters": [
+			{"type": "body data:AnyForm"},
+			{"type": "base NPC:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs eyes."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetEyes",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Get an NPCs eyes."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetHair",
+		"Alias": "",
+		"Parameters": [
+			{"type": "body data:AnyForm"},
+			{"type": "base NPC:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs hair."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetHair",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs hair."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetHairLength",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:HairLength"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs hair length."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetHairLength",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Get an NPCs hair length."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetHairColor",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:HairColor"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs hair color (RGB bytes)."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetHairColor",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Get an NPCs hair color (code."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetNPCWeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Weight"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs weight."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetNPCWeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Get an NPCs weight."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetNPCHeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Weight"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Set an NPCs height."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetNPCHeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Get an NPCs height."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "Update3D",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Updates the visual representation of the calling reference."
+		],
+		"Tags": ["Reference"]
+	},
+	
+	{
+		"Name": "IsPlayerSwimming",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "bool:IsSwimming"}
+		],
+		"Version": "4.2",
+		"Convention": "B",
+		"Description": [
+			"Check if the player is swimming."
+		],
+		"Tags": ["Reference"]
+	},
+	
+	{
+		"Name": "GetTFC",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "bool:CameraActive"}
+		],
+		"Version": "4.2",
+		"Convention": "B",
+		"Description": [
+			"Returns wether or not Fly Camera is active."
+		],
+		"Tags": ["Reference"]
+	}
+]

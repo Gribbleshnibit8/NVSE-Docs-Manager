@@ -1,0 +1,404 @@
+[
+	{
+		"Name": "Label",
+		"Alias": "",
+		"Parameters": [
+			{"type": "labelID:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Defines a labeled position in a script which subsequent calls to Goto can use to create loops. The label must be defined before Goto is called."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "Goto",
+		"Alias": "",
+		"Parameters": [
+			{"type": "labelID:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Jump to a labeled position in the script previously defined by a call to Label. Execution will return to the label, simulating a loop. Be careful to provide an exit condition to avoid creating infinite loops."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "Let",
+		"Alias": "",
+		"Parameters": [
+			{"type": "expression"},
+			{"type": ":="},
+			{"type": "expression"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"The Let statement is NVSE's version of Fallout's <code>Set</code> statement. It takes the form <code>let <span class=\"op\">expr1</span> := <span class=\"op\">expr2</span></code> where <span class=\"op\">expr1</span> evaluates to something which can hold a value, such as a variable or array element, and <span class=\"op\">expr2</span> is an expression of a type which can be stored in <span class=\"op\">expr1</span>. Values within expressions can include arithmetic expressions, function calls, etc. The assignment operator checks the types of its operands, so it will allow assigning a number to a <code>short</code> variable but not to a <code>string_var</code>."
+		],
+		"Examples": [
+			{"Example": [
+				"string_var str",
+				"array_var arr",
+				"short num",
+				"let str := \"a string\"",
+				"let str := str[0:num] + player.GetName + \" some more text\"",
+				"let arr := ar_Construct Map",
+				"let arr[(num + player.GetPos Z) / player.GetPos X] := player.GetDistance someRef ^ 2"
+			]}
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "eval",
+		"Alias": "",
+		"Parameters": [
+			{"type": "boolean expression"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Used within if statements to test the value of an expression. This allows OBSE expressions to be used as conditions. The expression must evaluate to a boolean value."
+		],
+		"Examples": [
+			{"Example": [
+				"if eval (array[0] &gt; 1)",
+				"\t; code executes if array[0] &gt; 1",
+				"endif"
+			]}
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "While",
+		"Alias": "",
+		"Parameters": [
+			{"type": "boolean expression:<unknown>"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Evaluates an NVSE expression. If the expression is true, the statements following it will be executed until the next Loop command, at which point control returns to the top of the loop and the expression is evaluated again."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "loop",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns execution to the most recent While or ForEach command. The loop condition is evaluated and if it passes, execution continues inside the body of the loop. Otherwise, execution returns to the instruction immediately following the Loop command."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "ForEach",
+		"Alias": "",
+		"Parameters": [
+			{"type": "iterator:Multi"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"<code>ForEach</code> is used to iterate over the elements of an array, the characters in a string, or references to objects in a container. The syntax <code>ForEach item &lt;- collection</code> is used to indicate the variable (\"<code>item</code>\") which will hold the current element and the string, array, or container reference (\"<code>collection</code>\") from which elements will be drawn. On loop entry, <code>item</code> is set to the first element in <code>collection</code>. When the next <code>Loop</code> command is encountered, <code>item</code> is set to the next element in <code>collection</code> and execution returns to the top of the loop. The loop terminates when all elements have been returned. The type of <code>item</code> varies based on the type of <code>collection</code>.",
+			"For arrays, <code>item</code> is an array_var, specifically a StringMap. The loop will initialize <code>item</code> with two elements: \"key\", which holds the key of the current element, and \"value\", which holds the value associated with that key. Within a <code>ForEach</code> loop you can access both fields via <code>item[\"key\"]</code> and <code>item[\"value\"]</code>. Once the loop terminates, <code>item</code> is reset to an uninitialized array."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "Continue",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Must be called inside of a ForEach or While loop. Continue skips the rest of the body of a loop, returning execution to the top of the loop and evaluating the loop condition. If the condition passes, execution enters the loop body, otherwise the loop terminates and continues from the instruction following the corresponding Loop command."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "Break",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Must be called inside of a ForEach or While loop. Break causes the loop to exit immediately, forcing execution to jump to the instruction immediately following the next Loop command."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "ToString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "expression"}
+		],
+		"ReturnType": [
+			{"type": "String"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Attempts to convert an expression to a string. For numeric expressions, the result is a string representation of the numeric value. For objects, it is the name of the object if available; otherwise it is the formID expressed in hexadecimal notation. For string expressions no conversion is necessary."
+		],
+		"Examples": [
+			{"Example": [
+				"let aStringVar := ToString (aNumber + 1)"
+			]}
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "Print",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:expr"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Prints a string expression to the console. This is mainly a convenience function to eliminate the need for temporary string variables when printing complex strings using PrintToConsole, as it supports string concatenation, the ToString function, etc."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "TestExpr",
+		"Alias": "",
+		"Parameters": [
+			{"type": "expression:String"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "4.1",
+		"Convention": "",
+		"Description": [
+			"Attempts to evaluate an expression, returning false if an error occurs during evaluation and true otherwise. This can be useful when checking if an array index is out of bounds or if an element exists with a given key, among other things. TestExpr suppresses the output of error messages to the console and log file."
+		],
+		"Examples": [
+			{"Example": [
+				"array_var array",
+				"let array := ar_Construct Array",
+				"if testexpr (array[5] := 2)",
+				"\tPrintC \"5 is a valid index, assignment succeeded.\"",
+				"else",
+				"\tPrintC \"Index 5 is out of bounds, no assignment.\"",
+				"endif",
+				"let array := ar_Construct StringMap",
+				"if testexpr (array[\"INDEX\"])",
+				"\tPrintC \"An element exists in array with key 'INDEX'\"",
+				"else",
+				"\tPrintC \"No element with the specified key exists.\"",
+				"endif"
+			]}
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "TypeOf",
+		"Alias": "",
+		"Parameters": [
+			{"type": "expression"}
+		],
+		"ReturnType": [
+			{"type": "string:Type"}
+		],
+		"Version": "4.1",
+		"Convention": "",
+		"Description": [
+			"Returns a string representing the type of an expression. This is mainly useful for determining the type of an array element at run-time. Possible return values: \"String\", \"Number\", \"Form\", \"Array\", \"StringMap\", \"Map\"."
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "Function",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"A blocktype which precedes the body of a function. This blocktype is only valid within function scripts. A parameter list consisting of up to ten local variables used to hold arguments passed to the function must follow this keyword enclosed in curly braces; if the function takes no arguments the braces should be empty. See <a href=\"#User_Defined_Functions\">User-Defined Functions</a> for more information."
+		],
+		"Examples": [
+			{"Example": [
+				"Begin Function {arg1, arg2, ... arg10}",
+				"\t; function body",
+				"End"
+			]}
+		],
+		"Tags": ["Function"]
+	},
+
+	{
+		"Name": "Call",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formID:Script"},
+			{"type": "multi:Arg1", "optional": "true"},
+			{"type": "multi:Arg2", "optional": "true"},
+			{"type": "multi:Arg3", "optional": "true"},
+			{"type": "multi:Arg4", "optional": "true"},
+			{"type": "multi:Arg5", "optional": "true"},
+			{"type": "multi:Arg6", "optional": "true"},
+			{"type": "multi:Arg7", "optional": "true"},
+			{"type": "multi:Arg8", "optional": "true"},
+			{"type": "multi:Arg9", "optional": "true"},
+			{"type": "multi:Arg10", "optional": "true"},
+			{"type": "multi:Arg11", "optional": "true"},
+			{"type": "multi:Arg12", "optional": "true"},
+			{"type": "multi:Arg13", "optional": "true"},
+			{"type": "multi:Arg14", "optional": "true"},
+			{"type": "multi:Arg15", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "multi:ReturnValue"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Calls a user-defined function. Should be followed by a list of arguments matching the types expected by the function. If a calling reference is specified, commands within the function body will operate on that reference. Call returns whatever value is returned by the function."
+		],
+		"Tags": ["Function"]
+	},
+
+	{
+		"Name": "SetFunctionValue",
+		"Alias": "",
+		"Parameters": [
+			{"type": "returnValue:expr"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Specifies the value to be returned from a function. Valid only within a Function block. If a function does not specify a return value, the return value is assumed to be numeric zero. If multiple calls to SetFunctionValue are processed within a single Function block, the most recent value specified will be returned."
+		],
+		"Tags": ["Function"]
+	},
+
+	{
+		"Name": "GetUserTime",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "stringMap:UserTime"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a StringMap containing information about the time and date on the player's system.", "The returned StringMap has the following key/value pairs, all of which are integers:", "\n\tYear (1601 - 30827)", "\n\tMonth (1-12)", "\n\tDayOfWeek (1:Sunday - 7:Saturday)", "\n\tDay (1-31)", "\n\tHour (0-23)", "\n\tMinute (0-59)", "\n\tSecond (0-59)", "\n\tMillisecond (0-999)"
+		],
+		"Tags": ["Expression"]
+	},
+
+	{
+		"Name": "GetAllModLocalData",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "stringMap:Data"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a StringMap consisting of all of the name-value entries for the mod local data associated with the mod to which the calling script belongs. This is a copy of the local data so modifying the array contents will not modify the stored data."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetModLocalData",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Key"}
+		],
+		"ReturnType": [
+			{"type": "multi:Data"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Gets the data value associated with the specified key for the mod to which the calling script belongs. If no data exists for the key, returns 0."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetModLocalData",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Key"},
+			{"type": "multi:Data"}
+		],
+		"ReturnType": [
+			{"type": "bool:Success"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the data value associated with the specified key for the mod to which the calling script belongs. The key must be a string; the data can be a string, number, or object. Keys are case-insensitive and unique - only one data value can be associated with a particular key."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "ModLocalDataExists",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Key"}
+		],
+		"ReturnType": [
+			{"type": "bool:Exists"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns true if mod local data exists for the specified key."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "RemoveModLocalData",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Key"}
+		],
+		"ReturnType": [
+			{"type": "bool:Removed"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Removes the specified entry from the mod's local data."
+		],
+		"Tags": []
+	}
+]

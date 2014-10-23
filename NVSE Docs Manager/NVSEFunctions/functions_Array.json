@@ -1,0 +1,519 @@
+[
+	{
+		"Name": "ar_Construct",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:ArrayType"}
+		],
+		"ReturnType": [
+			{"type": "array_var"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Creates a new array_var and assigns it to an array variable. Must be called within the context of an OBSE expression such as Let. The parameter specifies the type of array to create: StringMap, Map, or Array. See the above section for more information on the different types of array variables."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Size",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var"}
+		],
+		"ReturnType": [
+			{"type": "int:Size"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the number of elements in an array, or -1 if the array is not initialized. For Array-type variables the highest key in the array is equal to one less than the array's size. Must be called within the context of an NVSE expression. The array can be an array variable or an array element which contains an array."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Dump",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"For debugging purposes, prints the key and value of every element in an array to the console. Must be called within an NVSE expression."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_DumpID",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:ArrayID"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Does the same as ar_Dump but accepts an array ID instead of an array_var. Provided as a convenience for debugging in the console."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Erase",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Target"},
+			{"type": "int:ArrayIndexOrRange", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:NumRemoved"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Erases elements from an array. You may provide a single element, in which case only that element will be erased and only if it is present. Or, you may provide a range in slice notation. Any elements greater than or equal to the lower bound and less than or equal to the upper bound of the range will be erased. If the array is of type Array, elements above the erased elements will be shifted down. Returns the number of elements removed. May omit the second argument; doing so will erase all elements of the array."
+		],
+		"Examples": [
+			{"Example": [
+				"array_var arr",
+				"let arr := ar_Construct StringMap",
+				"let arr[\"another array\"] := ar_Construct Array",
+				"ar_Erase arr[\"another array\"] 0  ; erase element 0 if it exists, higher elements will be shifted down by 1",
+				"ar_Erase arr \"begin\":\"end\"  ; erase any elements having keys >= \"begin\" and <= \"end\""
+			]}
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Sort",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:ToSort"},
+			{"type": "bool:SortDescending", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:SortedArray"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Attempts to sort the elements of an array in ascending or descending order and returns a new Array containing the elements in sorted order (keys associated with the elements are lost). In order to be sorted all elements of an array must be of the same type (strings, numbers, or objects). If this condition is not met an empty Array is returned. Strings are sorted alphabetically and case-insensitively, numbers are sorted numerically, and objects are sorted by formID. By default the elements are sorted in ascending order."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_CustomSort",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:ToSort"},
+			{"type": "ref:ComparisonFunction"},
+			{"type": "bool:Reverse", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Sorted"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns an Array sorted by calling the provided function script to perform comparison of elements. The function should be defined to take two array_var arguments. When it is called, the arguments will contain exactly one element each - the elements to be compared. It should return true if the first argument is less than the second argument, and true if it is greater than or equal to the second argument. You can define 'less', 'greater', and 'equal' in whatever way makes sense for you provided your definitions provide a definitive ordering of any set of values; otherwise the sort may never terminate. The optional third argument sorts the elements in reverse order. ",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_SortAlpha",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:ToSort"},
+			{"type": "bool:SortDescending", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:SortedArray"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sorts the elements of an array alphabetically in ascending or descending order and returns a new Array containing the elements in sorted order. Ordering is case-insensitive. Unlike ar_Sort, does not require elements to be of the same type - numeric elements are converted to a string representation, and forms are sorted by their names (if named) or the string representation of their formIDs. Omitting the optional parameter causes elements to be sorted in ascending order."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Find",
+		"Alias": "",
+		"Parameters": [
+			{"type": "stringOrNumberOrForm:Value"},
+			{"type": "array_var:ArrayToSearch"},
+			{"type": "range:InRange", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "StringOrNumber:Key"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Locates the first occurrence of the specified value within an array and returns the key associated with it. A range may optionally be specified using range notation, i.e. let key := ar_Find \"tofind\" arrayVar lowerBound:upperBound. If the value is not found, the function returns an empty string (for string-indexed arrays) or the value -99999.0 (for numeric-index arrays)."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_First",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "arrayKey:Key"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the key of the first element in an array."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Last",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "arrayKey:Key"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the key of the last element in an array."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Next",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"},
+			{"type": "arrayKey:PrecedingKey"}
+		],
+		"ReturnType": [
+			{"type": "arrayKey:Key"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the key of the element immediately following the specified key."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Prev",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"},
+			{"type": "arrayKey:PrevKey"}
+		],
+		"ReturnType": [
+			{"type": "arrayKey:Key"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the key of the element immediately preceding the specified key."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Keys",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Keys"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns an Array containing the keys of the specified array."
+		],
+		"Tags": ["Input","String"]
+	},
+
+	{
+		"Name": "ar_HasKey",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"},
+			{"type": "arrayKey:Key"}
+		],
+		"ReturnType": [
+			{"type": "bool:HasKey"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the array contains an element with the specified key."
+		],
+		"Tags": ["Input","String"]
+	},
+
+	{
+		"Name": "ar_BadStringIndex",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "string:BadKey"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a constant representing an invalid string array index. Compare to the return value of commands returning an array key to determine if a valid key was returned."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_BadNumericIndex",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "Integer:BadKey"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a constant representing an invalid numeric array index. Compare to the return value of commands returning an array key to determine if a valid key was returned."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Copy",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Copy"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Creates a copy of the keys and elements of the specified array. The resulting array is identical to the source array. If the source array contains other arrays, the copy will contain <strong>references</strong> to those same arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_DeepCopy",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Copy"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Performs the same function as ar_Copy, except any arrays contained within the source array are <strong>also</strong> copied (and any arrays within those arrays are copied as well, and so on)."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Null",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "array_var:NullArray"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns an invalid array. This is useful if you wish to specify that a variable which previously referred to an array should no longer refer to any array."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Resize",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Array"},
+			{"type": "Integer:NewSize"},
+			{"type": "multi:PaddingValue", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:Resized"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Resizes an Array-type array to be of the specified size. If the new size is smaller than the current size, elements at the end of the array are discarded. If the new size is larger, additional elements are appended to the array. By default these elements have the numeric value zero, but an optional argument can be used to specify the value with which to pad the array. Returns 1 if successful, 0 otherwise.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Insert",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Array"},
+			{"type": "Integer:Index"},
+			{"type": "multi:ValueToInsert"}
+		],
+		"ReturnType": [
+			{"type": "bool:Inserted"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Inserts a single element into an Array-type array at the specified index provided the index is not greater than the current size of the array. Elements above the index are shifted up by one index.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_InsertRange",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Array"},
+			{"type": "Integer:Index"},
+			{"type": "array_var:RangeToInsert"}
+		],
+		"ReturnType": [
+			{"type": "bool:Resized"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Inserts a range of elements into an Array-type array at the specified index provided the index is not greater than the current size of the array. The range is passed as an Array. Each element of the range is inserted into the target Array in order. Elements above the insertion index are shifted up by the number of elements inserted.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Append",
+		"Alias": "",
+		"Parameters": [
+			{"type": "array_var:Array"},
+			{"type": "multi:ToInsert"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Appends an element to an Array.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_List",
+		"Alias": "",
+		"Parameters": [
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"},
+			{"type": "multi:Element", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:List"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Takes up to twenty arguments of any type and returns an Array containing those elements in the order in which they were passed. We recommend separating the values with commas (starting after the first argument)."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Map",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key-value pair"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"},
+			{"type": "key-value pair", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Map/StringMap"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Creates a Map or Stringmap given a list of 0-20 key-value pairs. Pairs are specified as 'key::value', where 'key' is a string or numeric value and 'value' is a string, number, array, or form.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	},
+
+	{
+		"Name": "ar_Range",
+		"Alias": "",
+		"Parameters": [
+			{"type": "Integer:Start"},
+			{"type": "Integer:End"},
+			{"type": "Integer:Step", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Range"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns an Array of zero or more numbers ranging from <em>start</em> up to and including <em>end</em> spaced in intervals of <em>step</em>.",
+			"For example, <code>ar_Range (5,10,2)</code> returns <code>(5,7,9)</code> and <code>ar_Range (5,3,-1)</code> returns <code>(5,4,3)</code>. This is useful for performing a traditional for loop within a foreach expression. The optional step argument defaults to 1.",
+			"Usable only with Array-type arrays."
+		],
+		"Tags": ["Array"]
+	}
+]

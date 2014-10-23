@@ -1,0 +1,61 @@
+[
+	{
+		"Name": "AddSpellNS",
+		"Alias": "",
+		"Parameters": [
+			{"type": "spell:SpellItem"},
+			{"type": "item:InventoryObject", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Identical to AddSpell but without the UI message."
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "IsRefInList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form list:FormList"},
+			{"type": "form:GenericObjec"}
+		],
+		"ReturnType": [
+			{"type": "index:Integer"}
+		],
+		"Version": "3.02",
+		"Convention": "B",
+		"Description": [
+			"Checks whether a ref, its baseform, or its leveled baseForm is in a FormList and Returns the index."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "PrintActiveTile",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"A debugging command which outputs all of the children of the UI component currently under the mouse cursor as well as the names and values of all of its traits. Output is sent to the console and to obse.log. Avoid using this function in released mods; it is intended for testing and debugging only."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "ListClear",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form list:FormList"}
+		],
+		"Version": "1.1",
+		"Convention": "",
+		"Description": [
+			"Removes all entries from the list."
+		],
+		"Examples": [],
+		"Tags": []
+	}
+]

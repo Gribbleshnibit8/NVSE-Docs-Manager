@@ -1,0 +1,270 @@
+[
+	{
+		"Name": "Exp",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"}
+		],
+		"ReturnType": [
+			{"type": "float:Float"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Calculates the exponential of a value."
+		],
+		"Tags": ["Math"]
+	},
+
+	{
+		"Name": "Log10",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"}
+		],
+		"ReturnType": [
+			{"type": "float:Float"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Calculates the base 10 log of a value."
+		],
+		"Tags": ["Math"]
+	},
+
+	{
+		"Name": "Floor",
+		"Alias": "flr",
+		"Parameters": [
+			{"type": "float:Float"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Returns the nearest whole number that is less than a float."
+		],
+		"Tags": ["Math"]
+	},
+
+	{
+		"Name": "Ceil",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Returns the nearest whole number that is greater than a float."
+		],
+		"Tags": ["Math"]
+	},
+	
+	{
+		"Name": "LeftShift",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"},
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Shifts a 32-bit integer left the specified number of bits."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+
+	{
+		"Name": "RightShift",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"},
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Shifts a 32-bit integer right the specified number of bits."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+
+	{
+		"Name": "LogicalAnd",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"},
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Performs a logical AND between two 32-bit integers."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+	
+	{
+		"Name": "LogicalOr",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"},
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Performs a logical OR between two 32-bit integers."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+
+	{
+		"Name": "LogicalXor",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"},
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Performs a logical XOR between two 32-bit integers."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+
+	{
+		"Name": "LogicalNot",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Integer"}
+		],
+		"ReturnType": [
+			{"type": "int:Integer"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Performs a logical NOT on a 32-bit integer."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+
+	{
+		"Name": "Pow",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"},
+			{"type": "float:Float"}
+		],
+		"ReturnType": [
+			{"type": "float:Float"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Calculates one value raised to the power of another."
+		],
+		"Tags": ["Math"]
+	},
+	
+	{
+		"Name": "SetBit",
+		"Alias": "",
+		"Parameters": [
+			{"type": "valueToSet:Integer"},
+			{"type": "bitToChange:Integer"},
+			{"type": "clearBit:Integer", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "newValue:Integer"}
+		],
+		"Version": "2.6",
+		"Convention": "B",
+		"Description": [
+			"Sets the value of the specified bit. The optional parameter Clears the value. For the optional parametere 1=Set, 0=Clear"
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+	
+	{
+		"Name": "ClearBit",
+		"Alias": "",
+		"Parameters": [
+			{"type": "valueToChange:Integer"},
+			{"type": "bitToClear:Integer"}
+		],
+		"ReturnType": [
+			{"type": "newValue:Integer"}
+		],
+		"Version": "2.6",
+		"Convention": "B",
+		"Description": [
+			"Clears the specified bit."
+		],
+		"Tags": ["Math","Logical","Binary","Bit"]
+	},
+	
+	{
+		"Name": "fmod",
+		"Alias": "",
+		"Parameters": [
+			{"type": "x:Float"},
+			{"type": "n:Float"},
+			{"type": "offset:Float", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Returns the floating point modulus of dividend in the given base. This differs from dividend % base in the scripting language as % is a strictly integer function. When base is positive, 0 <= result < base. The optional offset shifts the range of the result to offset <= result < base+offset.",
+			"The two most likely uses of this function are modulus angle 360 to normalize a computed angle, i.e., ensure it is = 0 and < 360.0 and modulus angle 360 -180 which ensures the computed [change of] angle is = -180.0 and < 180.0.",
+			"Modulus n base is defined as n - base Floor n / base. If the base is negative the direction of the inequality changes. Thus: 0 = result  base and offset = result  base+offset."
+		],
+		"Tags": ["Math"]
+	},
+
+	{
+		"Name": "Rand",
+		"Alias": "r",
+		"Parameters": [
+			{"type": "min:Float"},
+			{"type": "max:Float"}
+		],
+		"ReturnType": [
+			{"type": "float:Float"}
+		],
+		"Version": "1.6",
+		"Convention": "B",
+		"Description": [
+			"Returns a random number between min and max."
+		],
+		"Tags": ["Math"]
+	}
+]

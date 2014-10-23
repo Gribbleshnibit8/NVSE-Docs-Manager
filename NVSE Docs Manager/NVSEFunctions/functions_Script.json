@@ -1,0 +1,302 @@
+[
+	{
+		"Name": "IsScripted",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsScripted"}
+		],
+		"Version": "1.3",
+		"Convention": "E",
+		"Description": [
+			"Returns 1 if the object or reference has a script attached to it."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "GetScript",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ScriptID"}
+		],
+		"Version": "1.3",
+		"Convention": "E",
+		"Description": [
+			"Returns the script of the reference or passed object."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "RemoveScript",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:OldScript"}
+		],
+		"Version": "1.3",
+		"Convention": "E",
+		"Description": [
+			"Removes the script of the reference or passed object."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "SetScript",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ScriptID"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:OldScript"}
+		],
+		"Version": "1.3",
+		"Convention": "E",
+		"Description": [
+			"Sets the specified script onto the calling object and Returns any previous script. Note that Oblivion doesn't have a script variable type so you must assign the script to a ref variable for this to work.",
+			"NOTE: If the specified object already has a script attached to it, after changing the script the stored values of local variables for references to that object will not match the variables in the new script. If called on a reference, the variable list for the calling reference will be updated to match the new script, but other references to the same base object will not be updated.",
+			"Summary: SetScript is safe to use with quests, with previously unscripted objects, and on unique references (for which no other references exist to the same base object). Using the command on base objects for which non-unique references exist may result in undefined behavior."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "IsFormValid",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:Valid"}
+		],
+		"Version": "1.3",
+		"Convention": "E",
+		"Description": [
+			"Returns 1 if the object passed in the ref variable is valid. Returns 0 if the object stored in the variable is not currently loaded in memory (for instance, a non-persistent reference) or if the variable doesn't hold any object."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "IsReference",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsReference"}
+		],
+		"Version": "1.3",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the specified ref variable contains a reference, as opposed to a base object."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "GetVariable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:VariableValue"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Looks up the value of a variable by name."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "HasVariable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:HasVariable"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns true if the script has a variable with the specified name."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "GetRefVariable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:VariableValue"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Looks up the value of a ref variable by name."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "GetArrayVariable",
+		"Alias": "GetArrayVar",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:ArrayVariableValue"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Looks up an array variable by name on the calling object or specified quest."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "SetVariable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "float:NewValue"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"Version": "4.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the value of a variable by name."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "SetRefVariable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:NewValue"},
+			{"type": "ref:QuestID", "optional": "true"}
+		],
+		"Version": "4.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the value of a variable by name."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "CompareScripts",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formID:Script"},
+			{"type": "formID:Script"}
+		],
+		"ReturnType": [
+			{"type": "bool:Identical"}
+		],
+		"Version": "4.1",
+		"Convention": "",
+		"Description": [
+			"Returns true if the compiled scripts are identical."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "ResetAllVariables",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Sets all variables in a script to zero."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "GetNumExplicitRefs",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formID:Script", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the number of literal references in a script."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "GetNthExplicitRef",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Index"},
+			{"type": "formID:Script", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:Object"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the nth literal reference in a script."
+		],
+		"Tags": ["Script"]
+	},
+	
+	{
+		"Name": "GetCurrentScript",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "formID:Script"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the script which is currently executing."
+		],
+		"Tags": ["Script"]
+	},
+
+	{
+		"Name": "GetCallingScript",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "formID:Script"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the script that called the executing function script."
+		],
+		"Tags": ["Script"]
+	}
+]

@@ -1,0 +1,256 @@
+[
+	{
+		"Name": "GetDialogueTarget",
+		"Alias": "GDT",
+		"Parameters": [
+			{"type": "actor reference:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Get the NPC talked to."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetDialogueSubject",
+		"Alias": "GDS",
+		"Parameters": [
+			{"type": "actor reference:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Get the NPC who started the conversation."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetDialogueSpeaker",
+		"Alias": "GDK",
+		"Parameters": [
+			{"type": "actor reference:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Get the NPC who is currently speaking in the conversation."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetCurrentPackage",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "E",
+		"Description": [
+			"Gets the current package from an actor."
+		],
+		"Tags": ["Actor","AI"]
+	},
+	
+	{
+		"Name": "SetPackageLocationReference",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form:AnyForm"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Convention": "B",
+		"Description": [
+			"Sets package start location as a reference."
+		],
+		"Tags": ["Actor","AI"]
+	},
+	
+	{
+		"Name": "GetPackageLocation",
+		"Alias": "GetPackageLocationReference",
+		"Parameters": [
+			{"type": "form:AnyForm"}
+		],
+		"Version": "3.3",
+		"Convention": "B",
+		"Description": [
+			"Gets package start location."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "SetPackageLocationRadius",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form:AnyForm"},
+			{"type": "float:Float"}
+		],
+		"Version": "3.5",
+		"Convention": "B",
+		"Description": [
+			"Sets package start location radius."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetPackageLocationRadius",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form:AnyForm"}
+		],
+		"ReturnType": [
+			{"type": "int:Radius"}
+		],
+		"Version": "3.5",
+		"Convention": "B",
+		"Description": [
+			"Gets package start location radius."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "SetPackageTargetReference",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form:AnyForm"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.5",
+		"Convention": "B",
+		"Description": [
+			"Sets package target as a reference."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "SetPackageTargetCount",
+		"Alias": "SetPackageTargetDistance",
+		"Parameters": [
+			{"type": "form:AnyForm"},
+			{"type": "int:Integer"}
+		],
+		"Version": "3.5",
+		"Convention": "B",
+		"Description": [
+			"Sets package target count or distance."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetPackageTargetCount",
+		"Alias": "GetPackageTargetDistance",
+		"Parameters": [
+			{"type": "form:AnyForm"}
+		],
+		"Version": "3.5",
+		"Convention": "B",
+		"Description": [
+			"Gets package target count or distance."
+		],
+		"Tags": ["Actor","AI"]
+	},
+	
+	{
+		"Name": "GetPackageCount",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Gets the count of packages from an actor base form."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "GetNthPackage",
+		"Alias": "",
+		"Parameters": [
+			{"type": "index:Integer"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "B",
+		"Description": [
+			"Gets the Nth package from an actor base form."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "SetNthPackage",
+		"Alias": "",
+		"Parameters": [
+			{"type": "package:AnyForm"},
+			{"type": "index:Integer"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "E",
+		"Description": [
+			"Sets and returns the Nth package to an actor base form."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "AddPackageAt",
+		"Alias": "",
+		"Parameters": [
+			{"type": "package:AnyForm"},
+			{"type": "index:Integer"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "E",
+		"Description": [
+			"Adds the Nth package to an actor base form."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "RemovePackageAt",
+		"Alias": "",
+		"Parameters": [
+			{"type": "index:Integer"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "E",
+		"Description": [
+			"Removes and returns the Nth package from an actor base form."
+		],
+		"Tags": ["Actor","AI"]
+	},
+
+	{
+		"Name": "RemoveAllPackages",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.3",
+		"Convention": "E",
+		"Description": [
+			"Removes all packages from an actor base form returns count removed."
+		],
+		"Tags": ["Actor","AI"]
+	}
+]

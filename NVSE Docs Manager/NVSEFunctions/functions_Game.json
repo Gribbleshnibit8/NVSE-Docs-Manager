@@ -1,0 +1,316 @@
+[
+	{
+		"Name": "GetNumericGameSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"}
+		],
+		"ReturnType": [
+			{"type": "IntegerOrFloat"}
+		],
+		"Version": "1.1",
+		"Convention": "",
+		"Description": [
+			"Returns the value of a numeric game setting."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetNumericGameSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"},
+			{"type": "float:Float"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Sets a numeric game setting. Accepts variables as arguments."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetNumericIniSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"}
+		],
+		"ReturnType": [
+			{"type": "IntegerOrFloat"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the value of a numeric setting. Setting name is of the format \"SettingName:CategoryName\" where CategoryName is the header under which the setting appears in the .ini file."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetNumericIniSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"},
+			{"type": "newValue:Float"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Sets a numeric ini setting, using the same format for the setting name as GetNumericIniSetting. Accepts variables as arguments."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "GetCrosshairRef",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:AnyForm"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the reference under the crosshair - i.e., the reference that would be activated if the player pressed the Activate button. Will return non-activatable items (like tables and trees) as long as they are within activation distance. Otherwise Returns zero."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetGameLoaded",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "gameLoaded:Bool"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 after a game is loaded on a per-script basis. For each script that calls GetGameLoaded, the command will return true exactly once each time the game is loaded and false thereafter."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "GetGameRestarted",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "gameRestarted:Bool"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 when the game is restarted on a per-script basis. For each script that calls GetGameRestarted, the commands Returns true exactly once per game session. Useful for situations in which a script must set certain object properties or settings each time the game is started."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "IsModLoaded",
+		"Alias": "",
+		"Parameters": [
+			{"type": "modName:String"}
+		],
+		"ReturnType": [
+			{"type": "isLoaded:Bool"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the whether the specified mod is loaded."
+		],
+		"Examples": [
+			{"Example": [
+				"if IsModLoaded \"ExampleMod.esp\" == 1",
+				"\t; do things if mod is loaded",
+				"endif"
+			]}
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetModIndex",
+		"Alias": "",
+		"Parameters": [
+			{"type": "modName:String"}
+		],
+		"ReturnType": [
+			{"type": "index:Integer"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the index, in decimal form, of the specified mod."
+		],
+		"Examples": [
+			{"Example": [
+				"int iIndex",
+				"\tset iIndex to GetModIndex \"ExampleMod.esp\""
+			]}
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetNumLoadedMods",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "loadedModsCount:Integer"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the number of loaded mods."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetSourceModIndex",
+		"Alias": "",
+		"Parameters": [
+			{"type": "target item:Object", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "index:Integer"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the index of the mod associated with the form."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetLocalRefIndex",
+		"Alias": "",
+		"Parameters": [
+			{"type": "target item:Object", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "index:Integer"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the index of the ref."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "BuildRef",
+		"Alias": "",
+		"Parameters": [
+			{"type": "mod Index:Integer"},
+			{"type": "item ID:Integer"}
+		],
+		"ReturnType": [
+			{"type": "builtForm:Reference", "optional": "true"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Takes a mod index as an integer set by GetModIndex and the decimal converted formID of an object. Returns a reference to that object (object can be BaseForm or Reference)"
+		],
+		"Examples": [
+			{"Example": [
+				"int iIndex",
+				"ref rObject",
+				"set rObject to BuildRef iIndex N\t; where N is the decimal version of a FormID"
+			]}
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "GetDebugSelection",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "selection:Reference"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Returns the reference to the item last selected in the console."
+		],
+		"Tags": []
+	},
+	
+	{
+		"Name": "MessageEx",
+		"Alias": "",
+		"NumParameters": "21",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Prints a formatted message to the top-left corner of the screen."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "MessageBoxEx",
+		"Alias": "",
+		"NumParameters": "21",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Displays a formatted MessageBox using the extended format specifiers. Format specifiers may appear within buttons. Button text should be included within the format string, separated by the pipe character |."
+		],
+		"Tags": []
+	}
+]

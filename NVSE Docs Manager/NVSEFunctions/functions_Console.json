@@ -1,0 +1,137 @@
+[
+	{
+		"Name": "PrintToConsole",
+		"Alias": "printc",
+		"NumParameters": "21",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Prints a formatted message to the console using the extended format specifiers."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "DebugPrint",
+		"Alias": "dbprintc",
+		"NumParameters": "21",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Prints a formatted string to the console if debug mode is enabled for calling script."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetDebugMode",
+		"Alias": "dbmode",
+		"Parameters": [
+			{"type": "bEnableDebugMessages:Integer"},
+			{"type": "modIndex:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Toggles debug mode for all scripts belonging to a mod. When called in the console, the mod index of the mod for which debug messages are to be toggled can be specified by the second parameter (in decimal, not hexadecimal, format)."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetDebugMode",
+		"Alias": "GetDbMode",
+		"Parameters": [
+			{"type": "modIndex:Integer", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "debugEnabled:bool"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns whether debug mode is set for the mod."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetConsoleEcho",
+		"Alias": "",
+		"Parameters": [
+			{"type": "bool:EchoState", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:PreviousEchoState"}
+		],
+		"Version": "4.2",
+		"Convention": "B",
+		"Description": [
+			"Toggles whether the engine echoes to the console and return the previous state"
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetConsoleEcho",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:EchoState"}
+		],
+		"Version": "4.2",
+		"Convention": "B",
+		"Description": [
+			"Returns whether the engine echoes to the console."
+		],
+		"Tags": []
+	}
+]

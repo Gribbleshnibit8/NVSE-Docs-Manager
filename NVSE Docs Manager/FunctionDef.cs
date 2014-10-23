@@ -13,11 +13,6 @@ namespace NVSE_Docs_Manager
 	// TODO
 	// Need a list to hold all Parameter and Return Type type fields
 
-	public class FunctionList
-	{
-		public string[] Function { get; set; }
-	}
-
 	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class FunctionDef
 	{
@@ -32,7 +27,7 @@ namespace NVSE_Docs_Manager
 		public List<Parameter> Parameters;
 
 		[JsonProperty(PropertyName = "ReturnType")]
-		public ReturnType ReturnType;
+		public List<ReturnType> ReturnType;
 
 		[JsonProperty(PropertyName = "Version")]
 		public string Version { get; set; }
@@ -60,23 +55,37 @@ namespace NVSE_Docs_Manager
 
 		public FunctionDef()
 		{
+			Name = "";
+			Alias = "";
+			Version = "";
+			Condition = "";
+			Convention = "";
+			FromPlugin = "";
+			Category = "";
 			Parameters = new List<Parameter>();
-			ReturnType = new ReturnType();
+			ReturnType = new List<ReturnType>();
 			Description = new List<string>();
 			ExampleList = new List<Examples>();
 			Tags = new List<string>();
 		}
 
-		
-
-		public override string ToString()
+		public bool Equals(FunctionDef obj)
 		{
-			string s = "";
+			if (obj == null)
+				return false;
 
-			s += "\"Name\": " + Name;
-
-
-			return s;
+			if (this.Name.Equals(obj.Name))
+				if (this.Alias.Equals(obj.Alias))
+					if (this.Version.Equals(obj.Version))
+						if (this.Convention.Equals(obj.Convention))
+							if (this.Condition.Equals(obj.Condition))
+								if (this.Tags.Equals(obj.Tags))
+									if (this.FromPlugin.Equals(obj.FromPlugin))
+										if (this.Category.Equals(obj.Category))
+											if (this.Parameters.Equals(obj.Parameters))
+												if (this.ReturnType.Equals(obj.ReturnType))
+													return true;
+			return false;
 		}
 
 	}
@@ -86,16 +95,46 @@ namespace NVSE_Docs_Manager
 		public string url { get; set; }
 		public string type { get; set; }
 		public string optional { get; set; }
+
+		public Parameter()
+		{
+			url = "";
+			type = "";
+			optional = "";
+		}
+
+		public bool Equals(Parameter obj)
+		{
+			if (this.url.Equals(obj.url))
+				if (this.type.Equals(obj.type))
+					if (this.optional.Equals(obj.optional))
+						return true;
+			return false;
+		}
 	}
 
 	public class ReturnType
 	{
 		public string url { get; set; }
 		public string type { get; set; }
+
+		public ReturnType()
+		{
+			url = "";
+			type = "";
+		}
+
+		public bool Equals(ReturnType obj)
+		{
+			if (this.url.Equals(obj.url))
+				if (this.type.Equals(obj.type))
+					return true;
+			return false;
+		}
 	}
 
 	public class Examples
 	{
-		public string[] Example { get; set; }
+		public List<string> Example { get; set; }
 	}
 }

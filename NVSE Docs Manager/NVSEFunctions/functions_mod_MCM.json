@@ -1,0 +1,301 @@
+[
+	{
+		"Name": "GetModINISetting",
+		"Alias": "GetModINI",
+		"Parameters": [
+			{"type": "string:INIKeyPath"}
+		],
+		"ReturnType": [
+			{"type": "float:INIValue"}
+		],
+		"Version": "1.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Returns a float value for the key in the Path string.",
+			"The Path string contains the INI name, the App name, and the Key name. The format is \"iniName\/appName\/keyName\" with the separators being : \/ or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \".ini\" suffix.",
+			"Returns default value of 0 if the Path string is erroneous, if the INI file does not exist, or if the App and\/or Key do not exist in the file",
+			"The activity of MCM's INI functions is logged in the mcm.log file, located in the game's main directory, if you need to see what is being passed through the plugin."
+		],
+		"Examples": [
+			{"Example": [
+				"GetModINI \"ExampleMenu\/Variables\/Variable1\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetModINISetting",
+		"Alias": "SetModINI",
+		"Parameters": [
+			{"type": "string:INIKeyPath"},
+			{"type": "float:INIValue"}
+		],
+		"Version": "1.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets a new value to the key in the Path string.",
+			"The Path string contains the INI name, the App name, and the Key name. The format is \"iniName\/appName\/keyName\" with the separators being : \/ or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \".ini\" suffix.",
+			"An INI file will be created by this function if one matching the INI name does not exist. An App and\/or Key will also be created if not found in the INI file.",
+			"The activity of MCM's INI functions is logged in the mcm.log file, located in the game's main directory, if you need to see what is being passed through the plugin."
+		],
+		"Examples": [
+			{"Example": [
+				"SetModINI \"ExampleMenu\/Variables\/Variable1\" 2"
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "GetMCMFloat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Grandchild"},
+			{"type": "string:Setting"}
+		],
+		"ReturnType": [
+			{"type": "integer:Value"}
+		],
+		"Version": "1.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Returns a UI float value for a Setting in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and serves to shorten 'GetUIFloat \"StartMenu\/MCM\/*:Child\/*:Grandchild\/Setting\"'"
+		],
+		"Examples": [
+			{"Example": [
+				"GetMCMFloat 0 0 \"_ActiveMod\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetMCMFloat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Grandchild"},
+			{"type": "string:Setting"},
+			{"type": "integer:Value"}
+		],
+		"Version": "1.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets the UI float value for a Setting in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and serves to shorten 'SetUIFloat \"StartMenu\/MCM\/*:Child\/*:Grandchild\/Setting\" Value'"
+		],
+		"Examples": [
+			{"Example": [
+				"SetMCMFloat 1 1 \"_enable\" 1"
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetMCMString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Grandchild"},
+			{"type": "string:Setting"},
+			{"url": "FormatSpecifiers", "type": "format string:Value"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"}
+		],
+		"Version": "1.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets the UI string value for a Setting in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and serves to shorten 'SetUIString \"StartMenu\/MCM\/*:Child\/*:Grandchild\/Setting\" Value'"
+		],
+		"Examples": [
+			{"Example": [
+				"SetMCMString 1 1 \"_title\" \"Options\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetMCMFloatMass",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Min"},
+			{"type": "integer:Max"},
+			{"type": "string:Setting"},
+			{"type": "integer:Value"}
+		],
+		"Version": "2.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets the UI float value for a Setting belonging to multiple grandchildren in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and is similar to SetMCMFloat, except it iterates through Grandchild values ranging from Min to Max."
+		],
+		"Examples": [
+			{"Example": [
+				"SetMCMFloatMass 1 1 36 \"_enable\" 0"
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetMCMStringMass",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Min"},
+			{"type": "integer:Max"},
+			{"type": "string:Setting"},
+			{"url": "FormatSpecifiers", "type": "format string:Value"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"}
+		],
+		"Version": "2.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets the UI string value for a Setting belonging to multiple grandchildren in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and is similar to SetMCMString, except it iterates through Grandchild values ranging from Min to Max."
+		],
+		"Examples": [
+			{"Example": [
+				"SetMCMStringMass 1 1 36 \"_title\" \"%e\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "GetMCMString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "integer:Child"},
+			{"type": "integer:Grandchild"},
+			{"type": "string:Setting"}
+		],
+		"ReturnType": [
+			{"type": "string:String"}
+		],
+		"Version": "2.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Returns a UI string value for a Setting in the MCM menu hierarchy.",
+			"This function is intended to be used internally by MCM and serves to act as 'GetUIString \"StartMenu\/MCM\/*:Child\/*:Grandchild\/Setting\"'"
+		],
+		"Examples": [
+			{"Example": [
+				"GetMCMString 1 1 \"_title\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "GetModINIStringSetting",
+		"Alias": "GetModINIString",
+		"Parameters": [
+			{"type": "string:INIKeyPath"}
+		],
+		"ReturnType": [
+			{"type": "string:Value"}
+		],
+		"Version": "2.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Returns a string value for the key in the Path string.",
+			"The Path string contains the INI name, the App name, and the Key name. The format is \"iniName\/appName\/keyName\" with the separators being : \/ or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \".ini\" suffix.",
+			"Returns an empty string if the Path string is erroneous, if the INI file does not exist, or if the App and\/or Key do not exist in the file",
+			"The activity of MCM's INI functions is logged in the mcm.log file, located in the game's main directory, if you need to see what is being passed through the plugin."
+		],
+		"Examples": [
+			{"Example": [
+				"GetModINIString \"ExampleMenu\/Variables\/Variable1\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	},
+
+	{
+		"Name": "SetModINIStringSetting",
+		"Alias": "SetModINIString",
+		"Parameters": [
+			{"type": "string:INIKeyPath"},
+			{"type": "string:INIValue"}
+		],
+		"Version": "2.0",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Sets a new string value to the key in the Path string.",
+			"The Path string contains the INI name, the App name, and the Key name. The format is \"iniName\/appName\/keyName\" with the separators being : \/ or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \".ini\" suffix.",
+			"An INI file will be created by this function if one matching the INI name does not exist. An App and\/or Key will also be created if not found in the INI file.",
+			"The activity of MCM's INI functions is logged in the mcm.log file, located in the game's main directory, if you need to see what is being passed through the plugin."
+		],
+		"Examples": [
+			{"Example": [
+				"SetModINIString \"ExampleMenu\/Variables\/Variable1\" \"Value\""
+			]}
+		],
+		"Tags": ["MCM"],
+		"FromPlugin": "MCM"
+	}
+]

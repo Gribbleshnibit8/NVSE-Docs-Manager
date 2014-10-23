@@ -1,0 +1,1212 @@
+[
+	{
+		"Name": "sv_Destruct",
+		"Alias": "",
+		"Parameters": [
+			{"type": "var1:string_var"},
+			{"type": "var2:string_var", "optional": "true"},
+			{"type": "var3:string_var", "optional": "true"},
+			{"type": "var4:string_var", "optional": "true"},
+			{"type": "var5:string_var", "optional": "true"},
+			{"type": "var6:string_var", "optional": "true"},
+			{"type": "var7:string_var", "optional": "true"},
+			{"type": "var8:string_var", "optional": "true"},
+			{"type": "var9:string_var", "optional": "true"},
+			{"type": "var10:string_var", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Destroys a string variable, setting its value to zero and preventing its contents from being saved in the savegame."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Construct",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "newString:string_var"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a new string_var whose value is the passed format string."
+		],
+		"Examples":[
+			{"Example": [
+				"Copying a string:",
+				"set string2 to sv_construct \"%z\" string1"
+			]},
+			{"Example": [
+				"Concatenating two strings:",
+				"set string2 to sv_construct \"%z%z\" string1 string2"
+			]}
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Set",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "string_var", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the contents of a string variable.",
+			"This function is of limited use, as the same thing can be achieved by simply 'let'ing a string literal to a string variable."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Compare",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "string_var"},
+			{"type": "bool:CaseSensitive", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Comparison"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Compares a string to a formatted string. Performs a case-insensitive comparison by default. Returns 0 if the strings are equal, 1 if the string variable occurs alphabetically before the formatted string, -1 if the string variable occurs alphabetically after the formatted string, or -2 if the comparison fails."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Length",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var"}
+		],
+		"ReturnType": [
+			{"type": "int:length"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the number of characters in a string variable."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Erase",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var"},
+			{"type": "int:StartPos", "optional": "true"},
+			{"type": "int:HowMany", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Erases the specified number of characters from a string starting at the specified position. If omitted, startPos = 0. Omitting numToErase erases all characters from startPos to the end of the string."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_SubString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:string_var"},
+			{"type": "int:startPos", "optional": "true"},
+			{"type": "int:howMany", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a substring of a string variable.",
+			"Deprecated. Use slice notation instead: <code>let substr := str[a:b]</code>"
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_ToNumeric",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Attempts to convert the contents of a string variable to a number. Valid characters include digits, a leading sign, and an e to indicate scientific notation. Conversion halts at the first invalid character."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Insert",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "string_var"},
+			{"type": "bool:CaseSensitive", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Inserts a substring into a string at the specified position, provided the position is less than the length of the string, or prepends it if no position is specified."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Count",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "string_var:Source"},
+			{"type": "int:StartPos", "optional": "true"},
+			{"type": "int:EndPos", "optional": "true"},
+			{"type": "bool:CaseSensitive", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Count"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the number of occurrences of a substring within a string variable, using the same arguments as sv_Find."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Find",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "float:Variable", "optional": "true"},
+			{"type": "string_var:Source"},
+			{"type": "int:StartPos", "optional": "true"},
+			{"type": "int:EndPos", "optional": "true"},
+			{"type": "bool:CaseSensitive", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Index"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the index of the first occurrence of a substring within a string variable, starting at the specified position and only including occurrences contained completely within the range [startPos, startPos + searchLen].",
+			"Returns -1 if the substring is not found in the string variable.",
+			"Omit the arguments to search the entire string without regard to case."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Replace",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "subString:formatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "int:string_var"},
+			{"type": "int:startPos", "optional": "true"},
+			{"type": "int:endPos", "optional": "true"},
+			{"type": "int:bCaseSensitive", "optional": "true"},
+			{"type": "int:howMany", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:NumReplaced"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Replaces occurrences of a string1 with string2 within a string variable. Both the text to replace and that with which to replace it are passed in a single format string separated by a pipe character as in \"toReplace.\""
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "IsLetter",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsLetter"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the character is an alphabetic character."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "IsDigit",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsDigit"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the character is a numeric character."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "IsPrintable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsPrintable"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the character is a printable character."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "IsPunctuation",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsPunctuation"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the character is a punctuation character."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "IsUpperCase",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsUpperCase"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the character is an uppercase letter."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "sv_GetChar",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:int"},
+			{"type": "int:int"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the ASCII code of the character at the specified position in a string variable.",
+			"Deprecated. Use bracket notation: <code>let char := str[pos]</code>"
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "CharToAscii",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Character"}
+		],
+		"ReturnType": [
+			{"type": "int:Character"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Converts a single character to its equivalent ASCII code."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "ToUpper",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "int:UpperCharacter"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Converts a character to uppercase."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "ToLower",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Character"}
+		],
+		"ReturnType": [
+			{"type": "int:LowerCharacter"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Converts a character to lowercase."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetNthModName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:ModIndex"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Name"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the name of the nth active mod."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Name"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the name of an object."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetStringGameSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:SettingName"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Setting"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the value of a string game setting."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetStringIniSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:SettingGroup:SettingName"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Setting"}
+		],
+		"Version": "4.5",
+		"Convention": "B",
+		"Description": [
+			"Returns the value of a string INI setting."
+		],
+		"Examples": [
+			{"Example": [
+				"let s := GetStringIniSetting \"sDPad:LANGUAGE\""
+			]}
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "SetStringGameSettingEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "settingNameAndNewValue:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the string value of a game setting. The new string value is contained within the format string, following the setting name and separated by a pipe character, i.e. \"nameOfGameSetting|newValueOfGameSetting\". When calling from the console, use '@' instead of the pipe character."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "SetStringIniSettings",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:SettingGroup:SettingName"}
+		],
+		"Version": "4.5",
+		"Convention": "B",
+		"Description": [
+			"Returns the value of a string INI setting."
+		],
+		"Examples": [
+			{"Example": [
+				"SetStringIniSetting \"settingGroup|settingName\""
+			]}
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetModelPath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the model path of an object."
+		],
+		"Examples": [
+			{"Example": [
+				"let ModelName :=  objectRef.GetModelPath"
+			]}
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetIconPath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the icon path of an object."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetBipedModelPath",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Biped_Path_Codes", "type": "int:BipedPathCode"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the file path of one of the models for the specified biped object."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetBipedIconPath",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Biped_Path_Codes", "type": "int:BipedPathCode"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns an icon path."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "SetModelPathEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "path:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Sets a simple model path."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "SetIconPathEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "path:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Sets a simple icon path."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "SetBipedIconPathEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "path:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"url": "Biped_Path_Codes", "type": "int:BipedPathCode"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Sets a biped icon path."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "SetBipedModelPathEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "string:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"url": "Biped_Path_Codes", "type": "int:whichPath"},
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sets a biped model path."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetTexturePath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the texture path of an object. This command is identical to GetIconPath, but also works for other object types such as skills, classes, and miscellaneous objects."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "SetTexturePath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:Path"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the texture path of an object. This command works for a broader set of objects than SetIconPathEX.."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetNthFactionRankName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Faction"},
+			{"type": "int:WhichRank"},
+			{"type": "bool:Female", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:RankName"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the title of the nth rank in a faction. Optionally returns the female rank name."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "SetNthFactionRankNameEX",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Format_Specifiers", "type": "path:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "ref:Faction"},
+			{"type": "int:WhichRank"},
+			{"type": "bool:Female", "optional": "true"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the title of the nth rank in a faction. Optionally sets the female rank name."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetKeyName",
+		"Alias": "",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "int:KeyCode"}
+		],
+		"ReturnType": [
+			{"type": "string_var:KeyName"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the name of a key given its DirectInput scan code."
+		],
+		"Tags": ["Input"]
+	},
+	
+	{
+		"Name": "AsciiToChar",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:ASCIICode"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Character"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the character associated with an ASCII code as a string."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "GetFormIDString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Object", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:FormID"}
+		],
+		"Version": "4.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the formID of the specified object as a hexadecimal string. If the object cannot be found in memory (for example, a non-persistent reference), returns \"00000000\"."
+		],
+		"Tags": ["String","Hex"]
+	},
+	
+	{
+		"Name": "NumToHex",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Number"},
+			{"type": "int:Width", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:HexValue"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns a string representation of an integer in hexadecimal format. An optional width parameter ranging from 0 to 8 specifies the minimum number of digits toinclude; unused digits are padded with zeroes. By default, 8 digits are included."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "ToNumber",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:Expression"},
+			{"type": "bool:IsHex", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:Number"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Takes a string expression and attempts to convert it to a numeric value. By default the string is assumed to be in decimal notation containing digits, at most one decimal point, and an optional leading sign. If the string is prefixed with \"0x\" or the optional argument is non-zero, the string is interpreted in hexadecimal notation instead, with valid characters consisting of digits and the letters 'A' through 'F'. Returns 0 if the conversion fails."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "sv_Split",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:ToSplit"},
+			{"type": "int:Delimiters"}
+		],
+		"ReturnType": [
+			{"type": "array_var:SubStrings"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Given a string and a set of delimiters, returns an Array containing all the substrings separated by one or more of the delimiting characters. For example, <span class=\"mono\">sv_Split \"#This is.a##. string.\" \".# \" returns { \"This\", \"is\", \"a\", \"string\" }</span>. The '.', '#', and space characters are removed."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetFalloutDirectory",
+		"Alias": "GetFalloutDir",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "string_var:Directory"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the path to the Fallout directory."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_Percentify",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Percentified"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Takes an input string and returns it with each '%' character replaced by two '%' characters. For instance, \"100% gold\" becomes \"100%% gold\" and \"99.99%%\" becomes \"99.99%%%%\". The argument can be any expression evaluating to a string value."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetRawFormIDString",
+		"Alias": "GetFormIDString2",
+		"Parameters": [
+			{"type": "ref:Object", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:FormID"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the form ID stored in an array element or ref variable as a string regardless of whether or not the formID is valid."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_ToLower",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "string_var:LowerString"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Converts all characters in the string to lowercase."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "sv_ToUpper",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string_var:Source"}
+		],
+		"ReturnType": [
+			{"type": "string_var:UpperString"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Converts all characters in the string to uppercase."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "ActorValueToString",
+		"Alias": "AVString",
+		"Parameters": [
+			{"url": "Actor_Value_Codes", "type": "actorValue:ToConvert"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Value_Codes", "type": "string_var:ActorValueName"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the localized string corresponding to an actor value."
+		],
+		"Tags": ["String"]
+	},
+
+	{
+		"Name": "ActorValueToStringC",
+		"Alias": "AVStringC",
+		"Parameters": [
+			{"url": "Actor_Value_Codes", "type": "actorValueCode:ToConvert"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Value_Codes", "type": "string_var:ActorValueName"}
+		],
+		"Version": "4.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the localized string corresponding to an actor value code."
+		],
+		"Tags": ["String"]
+	},
+	
+	{
+		"Name": "GetScopeModelPath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "string_var:Path"}
+		],
+		"Version": "4.2.4",
+		"Convention": "E",
+		"Description": [
+			"Get the path to the scope model of a weapon."
+		],
+		"Tags": ["String","Weapon"]
+	},
+	
+	{
+		"Name": "SetScopeModelPath",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Path"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.2.4",
+		"Convention": "E",
+		"Description": [
+			"Set the path to the scope model of a weapon."
+		],
+		"Tags": ["String","Weapon"]
+	}
+]

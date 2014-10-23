@@ -1,0 +1,145 @@
+[
+	{
+		"Name": "PN_GetProjectileExplosion",
+		"Alias": "",
+		"Parameters": [
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Returns explosion of projectile."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_GetExplosionDamage",
+		"Alias": "",
+		"Parameters": [
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Returns damage of explosion."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_GetExplosionForce",
+		"Alias": "",
+		"Parameters": [
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Returns force of explosion."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_SetExplosionDamage",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"},
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Sets damage of explosion."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_SetExplosionForce",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"},
+			{"type": "item:ObjectID", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Sets force of explosion."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_ListClear",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form list:FormList"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Deletes all elements in the list."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_GetActorBaseFlagsLow",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actor base:ActorBase", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Fixed function."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_SetConditionDamagePenalty",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Float"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Set the condition damage penalty."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	},
+
+	{
+		"Name": "PN_GetConditionDamagePenalty",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Get the condition damage penalty."
+		],
+		"Tags": ["Project Nevada","PN"],
+		"FromPlugin": "PN"
+	}
+]

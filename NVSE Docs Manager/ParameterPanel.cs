@@ -61,13 +61,7 @@ namespace NVSE_Docs_Manager
 
 		private Control createNewParameter()
 		{
-			Control newParam = buildNewParameterForm("Parameter", true);
-			return newParam;
-		}
-
-		private Control createNewReturnType()
-		{
-			Control newParam = buildNewParameterForm("Return Type", false);
+			Control newParam = buildNewParameterForm();
 			return newParam;
 		}
 
@@ -87,6 +81,7 @@ namespace NVSE_Docs_Manager
 				System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
 
 				System.Windows.Forms.ComboBox cBox;
+				System.Windows.Forms.CheckBox cBox2;
 
 				if (!String.IsNullOrEmpty(param.url))
 				{
@@ -99,8 +94,8 @@ namespace NVSE_Docs_Manager
 
 				if (!String.IsNullOrEmpty(param.optional))
 				{
-					cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxOptional"];
-					cBox.Text = param.optional;
+					cBox2 = (System.Windows.Forms.CheckBox)newParameter.Controls["checkBoxOptional"];
+					cBox2.Checked = true;
 				}
 
 				parametersList.Add(newParameter);
@@ -109,12 +104,12 @@ namespace NVSE_Docs_Manager
 		}
 
 		// creates a new parameter groupbox with contents, sets and registers the buttons
-		private Control buildNewParameterForm(string title, bool hasOptional)
+		private Control buildNewParameterForm()
 		{
 			// create a new group box for the new parameter
 			System.Windows.Forms.GroupBox newParameter = new System.Windows.Forms.GroupBox();
-			newParameter.Size = new System.Drawing.Size(519, 61);
-			newParameter.Text = title + " " + (parametersList.Count() + 1).ToString();
+			newParameter.Size = new System.Drawing.Size(525, 55);
+			newParameter.Text = "Parameter " + (parametersList.Count() + 1).ToString();
 
 			// create the remove button
 			System.Windows.Forms.Button removeButton = new System.Windows.Forms.Button();
@@ -157,24 +152,14 @@ namespace NVSE_Docs_Manager
 			newParameter.Controls.Add(typeCombobox);
 
 			// Optional
-			if (hasOptional)
-			{
-				// create the Optional label and add it to the group box
-				System.Windows.Forms.Label optionalLabel = new System.Windows.Forms.Label();
-				optionalLabel.Text = "Optional";
-				optionalLabel.Location = new System.Drawing.Point(376, 24);
-				optionalLabel.AutoSize = true;
-				newParameter.Controls.Add(optionalLabel);
-				// create the Optional combobox and add it to the group box
-				System.Windows.Forms.ComboBox optionalCombobox = new System.Windows.Forms.ComboBox();
-				optionalCombobox.Name = "comboBoxOptional";
-				optionalCombobox.Items.AddRange(new object[] { "True", "False" });
-				optionalCombobox.Location = new System.Drawing.Point(428, 20);
-				optionalCombobox.Size = new System.Drawing.Size(85, 21);
-				optionalCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
-				optionalCombobox.SelectedIndex = 1;
-				newParameter.Controls.Add(optionalCombobox);
-			}
+			System.Windows.Forms.CheckBox optionalCheckbox = new System.Windows.Forms.CheckBox();
+			optionalCheckbox.Name = "checkBoxOptional";
+			optionalCheckbox.Text = "Optional";
+			optionalCheckbox.Location = new System.Drawing.Point(454, 22);
+			optionalCheckbox.AutoSize = true;
+			optionalCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			newParameter.Controls.Add(optionalCheckbox);
+
 			return newParameter;
 		}		
 

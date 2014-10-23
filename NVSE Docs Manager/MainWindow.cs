@@ -34,7 +34,10 @@ namespace NVSE_Docs_Manager
 		StreamReader inFile;
 
 		// array of read in functions
-		List<FunctionDef> functionsList = new List<FunctionDef>();
+		List<FunctionDef> LoadedFunctionsList = new List<FunctionDef>();
+
+		// Stores a backup of the function currently being edited for restore and comparison purposes
+		FunctionDef currentEdittingBackup = new FunctionDef();
 
 
 		public MainWindow()
@@ -76,7 +79,91 @@ namespace NVSE_Docs_Manager
 
 			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+
+
+
+
+			TreeNode ParentNode1;
+			TreeNode ParentNode2;
+
+			ParentNode1 = treeView1.Nodes.Add("tv1");
+			ParentNode1.Nodes.Add("tv1FirstChild");
+			ParentNode1.Nodes.Add("tv1SecondChild");
+			ParentNode1.Nodes.Add("tv1ThirdChild");
+			ParentNode1.Nodes.Add("tv1FourthChild");
+			ParentNode1 = treeView1.Nodes.Add("tv2");
+			ParentNode1.Nodes.Add("tv2FirstChild");
+			ParentNode1.Nodes.Add("tv2SecondChild");
+			ParentNode1.Expand();
+
+			ParentNode2 = treeView2.Nodes.Add("tv3");
+			ParentNode2.Nodes.Add("tv3FirstChild");
+			ParentNode2.Nodes.Add("tv3SecondChild");
+			//ParentNode2.Expand();
+			//this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+			//this.treeView2.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+			//this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
+			//this.treeView2.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
+			//this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
+			//this.treeView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);	
+
+
+			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
+			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
+			this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
 		}
+
+		private TreeNode tn; 
+
+		private void treeView1_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
+		{
+			tn = e.Item as TreeNode;
+			DoDragDrop(e.Item.ToString(), DragDropEffects.Move);
+		}
+		private void treeView1_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+		{
+			Point pt = new Point(e.X, e.Y);
+			pt = treeView1.PointToClient(pt);
+			TreeNode ParentNode = treeView1.GetNodeAt(pt);
+			ParentNode.Nodes.Add(tn.Text); // this copies the node 
+			tn.Remove(); // need to remove the original version of the node 
+		}
+		private void treeView1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+		{
+			e.Effect = DragDropEffects.Move;
+		}
+
+
+
+		private void treeView_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
+		{
+			DoDragDrop(e.Item, DragDropEffects.Move);
+		}
+
+		private void treeView_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
+		{
+			e.Effect = DragDropEffects.Move;
+		}
+
+		private void treeView_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
+		{
+			TreeNode NewNode;
+
+			if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false))
+			{
+				Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
+				TreeNode DestinationNode = ((TreeView)sender).GetNodeAt(pt);
+				NewNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
+				if (DestinationNode.TreeView != NewNode.TreeView)
+				{
+					DestinationNode.Nodes.Add((TreeNode)NewNode.Clone());
+					DestinationNode.Expand();
+					//Remove Original Node
+					NewNode.Remove();
+				}
+			}
+		}
+
 
 
 		private void outputToStatusbar(string s)
@@ -120,75 +207,35 @@ namespace NVSE_Docs_Manager
 
 		private void parseLoadedFile(StreamReader file)
 		{
-			//FunctionList newFunc = JsonConvert.DeserializeObject<FunctionList>(file.ReadToEnd());
-			//Console.WriteLine(newFunc.ToString());
-			//MessageBox.Show(newFunc.ToString());
-
-			string json = @"{
-		'Name': 'GetModINISetting',
-		'Alias': 'GetModINI',
-		'Parameters': [
-			{'type': 'string:INIKeyPath'}
-		],
-		'ReturnType': [
-			{'type': 'float:INIValue'}
-		],
-		'Version': '1.0',
-		'Condition': ' No',
-		'Convention': 'B',
-		'Description': [
-			'Returns a float value for the key in the Path string.',
-			'The Path string contains the INI name, the App name, and the Key name. The format is \'iniName\/appName\/keyName\' with the separators being : \/ or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \'.ini\' suffix.',
-			'Returns default value of 0 if the Path string is erroneous, if the INI file does not exist, or if the App and\/or Key do not exist in the file',
-			'The activity of MCM\'s INI functions is logged in the mcm.log file, located in the game\'s main directory, if you need to see what is being passed through the plugin.'
-		],
-		'Examples': [
-			{'Example': [
-				'GetModINI \'ExampleMenu\/Variables\/Variable1\''
-			]}
-		],
-		'Tags': ['MCM'],
-		'FromPlugin': 'MCM'
-	}";
-
-			FunctionDef func = TestFunctionDef();
-
-			functionsList.Add(func);
-			listboxFunctionList.Items.Add(func.Name);
-
-			//func = JsonConvert.DeserializeObject<FunctionDef>(json);
-
-			//functionList = JsonConvert.DeserializeObject<List<FunctionDef>>(json);
-			//FunctionDef func = JsonConvert.DeserializeObject<FunctionDef>(json);
-			//Console.WriteLine(func.Name);
-
-			//JsonTextReader reader = new JsonTextReader(file);
-			//JsonSerializer se = new JsonSerializer();
-			//object parsedData = se.Deserialize(reader);
-
-			
-
+			var funcList = JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd());
+			populateFunctionListBox(funcList);
 		}
 
-		public FunctionDef TestFunctionDef()
+		// Takes a list of function objects and adds their names to the listbox form
+		private void populateFunctionListBox(List<FunctionDef> funcList)
 		{
-			FunctionDef func = new FunctionDef();
-
-			func.Name = "GetModINISetting";
-			func.Alias = "GetModINI";
-			func.Parameters.Add(new Parameter { type = "string:INIKeyPath" });
-			func.ReturnType.type = "float:INIValue";
-			func.Version = "1.0";
-			func.Condition = "No";
-			func.Convention = "B";
-			func.Description.Add("Returs a float value for the key in the Path string.");
-			func.Description.Add("The Path string contains the INI name, the App name, and the Key name. The format is \'iniName/appName/keyName\' with the separators being : / or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \'.ini\' suffix.");
-			func.Tags.Add("MCM");
-			func.FromPlugin = "MCM";
-
-			return func;
+			foreach (FunctionDef f in funcList)
+			{
+				addToFunctionListBox(f);
+			}
+			foreach (FunctionDef f in funcList)
+			{
+				if (treeView1.Nodes.ContainsKey(f.Category;))
+			}
 		}
 
+		// Checks if a function exists on the list, and if not add it to the list
+		// box and the list of loaded functions
+		private void addToFunctionListBox(FunctionDef f)
+		{
+			if (!LoadedFunctionsList.Exists(n => n.Name == f.Name))
+			{
+				listboxFunctionList.Items.Add(f.Name);
+				LoadedFunctionsList.Add(f);
+			}
+		}
+
+		// Takes a function and fills in all the fields with the associated data
 		public void populateFunctionForm(FunctionDef func)
 		{
 			flowLayoutPanelParameters.Controls.Clear();
@@ -201,6 +248,9 @@ namespace NVSE_Docs_Manager
 			textBoxTags.Clear();
 			radioButtonCallingConventionEither.Checked = true;
 			radioButtonConditionalFalse.Checked = true;
+
+			// save the settings to a global first, so we can revert if a bad change is made
+			currentEdittingBackup = func;
 
 			textBoxName.Text = func.Name;
 			textBoxAlias.Text = func.Alias;
@@ -219,42 +269,44 @@ namespace NVSE_Docs_Manager
 				radioButtonCallingConventionRef.Checked = true;
 
 			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-			if (func.Condition == "No")
-				radioButtonConditionalFalse.Checked = true;
-			else
+			if (func.Condition == "Yes")
 				radioButtonConditionalTrue.Checked = true;
+			else
+				radioButtonConditionalFalse.Checked = true;
 
 			populateParameterList(func.Parameters);
 
-			if (!String.IsNullOrEmpty(func.ReturnType.type))
-			{
-				comboBoxReturnTypeURL.Text = func.ReturnType.url;
-				comboBoxReturnTypeType.Text = func.ReturnType.type;
-				checkBoxReturnType.Checked = true;
-			}
-			else
-			{
-				comboBoxReturnTypeURL.Text = "";
-				comboBoxReturnTypeType.Text = "";
-				checkBoxReturnType.Checked = false;
-			}
+			if (func.ReturnType.Count > 0)
+				if (!String.IsNullOrEmpty(func.ReturnType[0].type))
+				{
+					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
+					comboBoxReturnTypeType.Text = func.ReturnType[0].type;
+					checkBoxReturnType.Checked = true;
+				}
+				else
+				{
+					comboBoxReturnTypeURL.Text = "";
+					comboBoxReturnTypeType.Text = "";
+					checkBoxReturnType.Checked = false;
+				}
 		}
 
-
-
+		// Takes all the info in the window and creates a new function from it
+		// then adds it to the listbox and LoadedFunctionsList
 		private void saveNewFunction()
 		{
-			FunctionDef func = new FunctionDef();
-			windowToFunction(func);
-			functionsList.Add(func);
-			listboxFunctionList.Items.Add(func.Name);
+			FunctionDef func = windowToFunction(new FunctionDef());
+			addToFunctionListBox(func);
 		}
 
-		private void updateFunction(FunctionDef func)
+		// Overwrites the function with the same name as that in the window with
+		// all of the data in the window
+		private void updateCurrentFunction()
 		{
-			windowToFunction(func);
+			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
 
+		// Converts the window data into a function object
 		private FunctionDef windowToFunction(FunctionDef func)
 		{
 			func.Name = textBoxName.Text;
@@ -310,11 +362,27 @@ namespace NVSE_Docs_Manager
 
 			if (checkBoxReturnType.Checked)
 			{
-				func.ReturnType.url = comboBoxReturnTypeURL.Text;
-				func.ReturnType.type = comboBoxReturnTypeType.Text;
+				func.ReturnType[0].type = comboBoxReturnTypeURL.Text;
+				func.ReturnType[0].type = comboBoxReturnTypeType.Text;
 			}
 			return func;
 		}
+
+		private bool hasChanged()
+		{
+			FunctionDef toCheck = windowToFunction(new FunctionDef());
+			if (toCheck.Equals(currentEdittingBackup))
+				return false;
+			return true;
+		}
+
+		private void buttonNewFunction_Click(object sender, EventArgs e)
+		{
+			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (d == DialogResult.Yes)
+				populateFunctionForm(new FunctionDef());
+		}
+
 
 	}
 }

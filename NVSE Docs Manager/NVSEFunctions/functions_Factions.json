@@ -1,0 +1,69 @@
+[
+	{
+		"Name": "GetBaseNumFactions",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "IntegerOrFloat"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the number of factions to which an actor base form belongs."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetBaseNthFaction",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "baseForm:Faction"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the Nth faction to which an actor base form belongs."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetBaseNthRank",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "IntegerOrFloat"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the Nth faction rank to which an actor base form belongs."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetNumRanks",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Faction"}
+		],
+		"ReturnType": [
+			{"type": "IntegerOrFloat"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the number of rank of a faction."
+		],
+		"Tags": []
+	}
+]

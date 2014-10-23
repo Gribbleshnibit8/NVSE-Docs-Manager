@@ -1,0 +1,97 @@
+[
+	{
+		"Name": "RemoveMeIR",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Convention": "B",
+		"Description": [
+			"Removes an inventory reference from its container, optionally transferring it to a different container, in much the same way as the vanilla RemoveMe command. The inventory reference becomes invalid once this command is called and should no longer be used."
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "CopyIR",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:Success"}
+		],
+		"Version": "3.1",
+		"Convention": "R",
+		"Description": [
+			"Copies an inventory reference to the specified container. The calling object needn't be in a container and remains valid after the command is called. If the calling object is equipped, the copy will not be equipped."
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "CreateTempRef",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Creates a temporary reference to the specified form. This reference does not exist in the gameworld or in a container."
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "GetFirstRefForItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the first entry in an array of temp refs to objects of the specified type in the calling container, and remains valid for only one frame. It is mostly useful for creating a stack of one or more items to be added to a container with CopyIR"
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "GetNextRefForItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the next entry in the array of temp refs to objects of the specified type in the calling container."
+		],
+		"Tags": ["Inventory"]
+	},
+
+	{
+		"Name": "GetInvRefsForItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Container"}
+		],
+		"ReturnType": [
+			{"type": "array_var:ContainerRefs"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of temp refs to objects of the specified type in the calling container."
+		],
+		"Tags": ["Inventory"]
+	}
+]

@@ -1,0 +1,2278 @@
+[
+	{
+		"Name": "GetWeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "weight:Float"}
+		],
+		"Version": "1.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Returns the weight of the sepcified base form."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetHealth",
+		"Alias": "GetBaseHealth",
+		"Parameters": [
+			{"type": "target ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:health"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the base health of the object or calling reference."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetValue",
+		"Alias": "GetItemValue",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:value"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the base value of the object or calling reference."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetWeight",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:Weight"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weight of the object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetHealth",
+		"Alias": "SetObjectHealth",
+		"Parameters": [
+			{"type": "int:newHealth"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the base health of the specified base form."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetBaseItemValue",
+		"Alias": "SetValue",
+		"Parameters": [
+			{"type": "ref:ObjectID"},
+			{"type": "int:NewValue"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the monetary value of a base object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetType",
+		"Alias": "GetObjectType",
+		"Parameters": [
+			{"type": "target ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Form_Type_IDs", "type": "int:FormType"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the type of the specified base form."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetRepairList",
+		"Alias": "grl",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "formList:RepairList"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the repair list for the inventory object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetEquipType",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Equip_Type", "type": "int:ItemType"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the equipment type of the inventory object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "CompareNames",
+		"Alias": "",
+		"Parameters": [
+			{"type": "target ref:ObjectID"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Comparison"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Compares the names of two objects and Returns -1 if the first occurs alphabetically before the second, 1 if the first occurs after the second, or 0 for equality. Comparison is case-insensitive."
+		],
+		"Tags":["Inventory","String"]
+	},
+
+	{
+		"Name": "SetName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Name"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the name of the object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetCurrentHealth",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:Health"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the current health of the calling ref."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetCurrentHealth",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:NewHealth"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Sets the current health of the calling reference."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetRepairList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "form list:FormList"},
+			{"type": "target ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the repair list for the specified item."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "IsQuestItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsQuestItem"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns 1 if the object or calling reference is a quest item."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetQuestItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "bool:SetQuestItem"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets whether the specified object or object reference is a quest item."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetObjectEffect",
+		"Alias": "GetEnchantment",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectEffect"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the object effect of the inventory object."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetHotkeyItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:WhichHotkey"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.1",
+		"Convention": "",
+		"Description": [
+			"Returns the item assigned to the specified hotkey from 1 to 8."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetHotkeyItem",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:WhichHotkey"},
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "4.5",
+		"Convention": "",
+		"Description": [
+			"Sets the item associated with a hotkey."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "ClearHotKey",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:WhichHotkey"}
+		],
+		"Version": "4.5",
+		"Convention": "",
+		"Description": [
+			"Clears the item associated with the specified hotkey."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetEquippedObject",
+		"Alias": "GetEqObj",
+		"Parameters": [
+			{"url": "Equipment_Slot_IDs", "type": "int:AtIndex"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the base object of the item in the specified slot."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetEquippedCurrentHealth",
+		"Alias": "GetEqCurHealth",
+		"Parameters": [
+			{"url": "Equipment_Slot_IDs", "type": "int:EquipmentSlot"}
+		],
+		"ReturnType": [
+			{"type": "float:Health"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the current health of the object equipped in the specified slot."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetEquippedCurrentHealth",
+		"Alias": "SetEqCurHealth",
+		"Parameters": [
+			{"type": "value:Float"},
+			{"url": "Equipment_Slot_IDs", "type": "int:Slot"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Sets the current health of the equipped object at the given slot."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetNumItems",
+		"Alias": "GetNumObjects",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Count"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the number of items contained by the calling ref."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetInventoryObject",
+		"Alias": "GetNthObject",
+		"Parameters": [
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Returns the base object of the specified index contained in the calling ref."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAmmo",
+		"Alias": "GetAmmo",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "BaseForm"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the ammo of a weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponClipRounds",
+		"Alias": "GetClipSize",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the clip size for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetAttackDamage",
+		"Alias": "GetDamage",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Damage"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the attack damage for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponType",
+		"Alias": "GetWeapType",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Weapon_Type", "type": "int:WeaponSkill"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the weapon type."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponMinSpread",
+		"Alias": "GetMinSpread",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the minimum spread of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponSpread",
+		"Alias": "GetSpread",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the spread of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponProjectile",
+		"Alias": "GetWeapProj",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "BaseForm"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the weapon projectile info."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponSightFOV",
+		"Alias": "GetSightFOV",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the zoom field of view for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponMinRange",
+		"Alias": "GetMinRange",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the min range of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponMaxRange",
+		"Alias": "GetMaxRange",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the max range of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAmmoUse",
+		"Alias": "GetAmmoUse",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the ammo used per shot of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponActionPoints",
+		"Alias": "GetAP",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the number of action points per shot of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponCritDamage",
+		"Alias": "GetCritDam",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the critical damage of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponCritChance",
+		"Alias": "GetCritPerc",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the chance of a critical shot for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponCritEffect",
+		"Alias": "GetCritEffect",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "BaseForm"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the spell for the critical effect for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponFireRate",
+		"Alias": "GetFireRate",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the fire rate of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAnimAttackMult",
+		"Alias": "GetAnimAttackMult",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the animation attack multiplier of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRumbleLeftMotor",
+		"Alias": "GetRumbleLeft",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the rumble left motor of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRumbleRightMotor",
+		"Alias": "GetRumbleRight",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the rumble right motor of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRumbleDuration",
+		"Alias": "GetRumbleDuration",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the rumble duration of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRumbleWavelength",
+		"Alias": "GetRumbleWavelen",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the rumble wavelegnth for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAnimShotsPerSec",
+		"Alias": "GetAnimShotsPerSec",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the animation shots per second of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAnimReloadTime",
+		"Alias": "GetAnimReloadTime",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"retuns the animation reload time for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAnimJamTime",
+		"Alias": "GetAnimJamTime",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the animation jam time of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponSkill",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Value_Codes", "type": "int:WeaponSkill"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the skill for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponResistType",
+		"Alias": "GetWeaponResist",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Actor_Value_Codes", "type": "int:ResistValue"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the resist type for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponFireDelayMin",
+		"Alias": "GetFireDelayMin",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the semi-auto min fire delay for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponFireDelayMax",
+		"Alias": "GetFireDelayMax",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the semi-auto max fire delay for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAnimMult",
+		"Alias": "GetAnimMult",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the animation multiplier for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponReach",
+		"Alias": "GetReach",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the reach of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponIsAutomatic",
+		"Alias": "GetIsAutomatic",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns 1 if the weapon is an automatic weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponHandGrip",
+		"Alias": "GetHandGrip",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Weapon_Hand_Grips", "type": "int:HandGrip"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the hand grip of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponReloadAnim",
+		"Alias": "GetReloadAnim",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Reload_Animations", "type": "int:ReloadAnim"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the reload animation of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponBaseVATSChance",
+		"Alias": "GetVATSChance",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the base VATS chance of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAttackAnimation",
+		"Alias": "GetAttackAnim",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Attack_Animations", "type": "int:AttackAnimation"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the attack animation of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponNumProjectiles",
+		"Alias": "GetNumProj",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the number of projectiles used in a single shot by the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponAimArc",
+		"Alias": "GetAimArc",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the aim arc of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponLimbDamageMult",
+		"Alias": "GetLimbDamageMult",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the limb damage multiplier of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponSightUsage",
+		"Alias": "GetSightUsage",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the sight usage of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponHasScope",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns whether the weapon has a scope or not."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponItemMod",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Mod", "type": "int:ModIndex"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "BaseForm"}
+		],
+		"Version": "1.2",
+		"Convention": "E",
+		"Description": [
+			"Returns the weapon mod form at the specified index."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRequiredStrength",
+		"Alias": "GetReqStr",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the reload animation of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponRequiredSkill",
+		"Alias": "GetReqSkill",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the reload animation of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponLongBursts",
+		"Alias": "GetLongBursts",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Float"}
+		],
+		"Version": "2.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the long burst value of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponFlags1",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Weapon_Flags", "type": "int:WeaponFlags1"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Returns a the weapon flags in bit value."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponFlags2",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Weapon_Flags", "type": "int:WeaponFlags2"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Returns a the weapon flags in bit value."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAmmoUse",
+		"Alias": "SetAmmoUse",
+		"Parameters": [
+			{"type": "int:AmmoUse"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon ammo use."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponClipRounds",
+		"Alias": "SetClipSize",
+		"Parameters": [
+			{"type": "int:ClipSize"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon clip size."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetAttackDamage",
+		"Alias": "SetDamage",
+		"Parameters": [
+			{"type": "int:AttackDamage"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the attack damage of the form."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponType",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Type", "type": "int:WeaponType"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon type of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponMinSpread",
+		"Alias": "SetMinSpread",
+		"Parameters": [
+			{"type": "float:Spread"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon min spread."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponSpread",
+		"Alias": "Setspread",
+		"Parameters": [
+			{"type": "float:Spread"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon spread."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponProjectile",
+		"Alias": "SetProjectile",
+		"Parameters": [
+			{"type": "ref:NewProjectile"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:OldProjectile"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the projectile of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponSightFOV",
+		"Alias": "SetsightFOV",
+		"Parameters": [
+			{"type": "float:FOV"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon xoom field of view."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponMinRange",
+		"Alias": "SetMinRange",
+		"Parameters": [
+			{"type": "float:Range"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon min range."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponMaxRange",
+		"Alias": "SetMaxRange",
+		"Parameters": [
+			{"type": "float:Range"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon max range."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAmmo",
+		"Alias": "SetAmmo",
+		"Parameters": [
+			{"type": "ref:NewAmmo"},
+			{"type": "ref:ObjectID"}
+		],
+		"ReturnType": [
+			{"type": "OldAmmo:BaseForm"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the ammo of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponActionPoints",
+		"Alias": "SetAP",
+		"Parameters": [
+			{"type": "float:ActionPoints"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon number of action pointer per shot."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponCritDamage",
+		"Alias": "SetWeaponCritDamage",
+		"Parameters": [
+			{"type": "int:CritDamage"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon critical hit damage."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponCritChance",
+		"Alias": "SetCritPerc",
+		"Parameters": [
+			{"type": "float:CritChance"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon critical hit chance."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponCritEffect",
+		"Alias": "SetCritEffect",
+		"Parameters": [
+			{"type": "ref:ObjectEffect"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:OldCriticalEffect"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon critical hit effect."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponFireRate",
+		"Alias": "SetFireRate",
+		"Parameters": [
+			{"type": "float:FireRate"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "2.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon fire rate."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAnimAttackMult",
+		"Alias": "SetAnimAttackMult",
+		"Parameters": [
+			{"type": "float:AnimAttackMult"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the anim attack multiplier."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAnimMult",
+		"Alias": "SetAnimMult",
+		"Parameters": [
+			{"type": "float:AnimMult"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the animiation multiple of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponReach",
+		"Alias": "SetReach",
+		"Parameters": [
+			{"type": "reach:Reach"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the reach of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponIsAutomatic",
+		"Alias": "SetIsAutomatic",
+		"Parameters": [
+			{"type": "bool:IsAutomatic"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets whether the weapon is an automatic weapon or not."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponHandGrip",
+		"Alias": "SetHandGrip",
+		"Parameters": [
+			{"url": "Weapon_Hand_Grips", "type": "int:HandGrip"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the hand grip of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponReloadAnim",
+		"Alias": "SetReloadAnim",
+		"Parameters": [
+			{"url": "Reload_Animations", "type": "int:ReloadAnim"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the reload animation of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponBaseVATSChance",
+		"Alias": "SetVATSChance",
+		"Parameters": [
+			{"type": "int:NewVATSChance"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the base VATS chance for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAttackAnimation",
+		"Alias": "SetAttackAnim",
+		"Parameters": [
+			{"url": "Attack_Animations", "type": "int:AttackAnimation"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the attack animation for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponNumProjectiles",
+		"Alias": "SetNumProj",
+		"Parameters": [
+			{"type": "int:NumProjectiles"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the number of projectiles the weapon fires each time it is shot."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponAimArc",
+		"Alias": "SetAimArc",
+		"Parameters": [
+			{"type": "float:AimArc"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the aim arc of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponLimbDamageMult",
+		"Alias": "SetLimbDamageMult",
+		"Parameters": [
+			{"type": "float:LimbDamageMult"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the limb damage multiplier for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponSightUsage",
+		"Alias": "SetsightUsage",
+		"Parameters": [
+			{"type": "float:SightUsage"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the sight usage for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponRequiredStrength",
+		"Alias": "SetReqStr",
+		"Parameters": [
+			{"type": "int:NewStrength"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the required strength level of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponRequiredSkill",
+		"Alias": "SetReqSkill",
+		"Parameters": [
+			{"type": "int:NewSkill"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the required skill level of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponSkill",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Actor_Value_Codes", "type": "int:WeaponSkill"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the skill type of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponResistType",
+		"Alias": "SetWeaponResist",
+		"Parameters": [
+			{"url": "Actor_Value_Codes", "type": "int:ResistValue"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the required strength level of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponLongBursts",
+		"Alias": "SetLongBursts",
+		"Parameters": [
+			{"type": "float:Value"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "2.5",
+		"Convention": "E",
+		"Description": [
+			"Sets the long burst value for the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponFlags1",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Flags", "type": "int:WeaponFlags1"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon flags using int bit value notation."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetWeaponFlags2",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Flags", "type": "int:WeaponFlags2"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "2.6",
+		"Convention": "E",
+		"Description": [
+			"Sets the weapon flags using int bit value notation."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetEquippedWeaponModFlags",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"url": "Weapon_Mod", "type": "int:ModFlags"}
+		],
+		"Version": "2.10",
+		"Convention": "E",
+		"Description": [
+			"Returns a bit value of the equipped weapon mods for the currently equipped weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "SetEquippedWeaponModFlags",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Mod", "type": "int:ModFlags"}
+		],
+		"Version": "2.10",
+		"Convention": "R",
+		"Description": [
+			"Sets the current health of the equipped object at the given slot."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponItemModEffect",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Weapon_Mod", "type": "int:ModIndex"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "2.10",
+		"Convention": "E",
+		"Description": [
+			"Returns the specified item mod effect id of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponItemModValue1",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:ModValue"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "2.10",
+		"Convention": "E",
+		"Description": [
+			"Returns the specified item mod value1 of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetWeaponItemModValue2",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:ModValue"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int"}
+		],
+		"Version": "2.10",
+		"Convention": "E",
+		"Description": [
+			"Returns the specified item mod value2 of the weapon."
+		],
+		"Tags": ["Weapon","Inventory"]
+	},
+
+	{
+		"Name": "GetArmorAR",
+		"Alias": "GetArmorArmorRating",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:ArmorRating"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns the armor rating of the specified armor."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "IsPowerArmor",
+		"Alias": "IsPA",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsPowerArmor"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Returns whether the biped form is considered power armor."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetArmorDT",
+		"Alias": "GetArmorDamageThreshold",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:DamageThreshold"}
+		],
+		"Version": "1.2",
+		"Convention": "E",
+		"Description": [
+			"Returns the damage threshold of the armor."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "IsPlayable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsPlayable"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Returns whether the specified object is playable or not. Returns true only if the object is of a type which can be flagged as playable in the editor."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "GetEquipmentSlotsMask",
+		"Alias": "GetESM",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Equipment_Slot_IDs", "type": "int:EquipmentSlotsMask"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Returns the slots used by the biped form as a bitmask.",
+			"The mask is a bitmask that should be built by using ClearBit/SetBit. The order is as defined in GECK in the slot list of an armor, and starts at 0."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "GetEquipmentBipedMask",
+		"Alias": "GetEBM",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"url": "Equipment_Slot_IDs", "type": "int:EquipmentBipedMask"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Returns the flags used by the biped form as a bitmask."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "SetIsPowerArmor",
+		"Alias": "SetIsPA",
+		"Parameters": [
+			{"type": "int:SetIsPowerArmor"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "E",
+		"Description": [
+			"Sets whether the armor is power armor or not."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetArmorAR",
+		"Alias": "SetArmorArmorRating",
+		"Parameters": [
+			{"type": "int:ARValue"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.2",
+		"Convention": "E",
+		"Description": [
+			"Sets the armor rating of the armor."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetArmorDT",
+		"Alias": "SetArmorDamageThreshold",
+		"Parameters": [
+			{"type": "float:DTValue"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "1.2",
+		"Convention": "E",
+		"Description": [
+			"Sets the damage threshold of the armor."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetIsPlayable",
+		"Alias": "",
+		"Parameters": [
+			{"type": "bool:IsPlayable"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Specifies whether the object can be used by the player."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "SetEquipmentSlotsMask",
+		"Alias": "SetESM",
+		"Parameters": [
+			{"url": "Equipment_Slot_IDs", "type": "int:EquipmentSlotsMask"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Sets the slots used by the biped form from a bitmask.",
+			"The mask is a bitmask that should be built by using ClearBit/SetBit. The order is as defined in GECK in the slot list of an armor, and starts at 0."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "SetEquipmentBipedMask",
+		"Alias": "SetEBM",
+		"Parameters": [
+			{"url": "Equipment_Slot_IDs", "type": "int:EquipmentBipedMask"},
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Sets the slots used by the biped form from a bitmask.",
+			"The mask is a bitmask that should be built by using ClearBit/SetBit. The order of bit index for slots can be found in NVSE source files (GameForms.h, search for EBipedFlags)."
+		],
+		"Tags":["Inventory","Armor"]
+	},
+
+	{
+		"Name": "GetAmmoSpeed",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:AmmoVelocity"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the speed value of the ammo."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetAmmoConsumedPercent",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:Percent"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the percentage chance of getting the casing item from the ammo."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetAmmoCasing",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "1.5",
+		"Convention": "E",
+		"Description": [
+			"Returns the casing item given by the ammo."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetPlayerCurrentAmmoRounds",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:CurrentRounds"}
+		],
+		"Version": "1.5",
+		"Convention": "R",
+		"Description": [
+			"Returns the number of rounds in the player's equipped weapon."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetPlayerCurrentAmmoRounds",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:CurrentRounds"}
+		],
+		"Version": "1.5",
+		"Convention": "R",
+		"Description": [
+			"Sets the current number of rounds in the clip of the player."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "GetPlayerCurrentAmmo",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:Ammo"}
+		],
+		"Version": "1.5",
+		"Convention": "R",
+		"Description": [
+			"Returns the current ammo in the weapon held by the player."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "TempCloneForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:AnyForm", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:ClonedForm"}
+		],
+		"Version": "2.1",
+		"Convention": "E",
+		"Description": [
+			"Clones the specified form and returns a new base form which will not be saved in the save game."
+		],
+		"Examples": [
+			{"Example": [
+				"ref clonedInventoryItem",
+				"set clonedInventoryItem to TempCloneForm Weap10mmPistol"
+			]}
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "IsClonedForm",
+		"Alias": "IsCloned",
+		"Parameters": [
+			{"type": "ref:AnyForm", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "bool:IsCloned"}
+		],
+		"Version": "2.1",
+		"Convention": "E",
+		"Description": [
+			"Returns whether the specified form is a created object or not."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "SetNameEx",
+		"Alias": "",
+		"Parameters": [
+			{"url": "FormatSpecifiers", "type": "string:FormatString"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "Variable", "optional": "true"},
+			{"type": "ref:ObjectID"}
+		],
+		"Version": "2.1",
+		"Convention": "B",
+		"Description": [
+			"Sets the name of the object based on the format string."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "AddItemOwnership",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID"},
+			{"type": "float:Count"},
+			{"type": "ref:ActorOrFaction"},
+			{"type": "int:Rank"}
+		],
+		"ReturnType": [
+			{"type": "int:Unknown"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Adds an item to a container with a specified ownership."
+		],
+		"Tags":["Inventory","Owner"]
+	},
+
+	{
+		"Name": "AddItemHealthPercentOwner",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID"},
+			{"type": "float:Count"},
+			{"type": "float:Health"},
+			{"type": "ref:ActorOrFaction"},
+			{"type": "int:Rank"}
+		],
+		"ReturnType": [
+			{"type": "int:Unknown"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Adds an item to a container at a specified health percentage and with an ownership."
+		],
+		"Tags":["Inventory","Owner"]
+	},
+
+	{
+		"Name": "PickOneOf",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ItemList"}
+		],
+		"ReturnType": [
+			{"type": "ref:AnyForm"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Returns a random item in the FormList."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "EquipItem2",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectID"},
+			{"type": "int:LockEquip", "optional": "true"},
+			{"type": "int:Silent", "optional": "true"}
+		],
+		"Version": "4.5",
+		"Convention": "E",
+		"Description": [
+			"Equips an item and runs its OnEquip block."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "EquipMe",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.5",
+		"Convention": "R",
+		"Description": [
+			"Equips the calling object on its owner."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "UnequipMe",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.5",
+		"Convention": "R",
+		"Description": [
+			"Unequips the calling object on its owner."
+		],
+		"Tags":["Inventory"]
+	},
+
+	{
+		"Name": "IsEquipped",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.5",
+		"Convention": "R",
+		"Description": [
+			"Returns 1 if the calling object is currently being worn."
+		],
+		"Tags":["Inventory"]
+	}
+]

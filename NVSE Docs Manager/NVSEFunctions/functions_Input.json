@@ -1,0 +1,397 @@
+[
+	{
+		"Name": "IsKeyPressed",
+		"Alias": "",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"},
+			{"type": "filter:Integer", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Return if a dx scancode is down or up. The optional integer is a bitfield, so the following values can be added together:",
+			"1 = Return game state (buttons as seen by the game after all filtering, previous default behavior)",
+			"2 = Return raw state (unfiltered buttons, exactly what is being pressed)",
+			"4 = Return inserted state (scripted keypresses only) if multiple of the above are selected, then they are logically or'd together",
+			"8 = Ignore disabled keys (Returns 0 for all DisableKey'd keys)"
+		],
+		"Tags":["Input"]
+	},
+	
+	{
+		"Name": "TapKey",
+		"Alias": "tk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Fakes a key press for one frame."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "HoldKey",
+		"Alias": "hk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Fakes a key press indefinately with the specified dx scancode."
+		],
+		"Tags": ["Input"]
+	},
+
+	{
+		"Name": "ReleaseKey",
+		"Alias": "rk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Releases a key held down by HoldKey."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "DisableKey",
+		"Alias": "dk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"},
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Prevents a player from using a key."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "EnableKey",
+		"Alias": "ek",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"},
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Reenables a key previously disabled with DisableKey."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "GetNumKeysPressed",
+		"Alias": "gnkp",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "count:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns how many keyboard keys are currently being held down."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "GetKeyPress",
+		"Alias": "gkp",
+		"Parameters": [
+			{"type": "index:Integer"}
+		],
+		"ReturnType": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the scancode of the nth key which is currently being held down."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "GetNumMouseButtonsPressed",
+		"Alias": "gnmbp",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "count:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns how many mouse buttons are currently being held down."
+		],
+		"Tags": ["Input"]
+	},
+	
+	{
+		"Name": "GetMouseButtonPress",
+		"Alias": "gmbp",
+		"Parameters": [
+			{"type": "index:Integer"}
+		],
+		"ReturnType": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the code of the nth mouse button which is currently being held down."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "GetControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"}
+		],
+		"ReturnType": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the key assigned to a control."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "GetAltControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"}
+		],
+		"ReturnType": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the mouse button assigned to a control."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "MenuTapKey",
+		"Alias": "mtk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Fakes a key press for one frame in menu mode."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "MenuHoldKey",
+		"Alias": "mhk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Fakes a key press indefinately in menu mode."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "MenuReleaseKey",
+		"Alias": "mrk",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Releases a key held down by MenuHoldKey."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "DisableControl",
+		"Alias": "dc",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"},
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Disables the key and button bound to a control."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "EnableControl",
+		"Alias": "ec",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"},
+			{"type": "int:Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Enables the key and button assigned to a control."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "TapControl",
+		"Alias": "tc",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Taps the key or mouse button assigned to control."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "SetControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"},
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Assigns a new keycode to the specified keyboard control. Changes are saved to the .ini when the user exits the game."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "SetAltControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"},
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Assigns a new mouse button code to the specified mouse control. Changes are saved to the ini when the user exits the game."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "SetIsControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"},
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Flags a key or mouse button as a control, allowing modders to define custom controls - other scripts can then use IsControl to detect conflicts in which two mods try to use the same key for different actions."
+		],
+		"Tags":["Input"]
+	},
+	
+	{
+		"Name": "IsControl",
+		"Alias": "",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"ReturnType": [
+			{"type": "isControl:Integer"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the specified key or mouse button is assigned to a game control, 2 if it has been registered as a custom control by a mod via SetIsControl, or 0 otherwise."
+		],
+		"Tags": ["Input"]
+	},
+
+	{
+		"Name": "IsKeyDisabled",
+		"Alias": "",
+		"Parameters": [
+			{"url": "DirectX_Scancodes", "type": "scanCode:Integer"}
+		],
+		"ReturnType": [
+			{"type": "isDisabled:Bool"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the key has been disabled using DisableKey."
+		],
+		"Tags":["Input"]
+	},
+
+	{
+		"Name": "IsControlDisabled",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"}
+		],
+		"ReturnType": [
+			{"type": "isDisabled:Bool"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if thecontrol has been disabled by a call to DisableControl.", "Note that this only keeps track of calls to DisableControl and EnableControl; it does not check if the disabled state of the key or mouse button has been affected by DisableKey."
+		],
+		"Tags": ["Input"]
+	},
+
+	{
+		"Name": "IsControlPressed",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Control_Codes", "type": "controlCode:Integer"}
+		],
+		"ReturnType": [
+			{"type": "isPressed:Bool"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if either the key or mouse button assigned to the specified control code is currently pressed. Detects disabled keys."
+		],
+		"Tags":["Input"]
+	}
+]

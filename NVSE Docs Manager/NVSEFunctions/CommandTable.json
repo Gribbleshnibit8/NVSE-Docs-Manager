@@ -1,0 +1,49 @@
+[
+	{
+		"Name": "GetNVSEVersion",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Version"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the installed version of NVSE."
+		],
+		"Tags": ["Version"]
+	},
+	
+	{
+		"Name": "GetNVSEBeta",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:BetaVersion"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the beta number of the installed version of NVSE. A non-beta version of NVSE will return 0."
+		],
+		"Tags": ["Version"]
+	},
+
+	{
+		"Name": "GetNVSERevision",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Revision"}
+		],
+		"Condition": "Yes",
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Returns the numbered revision of the installed version of NVSE."
+		],
+		"Tags": ["Version"]
+	}
+]

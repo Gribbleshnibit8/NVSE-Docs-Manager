@@ -1,0 +1,243 @@
+[
+	{
+		"Name": "NX_GetVersion",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "Version:Integer"}
+		],
+		"Version": "1",
+		"Condition": " No",
+		"Convention": "",
+		"Description": [
+			"Returns an integer representing the version (release #), starting from 1."
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_IsUsingSkeleton",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:String"},
+			{"type": "actor:Reference", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "",
+		"Condition": " No",
+		"Convention": "E",
+		"Description": [
+			"Given a skeleton name fragment and an actor reference (player, NPC, or creature), returns the 1 if the actor is using a skeleton in that directory, 0 otherwise. The directory fragment must match the subdirectory under meshes, and is not case sensitive."
+		],
+		"Examples": [
+			{"Example": [
+				"player.NX_IsUsingSkeleton \"_male\" ; will return 1",
+				"player.NX_IsUsingSkeleton \"nvgecko\" ; will return 0",
+				"RexREF.NX_IsUsingSkeleton \"_male\" ; will return 0",
+				"RexREF.NX_IsUsingSkeleton \"dog\" ; will return 1"
+			]}
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_IsInList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formlist:FormList"},
+			{"type": "form:AnyForm"},
+			{"type": "recurse:Integer", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "Bool"}
+		],
+		"Version": "1",
+		"Condition": " No",
+		"Convention": "B",
+		"Description": [
+			"Given a formlist and an item (base object, reference, or dynamic reference), will return 0 if the item is not in the list at all, or a value greater than 0 indicating how the object was found. The recurse flag is an optional integer that should be 1 or 0. It is currently not implemented. In the future, it will search formlists contained within formlists.",
+			"\t0 : item not in list.\n\t1 : item in list exactly.\n\t2 : base form of item in list.\n\t3 : item is a baseform of another item in list.\n\t4 : base form of item is the same as base form of another item in list."
+		],
+		"Examples": [
+			{"Example": [
+				"; Take the following three vars:",
+				"set itemA to AcousticGuitar",
+				"set itemB to player.placeatme AcousticGuitar 1",
+				"RexREF.NX_IsUsingSkeleton \"_male\" ; will return 0",
+				"set itemC to player.placeatme AcousticGuitar 1",
+				"; And two formlists. List1 contains itemA, list2 contains itemB",
+				"\"NX_IsInList List1 itemA\" and \"NX_IsInList List2 itemB\" will both return 1.",
+				"\"NX_IsInList List1 itemB\" will return 2.",
+				"\"NX_IsInList List2 itemA\" will return 3.",
+				"\"NX_IsInList List2 itemC\" will return 4."
+			]}],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_SetEVFl",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key:String"},
+			{"type": "val:Float"},
+			{"type": "persist:Integer", "optional": "true"}
+		],
+		"Version": "3",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"Stores a floating point value with a reference. 'key' is the name for the value used in the SET and GET functions. 511 character maximum.",
+			"NOTE: The persist flag, as yet, does nothing. These values are saved with savegames will persist across game sessions.",
+			"NOTE: The keys are NOT shared between types. You can safely store a float and a form both under the key 'my key' and they will not overwrite one another. Internally they are stored in entirely separate arrays (maps actually), one per \"type.\""
+		],
+		"Examples": [
+			{"Example": [
+				"playerREF.NX_SetEVFl \"test value\" 3.1415 0",
+				"; Will create the variable 'test value', associated with the player, and set it equal to 3.1514. This is basically the same thing as an associative array in perl, php, java (via an object), etc. As yet, there is no key iterator."
+			]}
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_GetEVFl",
+		"Alias": "GetEVFl",
+		"Parameters": [
+			{"type": "key:String"}
+		],
+		"ReturnType": [
+			{"type": "val:Float"}
+		],
+		"Version": "3",
+		"Condition": " Yes",
+		"Convention": "R",
+		"Description": [
+			"Retrieves a floating point value set via the above syntax. Will return 0 if the value has never been set.",
+			"NOTE: The persist flag, as yet, does nothing. These values are saved with savegames will persist across game sessions.",
+			"NOTE: The keys are NOT shared between types. You can safely store a float and a form both under the key 'my key' and they will not overwrite one another. Internally they are stored in entirely separate arrays (maps actually), one per \"type.\""
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_SetEVFo",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key:String"},
+			{"type": "val:AnyForm"},
+			{"type": "persist:Integer", "optional": "true"}
+		],
+		"Version": "3",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"See NX_SetEVFl. This is the same, but stores a form instead (reference, base, or dynamic).",
+			"NOTE: The persist flag, as yet, does nothing. These values are saved with savegames will persist across game sessions.",
+			"NOTE: The keys are NOT shared between types. You can safely store a float and a form both under the key 'my key' and they will not overwrite one another. Internally they are stored in entirely separate arrays (maps actually), one per \"type.\""
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_GetEVFo",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key:String"}
+		],
+		"ReturnType": [
+			{"type": "AnyForm"}
+		],
+		"Version": "3",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"See NX_GetEVFl. This is the same but retrieves a form.",
+			"NOTE: The persist flag, as yet, does nothing. These values are saved with savegames will persist across game sessions.",
+			"NOTE: The keys are NOT shared between types. You can safely store a float and a form both under the key 'my key' and they will not overwrite one another. Internally they are stored in entirely separate arrays (maps actually), one per \"type.\""
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_GetConversationPartner",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "actor:Ref"}
+		],
+		"Version": "7",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"Returns the current conversation partner if in a conversation AND the NPC initiated the conversation via StartConversation topic. Only makes sense when called on the player. Only works in MENUMODE blocks, as that is where conversations happen. To use in gamemode scripts, just create a menumode block that calls it fairly often and stores the result in a quest var that you can use in GAMEMODE blocks."
+		],
+		"Examples": [
+			{"Example": [
+				"someref.startconversation sometopic; wait a bit, and be in a menumode blockref = player.NX_GetConversationPartner; ref now == someref"
+			]}
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_ClrEVFl",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key:String", "optional": "true"},
+			{"type": "match:Integer", "optional": "true"}
+		],
+		"Version": "9",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"Clears an EV entry or the whole array.",
+			"Match is optional. If set to 2, clears all keys starting with the one you specify, e.g. \"mymod\" will clear all keys starting with the string \"mymod\"."
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_ClrEVFo",
+		"Alias": "",
+		"Parameters": [
+			{"type": "key:String", "optional": "true"},
+			{"type": "match:Integer", "optional": "true"}
+		],
+		"Version": "9",
+		"Condition": " No",
+		"Convention": "R",
+		"Description": [
+			"Clears an EV entry or the whole array."
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	},
+
+	{
+		"Name": "NX_GetQVEVFl",
+		"Alias": "GetQVEVFl",
+		"Parameters": [
+			{"type": "quest:Quest"},
+			{"type": "variable:Integer", "optional": "true"}
+		],
+		"Version": "",
+		"Condition": " Yes",
+		"Convention": "",
+		"Description": [
+			"Gets an extended actor float value named in a stringVar quest variable."
+		],
+		"Tags": ["Extender"],
+		"FromPlugin": "NVSE Extender"
+	}
+]

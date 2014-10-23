@@ -1,0 +1,115 @@
+[
+	{
+		"Name": "GetUIFloat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "traitName:String"}
+		],
+		"ReturnType": [
+			{"type": "Reference"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Looks up a UI trait by name and Returns its numeric value. The trait name is of the format \"MenuName/ElementName/ElementName/.../TraitName\"as defined in the XML hierarchy for the desired menu, i.e. \"MessageMenu\\NoGlow_Branch\\MM_Title\\x\"",
+			"The path argument as two new capabilities. A path segment of \"*\" matches any child tile, and a path segment suffix of \":N\" matches the N'th child tile.  This is useful when accessing list box items, where the tile names are either identical, or unpredictable, or both."
+		],
+		"Tags": ["Interface"]
+	},
+
+	{
+		"Name": "SetUIFloat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "traitName:String"},
+			{"type": "newValue:Float"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Sets the value of a float UI trait. Trait name is of the format used by GetUIFloat.",
+			"The path argument as two new capabilities. A path segment of \"*\" matches any child tile, and a path segment suffix of \":N\" matches the N'th child tile.  This is useful when accessing list box items, where the tile names are either identical, or unpredictable, or both."
+		],
+		"Tags": ["Interface"]
+	},
+	
+	{
+		"Name": "SetUIString",
+		"Alias": "",
+		"Parameters": [
+			{"type": "traitName:String"},
+			{"type": "newValue:String"}
+		],
+		"Version": "1.2",
+		"Convention": "B",
+		"Description": [
+			"Sets the value of a string UI trait. Trait name is of the format used by GetUIFloat.",
+			"The path argument as two new capabilities. A path segment of \"*\" matches any child tile, and a path segment suffix of \":N\" matches the N'th child tile.  This is useful when accessing list box items, where the tile names are either identical, or unpredictable, or both."
+		],
+		"Tags": ["Interface"]
+	},
+
+	{
+		"Name": "SetUIStringEx",
+		"Alias": "",
+		"NumParameters": "21",
+		"Parameters": [
+			{"type": "traitName:String"},
+			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"},
+			{"type": "variable:Float", "optional": "true"}
+		],
+		"Version": "2.2",
+		"Convention": "B",
+		"Description": [
+			"Sets the value of a string UI trait. Trait name is of the format used by GetUIFloat.",
+			"The path argument as two new capabilities. A path segment of \"*\" matches any child tile, and a path segment suffix of \":N\" matches the N'th child tile.  This is useful when accessing list box items, where the tile names are either identical, or unpredictable, or both."
+		],
+		"Tags": ["Interface"]
+	},
+	
+	{
+		"Name": "SortUIListBox",
+		"Alias": "",
+		"Parameters": [
+			{"type": "path:String"},
+			{"type": "sortSpec:String"}
+		],
+		"Version": "1.9",
+		"Convention": "B",
+		"Description": [
+			"Sorts a specified list box."
+		],
+		"Tags": ["Interface"]
+	},
+	
+	{
+		"Name": "EndVATSCam",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "4.5",
+		"Convention": "B",
+		"Description": [
+			"Remove all targets and close VATS mode."
+		],
+		"Tags": ["Interface"]
+	}
+]

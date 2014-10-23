@@ -1,0 +1,564 @@
+[
+	{
+		"Name": "GetAgeClass",
+		"Alias": "",
+		"Parameters": [
+			{"type": "NPC:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Return NPC age class. From 0=Child -default- to 3=OldAged. -1 for non NPC. Based on race fullname."
+		],
+		"Tags": ["Actor"]
+	},
+	
+	{
+		"Name": "GetRespawn",
+		"Alias": "",
+		"Parameters": [
+			{"type": "NPC:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Return if the respawn flag is set on a base form."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetRespawn",
+		"Alias": "",
+		"Parameters": [
+			{"type": "flag:Integer"},
+			{"type": "actor:Actor", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the respawn flag on a base form."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetPermanent",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Return if the permanent flag is set on a base form."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "SetPermanent",
+		"Alias": "",
+		"Parameters": [
+			{"type": "flag:Integer"},
+			{"type": "ref:ObjectRef", "optional": "true"}
+		],
+		"Version": "3.1",
+		"Convention": "E",
+		"Description": [
+			"Sets the permanent flag on a base form."
+		],
+		"Tags": ["Actor"]
+	},
+	
+	{
+		"Name": "GetRace",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "ref:Race"}
+		],
+		"Version": "4.2",
+		"Condition": "Yes",
+		"Convention": "E",
+		"Description": [
+			"Return NPC race."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetRaceName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:NPC"}
+		],
+		"ReturnType": [
+			{"type": "string_var:RaceName"}
+		],
+		"Version": "4.2",
+		"Convention": "E",
+		"Description": [
+			"Return the name of the NPC race."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetPerkRank",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Perk"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:PerkRank"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return actor Perk rank or -1 if the perk is not applied."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetAltPerkRank",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Perk"},
+			{"type": "ref:NPC", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:PerkRank"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return the alternate companion Perk rank or -1 if the perk is not applied."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetRaceHairs",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Race"}
+		],
+		"ReturnType": [
+			{"type": "array_var:RaceHairs"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return an array of hair for a race."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetRaceEyes",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Race"}
+		],
+		"ReturnType": [
+			{"type": "array_var:RaceEyes"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return an array of eyes for a race."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetBaseSpellListSpells",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Spells"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return an array of spells for a SpellList."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetBaseSpellListLevSpells",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Spells"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Return an array of leveled spells for a SpellList."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetBasePackages",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Packages"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of packages for an actor base form."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetBaseFactions",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Factions"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of factions to which an actor base form belongs."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetBaseRanks",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:FactionRanks"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of faction ranks to which an actor base form belongs."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetActiveFactions",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:Factions"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the active factions on an actor."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetActiveRanks",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:FactionRanks"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns the active faction ranks on an actor."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetFactionRankNames",
+		"Alias": "",
+		"Parameters": [
+			{"type": "objectBase:Faction"}
+		],
+		"ReturnType": [
+			{"type": "array_var:FactionRankNames"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of names of faction ranks."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetHeadParts",
+		"Alias": "",
+		"Parameters": [
+			{"type": "actorBase:Actor", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:HeadParts"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of head parts for a character."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetLevCreatureRefs",
+		"Alias": "",
+		"Parameters": [
+			{"type": "objectBase:CreatureList", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:CreatureRefs"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of the refs in a leveled creature leveled list."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetLevCharacterRefs",
+		"Alias": "",
+		"Parameters": [
+			{"type": "objectBase:CharacterList", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:CharacterRefs"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of the refs in a leveled character leveled list."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetListForms",
+		"Alias": "",
+		"Parameters": [
+			{"type": "objectBase:FormList"}
+		],
+		"ReturnType": [
+			{"type": "array_var:ListForms"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns an array of forms in a form list."
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GenericAddForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Which"},
+			{"type": "anyForm:ContainingForm"},
+			{"type": "anyForm:FormToAdd"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:IndexAddedAt"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Adds a form to a list of forms of an object at index."
+		],
+		"Examples": [
+			{"Example": [
+				"let indexAddedAt := GenericAddForm whichEmbeddedList objectContainingTheEmbeddedList formToAdd index"
+			]}
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GenericReplaceForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Which"},
+			{"type": "anyForm:ContainingForm"},
+			{"type": "anyForm:FormToAdd"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:IndexAddedAt"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Change a form in a list of forms of an object at index."
+		],
+		"Examples": [
+			{"Example": [
+				"let previousForm := GenericReplaceForm whichEmbeddedList objectContainingTheEmbeddedList replacingForm index"
+			]}
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GenericDeleteForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Which"},
+			{"type": "anyForm:ContainingForm"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:IndexAddedAt"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Delete a form from a list of forms of an object at index."
+		],
+		"Examples": [
+			{"Example": [
+				"let previousForm := GenericDeleteForm whichEmbeddedList objectContainingTheEmbeddedList index"
+			]}
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GenericGetForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Which"},
+			{"type": "anyForm:ContainingForm"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:IndexAddedAt"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "E",
+		"Description": [
+			"Returns a form from a list of forms of an object at index."
+		],
+		"Examples": [
+			{"Example": [
+				"let currentForm := GenericGetForm whichEmbeddedList objectContainingTheEmbeddedList index"
+			]}
+		],
+		"Tags": ["Actor"]
+	},
+
+	{
+		"Name": "GetNthDefaultForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"url": "Default_Form", "type": "string_var:DefaultForm"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Returns the Nth default form."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "SetNthDefaultForm",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Index"},
+			{"url": "Default_Form", "type": "form:AnyForm"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Sets the Nth default form."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetDefaultForms",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "array_var:ListForms"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Returns all default forms as an array."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "IsPluginInstalled",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:PluginName"}
+		],
+		"ReturnType": [
+			{"type": "bool:Installed"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Returns 1 if the plugin is installed."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "GetPluginVersion",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:PluginName"}
+		],
+		"ReturnType": [
+			{"type": "int:Version"}
+		],
+		"Version": "4.5 b7",
+		"Convention": "B",
+		"Description": [
+			"Returns the version of the specified plugin, or -1 if the plugin is not installed."
+		],
+		"Tags": []
+	}
+]

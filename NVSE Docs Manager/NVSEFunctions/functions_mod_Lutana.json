@@ -1,0 +1,755 @@
+[
+	{
+		"Name": "GetLNVersion",
+		"Alias": "",
+		"Parameters": [ ],
+		"ReturnType": [
+			{"type": "int:Version"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the version of the Lutana NVSE plugin."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "FileExists",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:FilePath"}
+		],
+		"ReturnType": [
+			{"type": "bool:Exists"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns whether or not a file exists in the Data directory for a given file path. You can pass a string_var by using the ToString ($) operator."
+		],
+		"Tags": ["Lutana","File"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetTimeStamp",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "string_var:TimeStamp"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a string_var containing the user's current local time in the following format: \"20140326072834\" (YYYYMMDDHHmmSS)"
+		],
+		"Tags": ["Lutana","String"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLoadedType",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formList:OutList"},
+			{"url": "Form_Type_IDs", "type": "int:TypeID"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Empties a form list and then fills it with every form of the given type ID from all loaded plugins. <a href=\"#Form_Type_IDs\">Form Type IDs</a>"
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "ListToArray",
+		"Alias": "",
+		"Parameters": [
+			{"type": "formList:InputList"}
+		],
+		"ReturnType": [
+			{"type": "array_var:ListArray"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Converts a form list into an array_var with elements at matching indexes."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetVariableFloat",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "float:Value"},
+			{"type": "baseForm:Quest", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:OldValue"}
+		],
+		"Version": "",
+		"Convention": "E",
+		"Description": [
+			"Sets the value of a numerical variable by name in the script attached to a reference or quest.",
+			"The same as NVSE's <a href=\"#SetVariable\">SetVariable</a> function. Use SetVariable."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetVariableRef",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:VariableName"},
+			{"type": "ref:Value"},
+			{"type": "baseForm:Quest", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "float:OldValue"}
+		],
+		"Version": "",
+		"Convention": "E",
+		"Description": [
+			"Sets the value of a reference variable by name in the script attached to a reference or quest.",
+			"The same as NVSE's <a href=\"#SetRefVariable\">SetVariable</a> function. Use SetVariable."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetCellRefs",
+		"Alias": "",
+		"Parameters": [
+			{"url": "Form_Type_IDs", "type": "int:TypeID"},
+			{"type": "int:CellDepth", "optional": "true"},
+			{"type": "bool:IncludeTakenRefs", "optional": "true"},
+			{"type": "cell:TargetCell", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "array_var:CellRefs"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Used in place of <a href=\"GetFirstRef\">GetFirstRef</a> or <a href=\"GetFirstRefInCell\">GetFirstRefInCell</a> to get an array of all the references in a cell (and optional surrounding cells)."
+		],
+		"Examples": [
+			{"Example": [
+				"array_var ar_cellContents",
+				"array_var ar_element",
+				" ",
+				"let ar_cellContents := GetCellRefs 200 2        ; find actor refs within 2 cells of me",
+				"ForEach ar_element <- ar_cellContents",
+				"        ; do what needs to be done here",
+				"        ; maybe we have a condition that skips the rest so use",
+				"        Continue",
+				"        ; or another condition that ends the loop, so",
+				"        Break",
+				"Loop"
+			]}
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetCombatStyle",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "ref:CombatStyle"}
+		],
+		"Version": "",
+		"Convention": "R",
+		"Description": [
+			"Returns the current combat style used by an NPC or creature reference."
+		],
+		"Tags": ["Lutana","Actor"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SaveHotkeys",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Saves the player's current hotkeys to an in-memory array."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "RestoreHotkeys",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Restores the player's hotkeys stored with SaveHotkeys."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "HasPerkRank",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Perk"},
+			{"type": "bool:Alt", "optional": "true"}
+		],
+		"ReturnType": [
+			{"type": "int:Rank"}
+		],
+		"Version": "",
+		"Convention": "E",
+		"Description": [
+			"Return the rank of a perk on the player, or 0 if the player does not have the perk. Passing 1 to the 'alt' parameter uses the follower perk list."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetGlobalValue",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:Global"},
+			{"type": "float:Value"}
+		],
+		"ReturnType": [
+			{"type": "float:OldValue"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Sets the value of a numeric global variable."
+		],
+		"Tags": ["Lutana"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetModName",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:Index"},
+			{"type": "int:KeepExtension"}
+		],
+		"ReturnType": [
+			{"type": "string:ModName"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a string containing the file name, minus the extension, of the mod at the given index. Pass '1' as an optional second parameter to keep the extension."
+		],
+		"Tags": ["Lutana","String"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetBipedModelList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Armor"}
+		],
+		"ReturnType": [
+			{"type": "formList:BipedModelList"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the biped model list of an armor form."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetBipedModelList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "baseForm:Armor"},
+			{"type": "formList:BipedModelList"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Sets the biped model list of an armor form."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "LeveledListAddForm",
+		"Alias": "LListAddForm",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "ref:FormToAdd"},
+			{"type": "int:Level"},
+			{"type": "int:Count"},
+			{"type": "float:Health"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Creates a new entry in a leveled list with the given parameters. (Use decimal values between 0.0 and 1.0 for health percentage.)"
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "LeveledListRemoveForm",
+		"Alias": "LListRemoveForm",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "ref:FormToRemove"}
+		],
+		"ReturnType": [
+			{"type": "int:NumberRemoved"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Removes all entries with the given form from a leveled list. Returns the number of entries removed."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetNumLevItems",
+		"Alias": "LListGetCount",
+		"Parameters": [
+			{"type": "ref:LeveledList"}
+		],
+		"ReturnType": [
+			{"type": "int:NumberRemoved"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the number of entries in a leveled list."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLevItemIndexByForm",
+		"Alias": "LListGetFormIndex",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "ref:FormToFind"}
+		],
+		"ReturnType": [
+			{"type": "int:Index"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the index of the first entry containing the given form."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLevItemIndexByLevel",
+		"Alias": "LListGetLevelIndex",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Level"}
+		],
+		"ReturnType": [
+			{"type": "int:Index"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the index of the first entry for the given level."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetNthLevItem",
+		"Alias": "LListGetNthForm",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "ref:FormAtIndex"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the form of the entry at the given index."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetNthLevItemLevel",
+		"Alias": "LListGetNthLevel",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:Level"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the level of the entry at the given index."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetNthLevItemCount",
+		"Alias": "LListGetNthCount",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Index"}
+		],
+		"ReturnType": [
+			{"type": "int:Count"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the count of the entry at the given index."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "RemoveNthLevItem",
+		"Alias": "LListRemoveNthForm",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Index"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Removes the leveled list entry at the given index."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "LeveledListClear",
+		"Alias": "LListClear",
+		"Parameters": [
+			{"type": "ref:LeveledList"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Removes all entries from a leveled list."
+		],
+		"Tags": ["Lutana","Inventory"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetChanceNone",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:LeveledList"}
+		],
+		"ReturnType": [
+			{"type": "int:Chance"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the 'none' chance of a leveled list."
+		],
+		"Tags": ["Lutana","Inventory","LeveledList","LList"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetChanceNoneGlobal",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:LeveledList"}
+		],
+		"ReturnType": [
+			{"type": "int:Chance"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the global variable governing the 'none' chance of a leveled list."
+		],
+		"Tags": ["Lutana","Inventory","LeveledList","LList"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetChanceNone",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:LeveledList"},
+			{"type": "int:Chance"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Sets the 'none' chance of a leveled list."
+		],
+		"Tags": ["Lutana","Inventory","LeveledList","LList"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "DumpLevList",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:LeveledList"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Similar to ar_Dump, outputs all entries to the console."
+		],
+		"Tags": ["Lutana","Inventory","LeveledList","LList"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetController",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:Port"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns which 'port' the gamepad is using, ranging from 1 to 4. This corresponds to the light around the Guide button on Xbox controllers."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "IsButtonPressed",
+		"Alias": "",
+		"Parameters": [
+			{"type": "int:BitMask"}
+		],
+		"ReturnType": [
+			{"type": "bool:Pressed"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns whether or not the button is currently pressed. Uses a bitmask.",
+			"00001 : DPAD_UP<br>00002 : DPAD_DOWN<br>00004 : DPAD_LEFT<br>00008 : DPAD_RIGHT<br>00016 : START<br>00032 : BACK<br>00064 : LEFT_THUMBSTICK<br>00128 : RIGHT_THUMBSTICK<br>00256 : LEFT_SHOULDER (LB)<br>00512 : RIGHT_SHOULDER (RB)<br>01024 : XBOX_GUIDE<br>04096 : BUTTON_A<br>08192 : BUTTON_B<br>16384 : BUTTON_X<br>32768 : BUTTON_Y"
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetPressedButtons",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "int:BitMask"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a bitfield of buttons currently pressed.",
+			"00001 : DPAD_UP<br>00002 : DPAD_DOWN<br>00004 : DPAD_LEFT<br>00008 : DPAD_RIGHT<br>00016 : START<br>00032 : BACK<br>00064 : LEFT_THUMBSTICK<br>00128 : RIGHT_THUMBSTICK<br>00256 : LEFT_SHOULDER (LB)<br>00512 : RIGHT_SHOULDER (RB)<br>01024 : XBOX_GUIDE<br>04096 : BUTTON_A<br>08192 : BUTTON_B<br>16384 : BUTTON_X<br>32768 : BUTTON_Y"
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLeftStickX",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:XPos"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from -1.00 to 1.00 for the x-axis position of the left joystick."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLeftStickY",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:YPos"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from -1.00 to 1.00 for the y-axis position of the left joystick."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetRightStickX",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:XPos"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from -1.00 to 1.00 for the x-axis position of the right joystick."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetRightStickY",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:YPos"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from -1.00 to 1.00 for the y-axis position of the right joystick."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetDeadZoneX",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:DeadZone"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the x-axis deadzone configured for the joysticks."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetDeadZoneY",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:DeadZone"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns the y-axis deadzone configured for the joysticks."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetDeadZoneX",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:DeadZone"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Specifies the x-axis deadzone used by the joysticks."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "SetDeadZoneY",
+		"Alias": "",
+		"Parameters": [
+			{"type": "float:DeadZone"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Specifies the y-axis deadzone used by the joysticks."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetLeftTrigger",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:TriggerValue"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from 0.00 to 1.00 for how far the left trigger is depressed."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	},
+
+	{
+		"Name": "GetRightTrigger",
+		"Alias": "",
+		"Parameters": [],
+		"ReturnType": [
+			{"type": "float:TriggerValue"}
+		],
+		"Version": "",
+		"Convention": "B",
+		"Description": [
+			"Returns a value ranging from 0.00 to 1.00 for how far the right trigger is depressed."
+		],
+		"Tags": ["Lutana","Controller","Input"],
+		"FromPlugin": "Lutana NVSE"
+	}
+]

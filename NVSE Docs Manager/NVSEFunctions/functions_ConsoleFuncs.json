@@ -1,0 +1,258 @@
+[
+	{
+		"Name": "con_CloseAllMenus",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Closes all open menus."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_GetINISetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Setting string is of the same format as that used by con_SetINISetting. Does not return a value but merely prints the value to the console."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_LoadGame",
+		"Alias": "",
+		"Parameters": [
+			{"type": "filename:String"},
+			{"type": "Integer (Optional):Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Loads the savegame with the specified filename if it exists."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_QuitGame",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Exit game without going through menus."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_RefreshINI",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Refresh INI settings from files."
+		],
+		"Tags": []
+	},
+
+	{
+		"Name": "con_Save",
+		"Alias": "",
+		"Parameters": [
+			{"type": "saveName:String"},
+			{"type": "Integer (Optional):Integer", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Saves the current game with the specified filename. If the second parameter is non-zero, generates a text file containing information about the saved data."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_SaveINI",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Writes all the .ini files."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_TCL",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Toggles clipping."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_TFC",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Toggles free camera."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_ToggleMenus",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Toggles menus on and off for screenshots."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_SetCameraFOV",
+		"Alias": "",
+		"Parameters": [],
+		"ParametersOptional": [
+			{"type": "Float:Float", "optional": "true"},
+			{"type": "Float:Float", "optional": "true"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Change the camera's field of view (in deg): default 75"
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_SetGameSetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "settingName:String"},
+			{"type": "newValue:String"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Sets a game setting. Does not accept variables as arguments."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_SetINISetting",
+		"Alias": "",
+		"Parameters": [
+			{"type": "setting:String"},
+			{"type": "newValue:String"}
+		],
+		"Version": "1.1",
+		"Convention": "B",
+		"Description": [
+			"Setting string is of the format \"SettingName:CategoryName\" where CategoryName is the header under which the setting appears in the .ini file. Does not accept variables as arguments."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_SetVel",
+		"Alias": "",
+		"Parameters": [
+			{"type": "axis:Axis"},
+			{"type": "float:Float"}
+		],
+		"Version": "1.1",
+		"Convention": "R",
+		"Description": [
+			"Sets Velocity on a reference."
+		],
+		"Tags": ["Console"]
+	},
+	
+	{
+		"Name": "con_SetUFOCamSpeedMult",
+		"Alias": "",
+		"Parameters": [
+			{"type": "Float:Float"}
+		],
+		"Version": "2.5",
+		"Convention": "B",
+		"Description": [
+			"Set speed mult for UFO cam."
+		],
+		"Tags": ["Console"]
+	},
+
+	{
+		"Name": "con_TDT",
+		"Alias": "",
+		"Parameters": [],
+		"Version": "2.5",
+		"Convention": "B",
+		"Description": [
+			"Show debug numbers on the screen."
+		],
+		"Tags": ["Console"]
+	},
+	
+	{
+		"Name": "con_SCOF",
+		"Alias": "",
+		"Parameters": [
+			{"type": "string:FileName"}
+		],
+		"Version": "4.2",
+		"Convention": "",
+		"Description": [
+			"SetConsoleOuputFile creates a text file in the Fallout NV directory that stores console input and output."
+		],
+		"Tags": ["Console"]
+	},
+	
+	{
+		"Name": "con_SQV",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:QuestID"}
+		],
+		"Version": "4.2",
+		"Convention": "",
+		"Description": [
+			"Shows the specified quest's variables in the console window. Requires ConsoleEcho turned on."
+		],
+		"Tags": ["Console"]
+	},
+	
+	{
+		"Name": "con_ShowVars",
+		"Alias": "",
+		"Parameters": [
+			{"type": "ref:QuestID"}
+		],
+		"Version": "4.5",
+		"Convention": "",
+		"Description": [
+			"Prints the name and value of all variables in the script attached to the specified object. Requires Console Echo to be toggled on. This function is useful for creating Debug Dumps with Con_SCOF."
+		],
+		"Tags": ["Console"]
+	}
+]

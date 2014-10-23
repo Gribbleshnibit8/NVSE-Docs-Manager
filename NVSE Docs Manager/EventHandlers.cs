@@ -83,41 +83,18 @@ namespace NVSE_Docs_Manager
 		// TODO: Check if function exists and update instead of create new
 		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
 		{
-			//if (functionsList.Count == 0)
+			//if (LoadedFunctionsList.Count == 0)
 			//	saveNewFunction();
 			//else
 			//{
-				if (!functionsList.Exists(f => f.Name == textBoxName.Text))
-				{
-					saveNewFunction();
-				}
+				if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text)) { saveNewFunction(); }
 				else
 				{
 					// Update existing function
 					DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 					if (d == DialogResult.Yes)
-						updateFunction(functionsList.Find(f => f.Name == textBoxName.Text)); // Update existing function
-				}
-
-
-				//foreach (FunctionDef f in functionsList)
-				//{
-				//	if (f.Name == textBoxName.Text)
-				//	{
-				//		// Update existing function
-				//		DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-				//		if (d == DialogResult.Yes)
-				//			updateFunction(f); // Update existing function
-				//		break;
-				//	} // end if
-				//	else
-				//	{
-				//		// save new function
-				//		saveNewFunction();
-				//		break;
-				//	} // end else
-				//} // end foreach
-			//} // end else
+						updateCurrentFunction(); // Update existing function
+				} // end else
 		} // end buttonSaveCurrentChages
 
 		// On double click a name in the list box, load the function data into the fields
@@ -125,13 +102,13 @@ namespace NVSE_Docs_Manager
 		{
 			if (listboxFunctionList.SelectedItem != null)
 			{
-				FunctionDef functionAtIndex = functionsList.ElementAt(listboxFunctionList.SelectedIndex);
-				populateFunctionForm(functionAtIndex);
+				//LoadedFunctionsList.Find(f => f.Name == treeView1.SelectedNode.Text)
+				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
 			}
 		}
 
 		// toggles the fields in the return type group
-		private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		private void checkBoxReturnType_CheckedChanged(object sender, EventArgs e)
 		{
 			System.Windows.Forms.CheckBox box = (System.Windows.Forms.CheckBox)sender;
 
@@ -145,6 +122,26 @@ namespace NVSE_Docs_Manager
 						c.Enabled = true;
 				}
 			}
+		}
+
+		// Reverts changes to the state when the form was loaded
+		// If working at start, will produce a clean form
+		// If working on an existing function will revert to pre-edit
+		private void buttonDiscardChanges_Click(object sender, EventArgs e)
+		{
+			DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (d == DialogResult.Yes)
+				populateFunctionForm(currentEdittingBackup);
+		}
+
+		// Ensures that the function has a name before allowing it to be saved
+		private void textBoxName_TextChanged(object sender, EventArgs e)
+		{
+			System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
+			if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
+				buttonSaveCurrentChanges.Enabled = false;
+			else
+				buttonSaveCurrentChanges.Enabled = true;
 		}
 	}
 }
