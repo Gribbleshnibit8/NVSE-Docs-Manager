@@ -150,9 +150,13 @@ namespace NVSE_Docs_Manager
 		'Tags': ['MCM'],
 		'FromPlugin': 'MCM'
 	}";
-			List<FunctionDef> functionList = new List<FunctionDef>();
 
-			//functionList = JsonConvert.DeserializeObject<List<FunctionDef>>(json);
+			FunctionDef func = TestFunctionDef();
+
+			functionsList.Add(func);
+			listboxFunctionList.Items.Add(func.Name);
+
+			//func = JsonConvert.DeserializeObject<FunctionDef>(json);
 
 			//functionList = JsonConvert.DeserializeObject<List<FunctionDef>>(json);
 			//FunctionDef func = JsonConvert.DeserializeObject<FunctionDef>(json);
@@ -164,6 +168,152 @@ namespace NVSE_Docs_Manager
 
 			
 
+		}
+
+		public FunctionDef TestFunctionDef()
+		{
+			FunctionDef func = new FunctionDef();
+
+			func.Name = "GetModINISetting";
+			func.Alias = "GetModINI";
+			func.Parameters.Add(new Parameter { type = "string:INIKeyPath" });
+			func.ReturnType.type = "float:INIValue";
+			func.Version = "1.0";
+			func.Condition = "No";
+			func.Convention = "B";
+			func.Description.Add("Returs a float value for the key in the Path string.");
+			func.Description.Add("The Path string contains the INI name, the App name, and the Key name. The format is \'iniName/appName/keyName\' with the separators being : / or \\ characters. The INI name corresponds to a file in \\Data\\Config\\ and does not include the \'.ini\' suffix.");
+			func.Tags.Add("MCM");
+			func.FromPlugin = "MCM";
+
+			return func;
+		}
+
+		public void populateFunctionForm(FunctionDef func)
+		{
+			flowLayoutPanelParameters.Controls.Clear();
+			parametersList.Clear();
+			textBoxName.Clear();
+			textBoxAlias.Clear();
+			textBoxVersion.Clear();
+			textBoxOrigin.Clear();
+			textBoxCategory.Clear();
+			textBoxTags.Clear();
+			radioButtonCallingConventionEither.Checked = true;
+			radioButtonConditionalFalse.Checked = true;
+
+			textBoxName.Text = func.Name;
+			textBoxAlias.Text = func.Alias;
+			textBoxVersion.Text = func.Version;
+			textBoxOrigin.Text = func.FromPlugin;
+			textBoxCategory.Text = func.Category;
+
+			if (func.Tags != null)
+				foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
+
+			if (func.Convention == "B")
+				radioButtonCallingConventionBase.Checked = true;
+			else if (func.Convention == "E")
+				radioButtonCallingConventionEither.Checked = true;
+			else if (func.Convention == "R")
+				radioButtonCallingConventionRef.Checked = true;
+
+			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
+			if (func.Condition == "No")
+				radioButtonConditionalFalse.Checked = true;
+			else
+				radioButtonConditionalTrue.Checked = true;
+
+			populateParameterList(func.Parameters);
+
+			if (!String.IsNullOrEmpty(func.ReturnType.type))
+			{
+				comboBoxReturnTypeURL.Text = func.ReturnType.url;
+				comboBoxReturnTypeType.Text = func.ReturnType.type;
+				checkBoxReturnType.Checked = true;
+			}
+			else
+			{
+				comboBoxReturnTypeURL.Text = "";
+				comboBoxReturnTypeType.Text = "";
+				checkBoxReturnType.Checked = false;
+			}
+		}
+
+
+
+		private void saveNewFunction()
+		{
+			FunctionDef func = new FunctionDef();
+			windowToFunction(func);
+			functionsList.Add(func);
+			listboxFunctionList.Items.Add(func.Name);
+		}
+
+		private void updateFunction(FunctionDef func)
+		{
+			windowToFunction(func);
+		}
+
+		private FunctionDef windowToFunction(FunctionDef func)
+		{
+			func.Name = textBoxName.Text;
+			func.Alias = textBoxAlias.Text;
+			func.Version = textBoxVersion.Text;
+			func.FromPlugin = textBoxOrigin.Text;
+			func.Category = textBoxCategory.Text;
+
+			if (!String.IsNullOrEmpty(textBoxTags.Text))
+			{
+				foreach (string line in textBoxTags.Lines)
+				{
+					;
+					if (func.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
+						func.Tags.Add(line);
+				}
+				//func.Tags.AddRange(textBoxTags.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
+			}
+				
+
+
+			if (radioButtonCallingConventionBase.Checked == true)
+				func.Convention = "B";
+			else if (radioButtonCallingConventionEither.Checked == true)
+				func.Convention = "E";
+			else if (radioButtonCallingConventionRef.Checked == true)
+				func.Convention = "R";
+
+			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
+			if (radioButtonConditionalFalse.Checked == true)
+				func.Condition = "No";
+			else
+				func.Condition = "Yes";
+
+			func.Parameters.Clear();
+			foreach (Control c in parametersList)
+			{
+				Parameter newParam = new Parameter();
+
+				System.Windows.Forms.ComboBox cBox;
+
+				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
+				newParam.url = cBox.Text;
+
+				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
+				newParam.type = cBox.Text;
+
+				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxOptional"];
+				newParam.optional = cBox.Text;
+
+				func.Parameters.Add(newParam);
+			}
+
+			if (checkBoxReturnType.Checked)
+			{
+				func.ReturnType.url = comboBoxReturnTypeURL.Text;
+				func.ReturnType.type = comboBoxReturnTypeType.Text;
+			}
+			return func;
 		}
 
 	}

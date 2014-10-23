@@ -61,10 +61,13 @@ namespace NVSE_Docs_Manager
 		public FunctionDef()
 		{
 			Parameters = new List<Parameter>();
+			ReturnType = new ReturnType();
 			Description = new List<string>();
 			ExampleList = new List<Examples>();
 			Tags = new List<string>();
 		}
+
+		
 
 		public override string ToString()
 		{

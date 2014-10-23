@@ -88,14 +88,22 @@ namespace NVSE_Docs_Manager
 
 				System.Windows.Forms.ComboBox cBox;
 
-				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
-				cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
-
+				if (!String.IsNullOrEmpty(param.url))
+				{
+					cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
+					cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
+				}
+				
 				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
 				cBox.Text = param.type;
 
-				cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxOptional"];
-				cBox.Text = param.optional;
+				if (!String.IsNullOrEmpty(param.optional))
+				{
+					cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxOptional"];
+					cBox.Text = param.optional;
+				}
+
+				parametersList.Add(newParameter);
 				flowLayoutPanelParameters.Controls.Add(newParameter);
 			}
 		}

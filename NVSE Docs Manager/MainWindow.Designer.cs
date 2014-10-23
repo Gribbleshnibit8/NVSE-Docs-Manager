@@ -43,11 +43,11 @@
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.checkBoxReturnType = new System.Windows.Forms.CheckBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.comboBox5 = new System.Windows.Forms.ComboBox();
-			this.comboBox6 = new System.Windows.Forms.ComboBox();
+			this.comboBoxReturnTypeURL = new System.Windows.Forms.ComboBox();
+			this.comboBoxReturnTypeType = new System.Windows.Forms.ComboBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
 			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
@@ -186,6 +186,7 @@
 			// 
 			this.listboxFunctionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listboxFunctionList.FormattingEnabled = true;
 			this.listboxFunctionList.Location = new System.Drawing.Point(12, 36);
 			this.listboxFunctionList.Name = "listboxFunctionList";
@@ -235,11 +236,11 @@
 			// 
 			this.groupBox1.AutoSize = true;
 			this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBox1.Controls.Add(this.checkBox1);
+			this.groupBox1.Controls.Add(this.checkBoxReturnType);
 			this.groupBox1.Controls.Add(this.label3);
 			this.groupBox1.Controls.Add(this.label5);
-			this.groupBox1.Controls.Add(this.comboBox5);
-			this.groupBox1.Controls.Add(this.comboBox6);
+			this.groupBox1.Controls.Add(this.comboBoxReturnTypeURL);
+			this.groupBox1.Controls.Add(this.comboBoxReturnTypeType);
 			this.groupBox1.Location = new System.Drawing.Point(190, 382);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(373, 60);
@@ -247,15 +248,15 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Return Type";
 			// 
-			// checkBox1
+			// checkBoxReturnType
 			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(6, 24);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(15, 14);
-			this.checkBox1.TabIndex = 11;
-			this.checkBox1.UseVisualStyleBackColor = true;
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.checkBoxReturnType.AutoSize = true;
+			this.checkBoxReturnType.Location = new System.Drawing.Point(6, 24);
+			this.checkBoxReturnType.Name = "checkBoxReturnType";
+			this.checkBoxReturnType.Size = new System.Drawing.Size(15, 14);
+			this.checkBoxReturnType.TabIndex = 11;
+			this.checkBoxReturnType.UseVisualStyleBackColor = true;
+			this.checkBoxReturnType.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// label3
 			// 
@@ -277,12 +278,12 @@
 			this.label5.TabIndex = 2;
 			this.label5.Text = "Type";
 			// 
-			// comboBox5
+			// comboBoxReturnTypeURL
 			// 
-			this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox5.Enabled = false;
-			this.comboBox5.FormattingEnabled = true;
-			this.comboBox5.Items.AddRange(new object[] {
+			this.comboBoxReturnTypeURL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxReturnTypeURL.Enabled = false;
+			this.comboBoxReturnTypeURL.FormattingEnabled = true;
+			this.comboBoxReturnTypeURL.Items.AddRange(new object[] {
             "Actor_Flags",
             "Actor_Value_Codes",
             "Attack_Animations",
@@ -297,20 +298,20 @@
             "Weapon_Hand_Grips",
             "Weapon_Mod",
             "Weapon_Type"});
-			this.comboBox5.Location = new System.Drawing.Point(64, 20);
-			this.comboBox5.Name = "comboBox5";
-			this.comboBox5.Size = new System.Drawing.Size(121, 21);
-			this.comboBox5.Sorted = true;
-			this.comboBox5.TabIndex = 1;
+			this.comboBoxReturnTypeURL.Location = new System.Drawing.Point(64, 20);
+			this.comboBoxReturnTypeURL.Name = "comboBoxReturnTypeURL";
+			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxReturnTypeURL.Sorted = true;
+			this.comboBoxReturnTypeURL.TabIndex = 1;
 			// 
-			// comboBox6
+			// comboBoxReturnTypeType
 			// 
-			this.comboBox6.Enabled = false;
-			this.comboBox6.FormattingEnabled = true;
-			this.comboBox6.Location = new System.Drawing.Point(230, 20);
-			this.comboBox6.Name = "comboBox6";
-			this.comboBox6.Size = new System.Drawing.Size(137, 21);
-			this.comboBox6.TabIndex = 3;
+			this.comboBoxReturnTypeType.Enabled = false;
+			this.comboBoxReturnTypeType.FormattingEnabled = true;
+			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(230, 20);
+			this.comboBoxReturnTypeType.Name = "comboBoxReturnTypeType";
+			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(137, 21);
+			this.comboBoxReturnTypeType.TabIndex = 3;
 			// 
 			// button1
 			// 
@@ -802,9 +803,9 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ComboBox comboBox5;
-		private System.Windows.Forms.ComboBox comboBox6;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeURL;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
+		private System.Windows.Forms.CheckBox checkBoxReturnType;
 	}
 }
 
