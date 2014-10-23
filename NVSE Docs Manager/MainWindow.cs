@@ -44,6 +44,8 @@ namespace NVSE_Docs_Manager
 		{
 			InitializeComponent();
 
+			#region mouseEventHandlers
+
 			// register mouse event handlers
 			this.textBoxName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			//this.nameTextBox.MouseHover += new System.EventHandler(this.formMouseEventHandler_MouseHover);
@@ -80,7 +82,7 @@ namespace NVSE_Docs_Manager
 			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
-
+			#endregion mouseEventHandlers
 
 
 			TreeNode ParentNode1;
@@ -108,67 +110,25 @@ namespace NVSE_Docs_Manager
 			//this.treeView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);	
 
 
-			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView1_ItemDrag);
-			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView1_DragEnter);
-			this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView1_DragDrop);
+			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(TreeManager.treeView1_ItemDrag);
+			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(TreeManager.treeView1_DragEnter);
+			this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(TreeManager.treeView1_DragDrop);
 		}
 
-		private TreeNode tn; 
+		
 
-		private void treeView1_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
+
+
+		
+
+
+		/// <summary>
+		/// Outputs a string to the statusbar
+		/// </summary>
+		/// <param name="outString">A string of text to explain what the current action is.</param>
+		private void outputToStatusbar(string outString)
 		{
-			tn = e.Item as TreeNode;
-			DoDragDrop(e.Item.ToString(), DragDropEffects.Move);
-		}
-		private void treeView1_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
-		{
-			Point pt = new Point(e.X, e.Y);
-			pt = treeView1.PointToClient(pt);
-			TreeNode ParentNode = treeView1.GetNodeAt(pt);
-			ParentNode.Nodes.Add(tn.Text); // this copies the node 
-			tn.Remove(); // need to remove the original version of the node 
-		}
-		private void treeView1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
-		{
-			e.Effect = DragDropEffects.Move;
-		}
-
-
-
-		private void treeView_ItemDrag(object sender, System.Windows.Forms.ItemDragEventArgs e)
-		{
-			DoDragDrop(e.Item, DragDropEffects.Move);
-		}
-
-		private void treeView_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
-		{
-			e.Effect = DragDropEffects.Move;
-		}
-
-		private void treeView_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
-		{
-			TreeNode NewNode;
-
-			if (e.Data.GetDataPresent("System.Windows.Forms.TreeNode", false))
-			{
-				Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
-				TreeNode DestinationNode = ((TreeView)sender).GetNodeAt(pt);
-				NewNode = (TreeNode)e.Data.GetData("System.Windows.Forms.TreeNode");
-				if (DestinationNode.TreeView != NewNode.TreeView)
-				{
-					DestinationNode.Nodes.Add((TreeNode)NewNode.Clone());
-					DestinationNode.Expand();
-					//Remove Original Node
-					NewNode.Remove();
-				}
-			}
-		}
-
-
-
-		private void outputToStatusbar(string s)
-		{
-			toolStripStatusLabel1.Text = s;
+			toolStripStatusLabel1.Text = outString;
 		}
 
 	// Tool strip handlers
@@ -205,33 +165,42 @@ namespace NVSE_Docs_Manager
 		}
 	// End tool strip handlers
 
+		/// <summary>
+		/// Turns a json encoded StreamReader file object into a list of FunctionDef objects.
+		/// </summary>
+		/// <param name="file">An input file object formatted in json.</param>
 		private void parseLoadedFile(StreamReader file)
 		{
 			var funcList = JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd());
 			populateFunctionListBox(funcList);
 		}
 
-		// Takes a list of function objects and adds their names to the listbox form
-		private void populateFunctionListBox(List<FunctionDef> funcList)
+		/// <summary>
+		/// Takes a list of function objects and adds their names to the listbox form.
+		/// </summary>
+		/// <param name="functionList">A List&lt;T&gt; of FunctionDefs that will be added to the working list of functions.</param>
+		private void populateFunctionListBox(List<FunctionDef> functionList)
 		{
-			foreach (FunctionDef f in funcList)
+			foreach (FunctionDef f in functionList)
 			{
 				addToFunctionListBox(f);
 			}
-			foreach (FunctionDef f in funcList)
+			foreach (FunctionDef f in functionList)
 			{
-				if (treeView1.Nodes.ContainsKey(f.Category;))
+				//if (treeView1.Nodes.ContainsKey(f.Category;))
 			}
 		}
 
-		// Checks if a function exists on the list, and if not add it to the list
-		// box and the list of loaded functions
-		private void addToFunctionListBox(FunctionDef f)
+		/// <summary>
+		/// Checks if a function exists in the list and, if it's not, adds it to the list and updates the listbox
+		/// </summary>
+		/// <param name="functionToAdd">A function to add to the list of loaded functions</param>
+		private void addToFunctionListBox(FunctionDef functionToAdd)
 		{
-			if (!LoadedFunctionsList.Exists(n => n.Name == f.Name))
+			if (!LoadedFunctionsList.Exists(n => n.Name == functionToAdd.Name))
 			{
-				listboxFunctionList.Items.Add(f.Name);
-				LoadedFunctionsList.Add(f);
+				listboxFunctionList.Items.Add(functionToAdd.Name);
+				LoadedFunctionsList.Add(functionToAdd);
 			}
 		}
 
@@ -306,42 +275,45 @@ namespace NVSE_Docs_Manager
 			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
 
-		// Converts the window data into a function object
-		private FunctionDef windowToFunction(FunctionDef func)
+		/// <summary>
+		/// Converts the window data into a function object
+		/// </summary>
+		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
+		private FunctionDef windowToFunction(FunctionDef function)
 		{
-			func.Name = textBoxName.Text;
-			func.Alias = textBoxAlias.Text;
-			func.Version = textBoxVersion.Text;
-			func.FromPlugin = textBoxOrigin.Text;
-			func.Category = textBoxCategory.Text;
+			function.Name = textBoxName.Text;
+			function.Alias = textBoxAlias.Text;
+			function.Version = textBoxVersion.Text;
+			function.FromPlugin = textBoxOrigin.Text;
+			function.Category = textBoxCategory.Text;
 
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
 			{
 				foreach (string line in textBoxTags.Lines)
 				{
 					;
-					if (func.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-						func.Tags.Add(line);
+					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
+						function.Tags.Add(line);
 				}
-				//func.Tags.AddRange(textBoxTags.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
+				//function.Tags.AddRange(textBoxTags.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
 			}
 				
 
 
 			if (radioButtonCallingConventionBase.Checked == true)
-				func.Convention = "B";
+				function.Convention = "B";
 			else if (radioButtonCallingConventionEither.Checked == true)
-				func.Convention = "E";
+				function.Convention = "E";
 			else if (radioButtonCallingConventionRef.Checked == true)
-				func.Convention = "R";
+				function.Convention = "R";
 
 			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
 			if (radioButtonConditionalFalse.Checked == true)
-				func.Condition = "No";
+				function.Condition = "No";
 			else
-				func.Condition = "Yes";
+				function.Condition = "Yes";
 
-			func.Parameters.Clear();
+			function.Parameters.Clear();
 			foreach (Control c in parametersList)
 			{
 				Parameter newParam = new Parameter();
@@ -357,15 +329,15 @@ namespace NVSE_Docs_Manager
 				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxOptional"];
 				newParam.optional = cBox.Text;
 
-				func.Parameters.Add(newParam);
+				function.Parameters.Add(newParam);
 			}
 
 			if (checkBoxReturnType.Checked)
 			{
-				func.ReturnType[0].type = comboBoxReturnTypeURL.Text;
-				func.ReturnType[0].type = comboBoxReturnTypeType.Text;
+				function.ReturnType[0].type = comboBoxReturnTypeURL.Text;
+				function.ReturnType[0].type = comboBoxReturnTypeType.Text;
 			}
-			return func;
+			return function;
 		}
 
 		private bool hasChanged()

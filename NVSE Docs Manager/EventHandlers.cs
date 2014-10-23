@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace NVSE_Docs_Manager
 {
-	public partial class MainWindow : Form
+	public partial class MainWindow
 	{
 
 	// Mouse event handlers
