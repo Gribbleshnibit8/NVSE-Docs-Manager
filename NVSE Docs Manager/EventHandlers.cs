@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Newtonsoft.Json;
+
 namespace NVSE_Docs_Manager
 {
 	public partial class MainWindow
@@ -81,27 +83,34 @@ namespace NVSE_Docs_Manager
 		#endregion
 
 		#region Tool Strip Handlers
+
+		string fileName;
+
 		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			openFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
+			openFileDialog1.Multiselect = true;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				StreamReader sr = new StreamReader(openFileDialog1.FileName);
-				//MessageBox.Show(inFile.ReadToEnd());
-				parseLoadedFile(sr);
-				sr.Close();
+				foreach (String file in openFileDialog1.FileNames)
+				{
+					StreamReader sr = new StreamReader(file);
+					parseLoadedFile(sr);
+					sr.Close();
+				}
+				fileName = openFileDialog1.SafeFileName;
 			}
 		}
 
 		private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			saveFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
+			saveFileDialog1.FileName = fileName;
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				saveFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
-				StreamReader sr = new
-				   StreamReader(saveFileDialog1.FileName);
-				MessageBox.Show(sr.ReadToEnd());
-				sr.Close();
+				StreamWriter sw = new StreamWriter(saveFileDialog1.OpenFile());
+				sw.Write(JsonConvert.SerializeObject(LoadedFunctionsList, Formatting.Indented));
+				sw.Close();
 			}
 		}
 
