@@ -14,7 +14,7 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow
 	{
 
-	// Mouse event handlers
+		#region Mouse Event Handlers
 		// Update the mouse event label to indicate the MouseEnter event occurred.
 		private void formMouseEventHandler_MouseEnter(object sender, System.EventArgs e)
 		{
@@ -78,36 +78,60 @@ namespace NVSE_Docs_Manager
 		{
 			flowLayoutPanelParameters.Focus();
 		}
+		#endregion
 
-		// Save all the form data and add the function as a new function to the list box
-		// TODO: Check if function exists and update instead of create new
-		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
+		#region Tool Strip Handlers
+		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			//if (LoadedFunctionsList.Count == 0)
-			//	saveNewFunction();
-			//else
-			//{
-				if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text)) { saveNewFunction(); }
-				else
-				{
-					// Update existing function
-					DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-					if (d == DialogResult.Yes)
-						updateCurrentFunction(); // Update existing function
-				} // end else
-		} // end buttonSaveCurrentChages
-
-		// On double click a name in the list box, load the function data into the fields
-		private void listboxFunctionList_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (listboxFunctionList.SelectedItem != null)
+			openFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
+			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				//LoadedFunctionsList.Find(f => f.Name == treeView1.SelectedNode.Text)
-				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
+				StreamReader sr = new StreamReader(openFileDialog1.FileName);
+				//MessageBox.Show(inFile.ReadToEnd());
+				parseLoadedFile(sr);
+				sr.Close();
 			}
 		}
 
-		// toggles the fields in the return type group
+		private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				saveFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
+				StreamReader sr = new
+				   StreamReader(saveFileDialog1.FileName);
+				MessageBox.Show(sr.ReadToEnd());
+				sr.Close();
+			}
+		}
+
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (confirmCloseForm() == DialogResult.Yes)
+				System.Windows.Forms.Application.Exit();
+		}
+		#endregion
+
+		#region Function Panel Events
+
+		/// <summary>
+		/// Save all the form data and add the function as a new function to the list box
+		/// </summary>
+		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
+		{
+			if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text)) { saveNewFunction(); }
+			else
+			{
+				// Update existing function
+				DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+				if (d == DialogResult.Yes)
+					updateCurrentFunction(); // Update existing function
+			} // end else
+		} // end buttonSaveCurrentChanges_Click
+		
+		/// <summary>
+		/// Toggles the fields in the return type group.
+		/// </summary>
 		private void checkBoxReturnType_CheckedChanged(object sender, EventArgs e)
 		{
 			System.Windows.Forms.CheckBox box = (System.Windows.Forms.CheckBox)sender;
@@ -124,9 +148,11 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		// Reverts changes to the state when the form was loaded
-		// If working at start, will produce a clean form
-		// If working on an existing function will revert to pre-edit
+		/// <summary>
+		/// Reverts changes to the state when the form was loaded
+		/// If working at start, will produce a clean form
+		/// If working on an existing function will revert to pre-edit
+		/// </summary>
 		private void buttonDiscardChanges_Click(object sender, EventArgs e)
 		{
 			DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -134,7 +160,9 @@ namespace NVSE_Docs_Manager
 				populateFunctionForm(currentEdittingBackup);
 		}
 
-		// Ensures that the function has a name before allowing it to be saved
+		/// <summary>
+		/// Enables the Save button only when a function name has been entered
+		/// </summary>
 		private void textBoxName_TextChanged(object sender, EventArgs e)
 		{
 			System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
@@ -143,5 +171,114 @@ namespace NVSE_Docs_Manager
 			else
 				buttonSaveCurrentChanges.Enabled = true;
 		}
+
+		/// <summary>
+		/// Prompts to ensure the user wants to clear the form, then clears all form entry if yes
+		/// </summary>
+		private void buttonNewFunction_Click(object sender, EventArgs e)
+		{
+			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (d == DialogResult.Yes)
+				populateFunctionForm(new FunctionDef());
+		}
+
+		#endregion
+
+		#region Function List Events
+
+		/// <summary>
+		/// Uses MouseUp event to catch when the selcted count changes.
+		/// Checks how many are selected and enables the editing buttons.
+		/// </summary>
+		private void listboxFunctionList_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (listboxFunctionList.SelectedItems.Count > 1)
+			{
+				buttonListBoxDeleteItem.Enabled = true;
+				buttonListBoxChangeCategory.Enabled = true;
+			}
+			else
+			{
+				buttonListBoxDeleteItem.Enabled = true;
+				buttonListBoxChangeCategory.Enabled = false;
+			}
+		}
+
+		/// <summary>
+		/// On double click a name in the list box, load the function data into the fields
+		/// </summary>
+		private void listboxFunctionList_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (listboxFunctionList.SelectedItem != null)
+			{
+				//LoadedFunctionsList.Find(f => f.Name == treeView1.SelectedNode.Text)
+				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
+			}
+		}
+
+		/// <summary>
+		/// Delete the selected functions from the functions list and listbox
+		/// </summary>
+		private void buttonListBoxDeleteItem_Click(object sender, EventArgs e)
+		{
+			if (listboxFunctionList.SelectedItems.Count > 0)
+			{
+				DialogResult d = MessageBox.Show("Are you sure you want to delete the selected function?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (d == DialogResult.Yes)
+				{
+					for (int i = listboxFunctionList.SelectedItems.Count - 1; i >= 0; i--)
+					{
+						LoadedFunctionsList.Remove(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItems[i].ToString()));
+						listboxFunctionList.Items.Remove(listboxFunctionList.SelectedItems[i]);
+					}
+
+
+
+					//List<string> names = new List<string>();
+					//foreach (string s in listboxFunctionList.SelectedItems)
+					//{
+					//	FunctionDef func = LoadedFunctionsList.Find(f => f.Name == s);
+					//	LoadedFunctionsList.Remove(func);
+					//	listboxFunctionList.Items.RemoveAt(listboxFunctionList.SelectedItems.IndexOf(s));
+					//} // end foreach
+
+				} // end dialog if
+			} // end size if
+		} // end buttonListBoxDeleteItem_Click
+
+		/// <summary>
+		/// Bulk change the category of all selected functions.
+		/// </summary>
+		private void buttonListBoxChangeCategory_Click(object sender, EventArgs e)
+		{
+			string input = "";
+			DialogResult d = InputBox("Change Category", "Enter the new Category", ref input);
+
+			// decided to bulk change category on selected functions
+			if (d == DialogResult.OK)
+			{
+				foreach (string s in listboxFunctionList.SelectedItems)
+				{
+					LoadedFunctionsList.Find(f => f.Name == s).Category = input;
+				}
+			}
+		} // end buttonListBoxChangeCategory_Click
+
+		#endregion Function List Events
+
+
+		/// <summary>
+		/// When closing the form, ask if data has been saved before allowing an exit
+		/// </summary>
+		private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			#if !DEBUG
+			if (confirmCloseForm() == DialogResult.No)
+				e.Cancel = true;
+			#endif
+		}
+
+		
+
 	}
 }
