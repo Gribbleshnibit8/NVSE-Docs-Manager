@@ -9,8 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using System.Json;
-using Newtonsoft;
 using Newtonsoft.Json;
 
 namespace NVSE_Docs_Manager
@@ -94,8 +92,7 @@ namespace NVSE_Docs_Manager
 		/// <param name="file">An input file object formatted in json.</param>
 		private void parseLoadedFile(StreamReader file)
 		{
-			var funcList = JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd());
-			populateFunctionListBox(funcList);
+			populateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
 		}
 
 		/// <summary>
@@ -268,11 +265,12 @@ namespace NVSE_Docs_Manager
 				function.ReturnType[0].type = comboBoxReturnTypeType.Text;
 			}
 
+			function.Description.Clear();
 			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
 			{
 				foreach (string line in richTextBoxDescription.Lines)
 				{
-					if (!String.IsNullOrEmpty(line))
+					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
 						function.Description.Add(line);
 				}
 			}
