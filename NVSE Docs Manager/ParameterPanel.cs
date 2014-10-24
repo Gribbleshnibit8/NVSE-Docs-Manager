@@ -51,20 +51,25 @@ namespace NVSE_Docs_Manager
 
 		private void removeParameter_Click(object sender, System.EventArgs e)
 		{
-			System.Windows.Forms.Button clickedButton = (System.Windows.Forms.Button)sender;
-			Control parent = clickedButton.Parent;
-
+			Control parent = (sender as System.Windows.Forms.Button).Parent;
 			flowLayoutPanelParameters.Controls.Remove(parent);
 			parametersList.Remove(parent);
 			rebuildParamaterPanel();
 		}
 
+		/// <summary>
+		/// Creates a new parameter groupbox
+		/// </summary>
+		/// <returns>Returns a groupbox populated with parameter list form controls.</returns>
 		private Control createNewParameter()
 		{
 			Control newParam = buildNewParameterForm();
 			return newParam;
 		}
 
+		/// <summary>
+		/// Renumbers the groupbox text on all groupboxes in the parameter list
+		/// </summary>
 		private void rebuildParamaterPanel()
 		{
 			for (int i = 0; i < parametersList.Count(); i++)
@@ -73,7 +78,11 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		// Populates the parameter panel from a loaded function
+		/// <summary>
+		/// Creates a parameter list and populates all the groupboxes with
+		/// the values from a function's parameters
+		/// </summary>
+		/// <param name="paramList">List of parameters</param>
 		private void populateParameterList(List<Parameter> paramList)
 		{
 			foreach (Parameter param in paramList)
@@ -103,7 +112,10 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		// creates a new parameter groupbox with contents, sets and registers the buttons
+		/// <summary>
+		/// Builds a parameter panel form
+		/// </summary>
+		/// <returns>Returns a parameter groupbox with all forms</returns>
 		private Control buildNewParameterForm()
 		{
 			// create a new group box for the new parameter
@@ -124,7 +136,7 @@ namespace NVSE_Docs_Manager
 			// URL
 			// create the URL label and add it to the group box
 			System.Windows.Forms.Label urlLabel = new System.Windows.Forms.Label();
-			urlLabel.Text = "URL";
+			urlLabel.Text = "URL:";
 			urlLabel.Location = new System.Drawing.Point(36, 24);
 			urlLabel.AutoSize = true;
 			newParameter.Controls.Add(urlLabel);
@@ -132,7 +144,8 @@ namespace NVSE_Docs_Manager
 			System.Windows.Forms.ComboBox urlCombobox = new System.Windows.Forms.ComboBox();
 			urlCombobox.Name = "comboBoxURL";
 			urlCombobox.Items.AddRange(parameterURLList.ToArray());
-			urlCombobox.Location = new System.Drawing.Point(71, 20);
+			urlCombobox.Location = new System.Drawing.Point(68, 20);
+			urlCombobox.Size = new System.Drawing.Size(130, 21);
 			urlCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
 			newParameter.Controls.Add(urlCombobox);
 
