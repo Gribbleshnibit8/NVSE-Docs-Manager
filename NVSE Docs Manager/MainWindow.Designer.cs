@@ -58,12 +58,12 @@
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
 			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
 			this.parameter1 = new System.Windows.Forms.GroupBox();
-			this.button2 = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
-			this.labelParameter1URL = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.buttonParameterTemplateClose = new System.Windows.Forms.Button();
+			this.checkBoxParameterTemplateOptional = new System.Windows.Forms.CheckBox();
+			this.labelParameterTemplateURL = new System.Windows.Forms.Label();
+			this.labelParameterTemplateType = new System.Windows.Forms.Label();
+			this.comboBoxParameterTemplateURL = new System.Windows.Forms.ComboBox();
+			this.comboBoxParameterTemplateType = new System.Windows.Forms.ComboBox();
 			this.buttonParameterCopy = new System.Windows.Forms.Button();
 			this.buttonParametersNew = new System.Windows.Forms.Button();
 			this.textBoxCategory = new System.Windows.Forms.TextBox();
@@ -201,6 +201,7 @@
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
 			this.listboxFunctionList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.listboxFunctionList.Size = new System.Drawing.Size(300, 580);
+			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
 			this.listboxFunctionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseUp);
@@ -254,11 +255,13 @@
 			// 
 			// richTextBoxDescription
 			// 
+			this.richTextBoxDescription.AcceptsTab = true;
 			this.richTextBoxDescription.Location = new System.Drawing.Point(190, 459);
 			this.richTextBoxDescription.Name = "richTextBoxDescription";
 			this.richTextBoxDescription.Size = new System.Drawing.Size(550, 147);
 			this.richTextBoxDescription.TabIndex = 503;
 			this.richTextBoxDescription.Text = "";
+			this.richTextBoxDescription.ZoomFactor = 1.2F;
 			// 
 			// buttonNewFunction
 			// 
@@ -386,12 +389,12 @@
 			// 
 			this.parameter1.AutoSize = true;
 			this.parameter1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.parameter1.Controls.Add(this.button2);
-			this.parameter1.Controls.Add(this.checkBox1);
-			this.parameter1.Controls.Add(this.labelParameter1URL);
-			this.parameter1.Controls.Add(this.label1);
-			this.parameter1.Controls.Add(this.comboBox1);
-			this.parameter1.Controls.Add(this.comboBox2);
+			this.parameter1.Controls.Add(this.buttonParameterTemplateClose);
+			this.parameter1.Controls.Add(this.checkBoxParameterTemplateOptional);
+			this.parameter1.Controls.Add(this.labelParameterTemplateURL);
+			this.parameter1.Controls.Add(this.labelParameterTemplateType);
+			this.parameter1.Controls.Add(this.comboBoxParameterTemplateURL);
+			this.parameter1.Controls.Add(this.comboBoxParameterTemplateType);
 			this.parameter1.Location = new System.Drawing.Point(3, 3);
 			this.parameter1.Name = "parameter1";
 			this.parameter1.Size = new System.Drawing.Size(525, 61);
@@ -400,51 +403,51 @@
 			this.parameter1.Text = "Parameter 1";
 			this.parameter1.Visible = false;
 			// 
-			// button2
+			// buttonParameterTemplateClose
 			// 
-			this.button2.AutoSize = true;
-			this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.button2.Location = new System.Drawing.Point(6, 19);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(24, 23);
-			this.button2.TabIndex = 28;
-			this.button2.Text = "X";
-			this.button2.UseVisualStyleBackColor = true;
+			this.buttonParameterTemplateClose.AutoSize = true;
+			this.buttonParameterTemplateClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonParameterTemplateClose.Location = new System.Drawing.Point(6, 19);
+			this.buttonParameterTemplateClose.Name = "buttonParameterTemplateClose";
+			this.buttonParameterTemplateClose.Size = new System.Drawing.Size(24, 23);
+			this.buttonParameterTemplateClose.TabIndex = 28;
+			this.buttonParameterTemplateClose.Text = "X";
+			this.buttonParameterTemplateClose.UseVisualStyleBackColor = true;
 			// 
-			// checkBox1
+			// checkBoxParameterTemplateOptional
 			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(454, 22);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.checkBox1.Size = new System.Drawing.Size(65, 17);
-			this.checkBox1.TabIndex = 1;
-			this.checkBox1.Text = "Optional";
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBoxParameterTemplateOptional.AutoSize = true;
+			this.checkBoxParameterTemplateOptional.Location = new System.Drawing.Point(454, 22);
+			this.checkBoxParameterTemplateOptional.Name = "checkBoxParameterTemplateOptional";
+			this.checkBoxParameterTemplateOptional.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.checkBoxParameterTemplateOptional.Size = new System.Drawing.Size(65, 17);
+			this.checkBoxParameterTemplateOptional.TabIndex = 1;
+			this.checkBoxParameterTemplateOptional.Text = "Optional";
+			this.checkBoxParameterTemplateOptional.UseVisualStyleBackColor = true;
 			// 
-			// labelParameter1URL
+			// labelParameterTemplateURL
 			// 
-			this.labelParameter1URL.AutoSize = true;
-			this.labelParameter1URL.Location = new System.Drawing.Point(36, 24);
-			this.labelParameter1URL.Name = "labelParameter1URL";
-			this.labelParameter1URL.Size = new System.Drawing.Size(29, 13);
-			this.labelParameter1URL.TabIndex = 0;
-			this.labelParameter1URL.Text = "URL";
+			this.labelParameterTemplateURL.AutoSize = true;
+			this.labelParameterTemplateURL.Location = new System.Drawing.Point(36, 24);
+			this.labelParameterTemplateURL.Name = "labelParameterTemplateURL";
+			this.labelParameterTemplateURL.Size = new System.Drawing.Size(32, 13);
+			this.labelParameterTemplateURL.TabIndex = 0;
+			this.labelParameterTemplateURL.Text = "URL:";
 			// 
-			// label1
+			// labelParameterTemplateType
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(198, 24);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(31, 13);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "Type";
+			this.labelParameterTemplateType.AutoSize = true;
+			this.labelParameterTemplateType.Location = new System.Drawing.Point(198, 24);
+			this.labelParameterTemplateType.Name = "labelParameterTemplateType";
+			this.labelParameterTemplateType.Size = new System.Drawing.Size(31, 13);
+			this.labelParameterTemplateType.TabIndex = 2;
+			this.labelParameterTemplateType.Text = "Type";
 			// 
-			// comboBox1
+			// comboBoxParameterTemplateURL
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Items.AddRange(new object[] {
+			this.comboBoxParameterTemplateURL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxParameterTemplateURL.FormattingEnabled = true;
+			this.comboBoxParameterTemplateURL.Items.AddRange(new object[] {
             "Actor_Flags",
             "Actor_Value_Codes",
             "Attack_Animations",
@@ -459,19 +462,19 @@
             "Weapon_Hand_Grips",
             "Weapon_Mod",
             "Weapon_Type"});
-			this.comboBox1.Location = new System.Drawing.Point(71, 20);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(121, 21);
-			this.comboBox1.Sorted = true;
-			this.comboBox1.TabIndex = 1;
+			this.comboBoxParameterTemplateURL.Location = new System.Drawing.Point(68, 20);
+			this.comboBoxParameterTemplateURL.Name = "comboBoxParameterTemplateURL";
+			this.comboBoxParameterTemplateURL.Size = new System.Drawing.Size(125, 21);
+			this.comboBoxParameterTemplateURL.Sorted = true;
+			this.comboBoxParameterTemplateURL.TabIndex = 1;
 			// 
-			// comboBox2
+			// comboBoxParameterTemplateType
 			// 
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(233, 20);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(137, 21);
-			this.comboBox2.TabIndex = 3;
+			this.comboBoxParameterTemplateType.FormattingEnabled = true;
+			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(233, 20);
+			this.comboBoxParameterTemplateType.Name = "comboBoxParameterTemplateType";
+			this.comboBoxParameterTemplateType.Size = new System.Drawing.Size(137, 21);
+			this.comboBoxParameterTemplateType.TabIndex = 3;
 			// 
 			// buttonParameterCopy
 			// 
@@ -835,11 +838,11 @@
 		private System.Windows.Forms.Button buttonParametersNew;
 		private System.Windows.Forms.Button buttonParameterCopy;
 		private System.Windows.Forms.GroupBox parameter1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Label labelParameter1URL;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.Button buttonParameterTemplateClose;
+		private System.Windows.Forms.Label labelParameterTemplateURL;
+		private System.Windows.Forms.Label labelParameterTemplateType;
+		private System.Windows.Forms.ComboBox comboBoxParameterTemplateURL;
+		private System.Windows.Forms.ComboBox comboBoxParameterTemplateType;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
 		private System.Windows.Forms.Button buttonDiscardChanges;
@@ -850,13 +853,13 @@
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
 		private System.Windows.Forms.CheckBox checkBoxReturnType;
 		private System.Windows.Forms.Button buttonNewFunction;
-		private System.Windows.Forms.CheckBox checkBox1;
-		#endregion
+		private System.Windows.Forms.CheckBox checkBoxParameterTemplateOptional;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button buttonListBoxDeleteItem;
 		private System.Windows.Forms.Button buttonListBoxChangeCategory;
 		private System.Windows.Forms.Label labelDescription;
 		private System.Windows.Forms.RichTextBox richTextBoxDescription;
+		#endregion
 	}
 }
 
