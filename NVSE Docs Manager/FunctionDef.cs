@@ -41,7 +41,7 @@ namespace NVSE_Docs_Manager
 		[JsonProperty(PropertyName = "Description")]
 		public List<string> Description;
 
-		[JsonProperty(PropertyName = "ExampleList")]
+		[JsonProperty(PropertyName = "Examples")]
 		public List<Examples> ExampleList;
 
 		[JsonProperty(PropertyName = "Tags")]
@@ -90,6 +90,10 @@ namespace NVSE_Docs_Manager
 
 	}
 
+	/// <summary>
+	/// A parameter object that stores a URL hash string, a type, 
+	/// and an indicator as to whether or not it is optional.
+	/// </summary>
 	public class Parameter
 	{
 		public string url { get; set; }
@@ -113,6 +117,9 @@ namespace NVSE_Docs_Manager
 		}
 	}
 
+	/// <summary>
+	/// A Return Type object holds a URL hash string and a type
+	/// </summary>
 	public class ReturnType
 	{
 		public string url { get; set; }
