@@ -30,8 +30,6 @@ namespace NVSE_Docs_Manager
 			"scanCode:Integer"
 		};
 
-		// input file
-		StreamReader inFile;
 
 		// array of read in functions
 		List<FunctionDef> LoadedFunctionsList = new List<FunctionDef>();
@@ -44,11 +42,8 @@ namespace NVSE_Docs_Manager
 		{
 			InitializeComponent();
 
-			#region mouseEventHandlers
-
-			// register mouse event handlers
+			#region Register Mouse Event Handlers
 			this.textBoxName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			//this.nameTextBox.MouseHover += new System.EventHandler(this.formMouseEventHandler_MouseHover);
 			this.textBoxName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
 			this.textBoxAlias.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
@@ -59,19 +54,19 @@ namespace NVSE_Docs_Manager
 
 			this.groupBoxCallingConvention.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.groupBoxCallingConvention.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-				this.radioButtonCallingConventionRef.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-				this.radioButtonCallingConventionRef.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-				this.radioButtonCallingConventionBase.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-				this.radioButtonCallingConventionBase.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-				this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-				this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.radioButtonCallingConventionRef.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionRef.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.radioButtonCallingConventionBase.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionBase.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
 			this.groupBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.groupBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-				this.radioButtonConditionalTrue.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-				this.radioButtonConditionalTrue.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-				this.radioButtonConditionalFalse.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-				this.radioButtonConditionalFalse.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.radioButtonConditionalTrue.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonConditionalTrue.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.radioButtonConditionalFalse.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonConditionalFalse.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
 			this.textBoxOrigin.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.textBoxOrigin.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
@@ -81,46 +76,8 @@ namespace NVSE_Docs_Manager
 
 			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			#endregion mouseEventHandlers
-
-
-			TreeNode ParentNode1;
-			TreeNode ParentNode2;
-
-			ParentNode1 = treeView1.Nodes.Add("tv1");
-			ParentNode1.Nodes.Add("tv1FirstChild");
-			ParentNode1.Nodes.Add("tv1SecondChild");
-			ParentNode1.Nodes.Add("tv1ThirdChild");
-			ParentNode1.Nodes.Add("tv1FourthChild");
-			ParentNode1 = treeView1.Nodes.Add("tv2");
-			ParentNode1.Nodes.Add("tv2FirstChild");
-			ParentNode1.Nodes.Add("tv2SecondChild");
-			ParentNode1.Expand();
-
-			ParentNode2 = treeView2.Nodes.Add("tv3");
-			ParentNode2.Nodes.Add("tv3FirstChild");
-			ParentNode2.Nodes.Add("tv3SecondChild");
-			//ParentNode2.Expand();
-			//this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-			//this.treeView2.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-			//this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
-			//this.treeView2.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeView_DragEnter);
-			//this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);
-			//this.treeView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeView_DragDrop);	
-
-
-			this.treeView1.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(TreeManager.treeView1_ItemDrag);
-			this.treeView1.DragEnter += new System.Windows.Forms.DragEventHandler(TreeManager.treeView1_DragEnter);
-			this.treeView1.DragDrop += new System.Windows.Forms.DragEventHandler(TreeManager.treeView1_DragDrop);
+			#endregion
 		}
-
-		
-
-
-
-		
-
 
 		/// <summary>
 		/// Outputs a string to the statusbar
@@ -130,40 +87,6 @@ namespace NVSE_Docs_Manager
 		{
 			toolStripStatusLabel1.Text = outString;
 		}
-
-	// Tool strip handlers
-		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			openFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				inFile = new StreamReader(openFileDialog1.FileName);
-				//MessageBox.Show(inFile.ReadToEnd());
-				parseLoadedFile(inFile);
-				inFile.Close();
-			}
-		}
-
-		private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				saveFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
-				StreamReader sr = new
-				   StreamReader(saveFileDialog1.FileName);
-				MessageBox.Show(sr.ReadToEnd());
-				sr.Close();
-			}
-		}
-
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("This will close down the whole application. Confirm?", "Close Application", MessageBoxButtons.YesNo) == DialogResult.Yes)
-			{
-				System.Windows.Forms.Application.Exit();
-			} 
-		}
-	// End tool strip handlers
 
 		/// <summary>
 		/// Turns a json encoded StreamReader file object into a list of FunctionDef objects.
@@ -204,7 +127,10 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		// Takes a function and fills in all the fields with the associated data
+		/// <summary>
+		/// Takes a function and fills in all the window fields
+		/// with their appropriate data
+		/// </summary>
 		public void populateFunctionForm(FunctionDef func)
 		{
 			flowLayoutPanelParameters.Controls.Clear();
@@ -215,6 +141,7 @@ namespace NVSE_Docs_Manager
 			textBoxOrigin.Clear();
 			textBoxCategory.Clear();
 			textBoxTags.Clear();
+			richTextBoxDescription.Clear();
 			radioButtonCallingConventionEither.Checked = true;
 			radioButtonConditionalFalse.Checked = true;
 
@@ -258,18 +185,24 @@ namespace NVSE_Docs_Manager
 					comboBoxReturnTypeType.Text = "";
 					checkBoxReturnType.Checked = false;
 				}
+			
+			if (func.Description != null)
+				foreach (string s in func.Description) { richTextBoxDescription.Text += s + System.Environment.NewLine + System.Environment.NewLine; }
 		}
 
-		// Takes all the info in the window and creates a new function from it
-		// then adds it to the listbox and LoadedFunctionsList
+		/// <summary>
+		/// Takes all the info in the window and creates a new function from it
+		/// then adds it to the listbox and LoadedFunctionsList
+		/// </summary>
 		private void saveNewFunction()
 		{
 			FunctionDef func = windowToFunction(new FunctionDef());
 			addToFunctionListBox(func);
 		}
 
-		// Overwrites the function with the same name as that in the window with
-		// all of the data in the window
+		/// <summary>
+		/// Finds the current function by name and replaces its data with that in the window
+		/// </summary>
 		private void updateCurrentFunction()
 		{
 			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
@@ -291,14 +224,10 @@ namespace NVSE_Docs_Manager
 			{
 				foreach (string line in textBoxTags.Lines)
 				{
-					;
 					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
 						function.Tags.Add(line);
 				}
-				//function.Tags.AddRange(textBoxTags.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
 			}
-				
-
 
 			if (radioButtonCallingConventionBase.Checked == true)
 				function.Convention = "B";
@@ -319,6 +248,7 @@ namespace NVSE_Docs_Manager
 				Parameter newParam = new Parameter();
 
 				System.Windows.Forms.ComboBox cBox;
+				System.Windows.Forms.CheckBox cBox2;
 
 				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
 				newParam.url = cBox.Text;
@@ -326,8 +256,8 @@ namespace NVSE_Docs_Manager
 				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
 				newParam.type = cBox.Text;
 
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxOptional"];
-				newParam.optional = cBox.Text;
+				cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
+				newParam.optional = cBox2.Checked.ToString();
 
 				function.Parameters.Add(newParam);
 			}
@@ -337,7 +267,83 @@ namespace NVSE_Docs_Manager
 				function.ReturnType[0].type = comboBoxReturnTypeURL.Text;
 				function.ReturnType[0].type = comboBoxReturnTypeType.Text;
 			}
+
+			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
+			{
+				foreach (string line in richTextBoxDescription.Lines)
+				{
+					if (!String.IsNullOrEmpty(line))
+						function.Description.Add(line);
+				}
+			}
+
 			return function;
+		}
+
+
+
+		/// <summary>
+		/// Presents a Yes/No dialog option asking if the user has saved.
+		/// Returns Yes or No
+		/// </summary>
+		private DialogResult confirmCloseForm()
+		{
+			DialogResult d = MessageBox.Show("Have you saved?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
+			if (d == DialogResult.Yes)
+			{
+				return DialogResult.Yes;
+			}
+			return DialogResult.No;
+		}
+
+		/// <summary>
+		/// Presents a dialog form with a text entry.
+		/// </summary>
+		/// <param name="title">Title of the form.</param>
+		/// <param name="promptText">Text prompt to inform what the entered string is for.</param>
+		/// <param name="value">String variable to hold the entered text.</param>
+		public static DialogResult InputBox(string title, string promptText, ref string value)
+		{
+			Form form = new Form();
+			Label label = new Label();
+			TextBox textBox = new TextBox();
+			Button buttonOk = new Button();
+			Button buttonCancel = new Button();
+
+			form.Text = title;
+			label.Text = promptText;
+			textBox.Text = value;
+
+			buttonOk.Text = "OK";
+			buttonCancel.Text = "Cancel";
+			buttonOk.DialogResult = DialogResult.OK;
+			buttonCancel.DialogResult = DialogResult.Cancel;
+
+			label.SetBounds(9, 20, 372, 13);
+			textBox.SetBounds(12, 36, 372, 20);
+			buttonOk.SetBounds(228, 72, 75, 23);
+			buttonCancel.SetBounds(309, 72, 75, 23);
+
+			label.AutoSize = true;
+			textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
+			buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+			form.ClientSize = new Size(396, 107);
+			form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
+			form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+			form.FormBorderStyle = FormBorderStyle.FixedDialog;
+			form.StartPosition = FormStartPosition.CenterScreen;
+			form.MinimizeBox = false;
+			form.MaximizeBox = false;
+			form.AcceptButton = buttonOk;
+			form.CancelButton = buttonCancel;
+
+			form.StartPosition = FormStartPosition.CenterParent;
+
+			DialogResult dialogResult = form.ShowDialog();
+			value = textBox.Text;
+			return dialogResult;
 		}
 
 		private bool hasChanged()
@@ -347,14 +353,6 @@ namespace NVSE_Docs_Manager
 				return false;
 			return true;
 		}
-
-		private void buttonNewFunction_Click(object sender, EventArgs e)
-		{
-			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (d == DialogResult.Yes)
-				populateFunctionForm(new FunctionDef());
-		}
-
-
+		
 	}
 }

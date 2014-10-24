@@ -45,6 +45,8 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
+			this.labelDescription = new System.Windows.Forms.Label();
+			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
 			this.buttonNewFunction = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.checkBoxReturnType = new System.Windows.Forms.CheckBox();
@@ -66,7 +68,6 @@
 			this.buttonParametersNew = new System.Windows.Forms.Button();
 			this.textBoxCategory = new System.Windows.Forms.TextBox();
 			this.labelCategory = new System.Windows.Forms.Label();
-			this.labelExamples = new System.Windows.Forms.Label();
 			this.textBoxOrigin = new System.Windows.Forms.TextBox();
 			this.labelOrigin = new System.Windows.Forms.Label();
 			this.labelTags = new System.Windows.Forms.Label();
@@ -88,8 +89,9 @@
 			this.textBoxName = new System.Windows.Forms.TextBox();
 			this.labelAlias = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
-			this.treeView1 = new System.Windows.Forms.TreeView();
-			this.treeView2 = new System.Windows.Forms.TreeView();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
+			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
@@ -188,23 +190,28 @@
 			// 
 			// listboxFunctionList
 			// 
+			this.listboxFunctionList.AllowDrop = true;
 			this.listboxFunctionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listboxFunctionList.FormattingEnabled = true;
+			this.listboxFunctionList.ItemHeight = 16;
 			this.listboxFunctionList.Location = new System.Drawing.Point(12, 36);
 			this.listboxFunctionList.Name = "listboxFunctionList";
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
-			this.listboxFunctionList.Size = new System.Drawing.Size(300, 290);
+			this.listboxFunctionList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.listboxFunctionList.Size = new System.Drawing.Size(300, 580);
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
+			this.listboxFunctionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseUp);
 			// 
 			// groupSelectionEditor
 			// 
 			this.groupSelectionEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupSelectionEditor.Controls.Add(this.treeView2);
+			this.groupSelectionEditor.Controls.Add(this.labelDescription);
+			this.groupSelectionEditor.Controls.Add(this.richTextBoxDescription);
 			this.groupSelectionEditor.Controls.Add(this.buttonNewFunction);
 			this.groupSelectionEditor.Controls.Add(this.groupBox1);
 			this.groupSelectionEditor.Controls.Add(this.buttonDiscardChanges);
@@ -214,7 +221,6 @@
 			this.groupSelectionEditor.Controls.Add(this.buttonParametersNew);
 			this.groupSelectionEditor.Controls.Add(this.textBoxCategory);
 			this.groupSelectionEditor.Controls.Add(this.labelCategory);
-			this.groupSelectionEditor.Controls.Add(this.labelExamples);
 			this.groupSelectionEditor.Controls.Add(this.textBoxOrigin);
 			this.groupSelectionEditor.Controls.Add(this.labelOrigin);
 			this.groupSelectionEditor.Controls.Add(this.labelTags);
@@ -237,6 +243,23 @@
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
 			// 
+			// labelDescription
+			// 
+			this.labelDescription.AutoSize = true;
+			this.labelDescription.Location = new System.Drawing.Point(190, 440);
+			this.labelDescription.Name = "labelDescription";
+			this.labelDescription.Size = new System.Drawing.Size(60, 13);
+			this.labelDescription.TabIndex = 504;
+			this.labelDescription.Text = "Description";
+			// 
+			// richTextBoxDescription
+			// 
+			this.richTextBoxDescription.Location = new System.Drawing.Point(190, 459);
+			this.richTextBoxDescription.Name = "richTextBoxDescription";
+			this.richTextBoxDescription.Size = new System.Drawing.Size(550, 147);
+			this.richTextBoxDescription.TabIndex = 503;
+			this.richTextBoxDescription.Text = "";
+			// 
 			// buttonNewFunction
 			// 
 			this.buttonNewFunction.Location = new System.Drawing.Point(107, 501);
@@ -256,7 +279,7 @@
 			this.groupBox1.Controls.Add(this.label5);
 			this.groupBox1.Controls.Add(this.comboBoxReturnTypeURL);
 			this.groupBox1.Controls.Add(this.comboBoxReturnTypeType);
-			this.groupBox1.Location = new System.Drawing.Point(190, 382);
+			this.groupBox1.Location = new System.Drawing.Point(190, 369);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(373, 60);
 			this.groupBox1.TabIndex = 29;
@@ -352,9 +375,9 @@
 			// flowLayoutPanelParameters
 			// 
 			this.flowLayoutPanelParameters.AutoScroll = true;
-			this.flowLayoutPanelParameters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.flowLayoutPanelParameters.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.flowLayoutPanelParameters.Controls.Add(this.parameter1);
-			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(190, 48);
+			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(190, 35);
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
 			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(550, 328);
 			this.flowLayoutPanelParameters.TabIndex = 11;
@@ -454,7 +477,7 @@
 			// 
 			this.buttonParameterCopy.AutoSize = true;
 			this.buttonParameterCopy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonParameterCopy.Location = new System.Drawing.Point(349, 24);
+			this.buttonParameterCopy.Location = new System.Drawing.Point(349, 11);
 			this.buttonParameterCopy.Name = "buttonParameterCopy";
 			this.buttonParameterCopy.Size = new System.Drawing.Size(64, 23);
 			this.buttonParameterCopy.TabIndex = 12;
@@ -467,7 +490,7 @@
 			// 
 			this.buttonParametersNew.AutoSize = true;
 			this.buttonParametersNew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonParametersNew.Location = new System.Drawing.Point(253, 24);
+			this.buttonParametersNew.Location = new System.Drawing.Point(253, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
 			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
 			this.buttonParametersNew.TabIndex = 10;
@@ -490,16 +513,6 @@
 			this.labelCategory.Size = new System.Drawing.Size(49, 13);
 			this.labelCategory.TabIndex = 25;
 			this.labelCategory.Text = "Category";
-			// 
-			// labelExamples
-			// 
-			this.labelExamples.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.labelExamples.AutoSize = true;
-			this.labelExamples.Location = new System.Drawing.Point(187, 459);
-			this.labelExamples.Name = "labelExamples";
-			this.labelExamples.Size = new System.Drawing.Size(52, 13);
-			this.labelExamples.TabIndex = 24;
-			this.labelExamples.Text = "Examples";
 			// 
 			// textBoxOrigin
 			// 
@@ -549,7 +562,7 @@
 			// labelParameters
 			// 
 			this.labelParameters.AutoSize = true;
-			this.labelParameters.Location = new System.Drawing.Point(187, 29);
+			this.labelParameters.Location = new System.Drawing.Point(187, 16);
 			this.labelParameters.Name = "labelParameters";
 			this.labelParameters.Size = new System.Drawing.Size(60, 13);
 			this.labelParameters.TabIndex = 16;
@@ -705,32 +718,51 @@
 			this.labelName.TabIndex = 0;
 			this.labelName.Text = "Name";
 			// 
-			// treeView1
+			// panel1
 			// 
-			this.treeView1.AllowDrop = true;
-			this.treeView1.Location = new System.Drawing.Point(12, 332);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(300, 310);
-			this.treeView1.TabIndex = 4;
+			this.panel1.Location = new System.Drawing.Point(319, 120);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(436, 436);
+			this.panel1.TabIndex = 503;
 			// 
-			// treeView2
+			// buttonListBoxDeleteItem
 			// 
-			this.treeView2.AllowDrop = true;
-			this.treeView2.Location = new System.Drawing.Point(265, 475);
-			this.treeView2.Name = "treeView2";
-			this.treeView2.Size = new System.Drawing.Size(121, 97);
-			this.treeView2.TabIndex = 5;
+			this.buttonListBoxDeleteItem.AutoSize = true;
+			this.buttonListBoxDeleteItem.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonListBoxDeleteItem.Enabled = false;
+			this.buttonListBoxDeleteItem.Location = new System.Drawing.Point(12, 622);
+			this.buttonListBoxDeleteItem.Name = "buttonListBoxDeleteItem";
+			this.buttonListBoxDeleteItem.Size = new System.Drawing.Size(92, 23);
+			this.buttonListBoxDeleteItem.TabIndex = 504;
+			this.buttonListBoxDeleteItem.Text = "Delete Function";
+			this.buttonListBoxDeleteItem.UseVisualStyleBackColor = true;
+			this.buttonListBoxDeleteItem.Click += new System.EventHandler(this.buttonListBoxDeleteItem_Click);
+			// 
+			// buttonListBoxChangeCategory
+			// 
+			this.buttonListBoxChangeCategory.AutoSize = true;
+			this.buttonListBoxChangeCategory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonListBoxChangeCategory.Enabled = false;
+			this.buttonListBoxChangeCategory.Location = new System.Drawing.Point(110, 622);
+			this.buttonListBoxChangeCategory.Name = "buttonListBoxChangeCategory";
+			this.buttonListBoxChangeCategory.Size = new System.Drawing.Size(99, 23);
+			this.buttonListBoxChangeCategory.TabIndex = 505;
+			this.buttonListBoxChangeCategory.Text = "Change Category";
+			this.buttonListBoxChangeCategory.UseVisualStyleBackColor = true;
+			this.buttonListBoxChangeCategory.Click += new System.EventHandler(this.buttonListBoxChangeCategory_Click);
 			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1075, 677);
-			this.Controls.Add(this.treeView1);
+			this.Controls.Add(this.buttonListBoxChangeCategory);
+			this.Controls.Add(this.buttonListBoxDeleteItem);
 			this.Controls.Add(this.groupSelectionEditor);
 			this.Controls.Add(this.listboxFunctionList);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.panel1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(1091, 715);
@@ -738,6 +770,7 @@
 			this.Name = "MainWindow";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "Form1";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainMenu_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
@@ -761,6 +794,7 @@
 
 		#endregion
 
+		#region Form Declarations
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
@@ -800,7 +834,6 @@
 		private System.Windows.Forms.GroupBox groupBoxConditional;
 		private System.Windows.Forms.Button buttonParametersNew;
 		private System.Windows.Forms.Button buttonParameterCopy;
-		private System.Windows.Forms.Label labelExamples;
 		private System.Windows.Forms.GroupBox parameter1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Label labelParameter1URL;
@@ -817,9 +850,13 @@
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
 		private System.Windows.Forms.CheckBox checkBoxReturnType;
 		private System.Windows.Forms.Button buttonNewFunction;
-		private System.Windows.Forms.TreeView treeView1;
-		private System.Windows.Forms.TreeView treeView2;
 		private System.Windows.Forms.CheckBox checkBox1;
+		#endregion
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Button buttonListBoxDeleteItem;
+		private System.Windows.Forms.Button buttonListBoxChangeCategory;
+		private System.Windows.Forms.Label labelDescription;
+		private System.Windows.Forms.RichTextBox richTextBoxDescription;
 	}
 }
 
