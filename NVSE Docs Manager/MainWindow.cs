@@ -20,13 +20,19 @@ namespace NVSE_Docs_Manager
 		List<Control> parametersList = new List<Control>();
 		List<string> parameterURLList = new List<string>() { 
 			"Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
-			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
+			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Format_Specifiers", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
 			"Weapon_Mod", "Weapon_Type"
 		};
-		List<string> parameterTypesList = new List<string>()
-		{
-			"scanCode:Integer"
-		};
+
+		/// <summary>
+		/// A list of all the names from the left-hand side of the parameter type
+		/// </summary>
+		List<string> parameterTypesList = new List<string>();
+
+		/// <summary>
+		/// A list of all the names from the right-hand side of the parameter type
+		/// </summary>
+		List<string> parameterNamesList = new List<string>();
 
 
 		// array of read in functions
@@ -59,12 +65,8 @@ namespace NVSE_Docs_Manager
 			this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
-			this.groupBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.groupBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			this.radioButtonConditionalTrue.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonConditionalTrue.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			this.radioButtonConditionalFalse.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonConditionalFalse.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.checkBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.checkBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 
 			this.textBoxOrigin.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.textBoxOrigin.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
@@ -93,6 +95,26 @@ namespace NVSE_Docs_Manager
 		private void parseLoadedFile(StreamReader file)
 		{
 			populateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
+			updateParameterTypeLists();
+		}
+
+		/// <summary>
+		/// Updates the parameter type and name lists from all parameters
+		/// </summary>
+		private void updateParameterTypeLists()
+		{
+			foreach (FunctionDef f in LoadedFunctionsList)
+			{
+				if (f.Parameters != null)
+				{
+					foreach (Parameter p in f.Parameters)
+					{
+						string[] s = p.type.Split(':');
+						if (!parameterTypesList.Contains(s[0]) && !String.IsNullOrEmpty(s[0])) { parameterTypesList.Add(s[0]); }
+						if (s.Length >= 2 && !parameterNamesList.Contains(s[1]) && !String.IsNullOrEmpty(s[1])) { parameterNamesList.Add(s[1]); }
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -101,14 +123,18 @@ namespace NVSE_Docs_Manager
 		/// <param name="functionList">A List&lt;T&gt; of FunctionDefs that will be added to the working list of functions.</param>
 		private void populateFunctionListBox(List<FunctionDef> functionList)
 		{
-			foreach (FunctionDef f in functionList)
+			if (functionList != null)
 			{
-				addToFunctionListBox(f);
+				foreach (FunctionDef f in functionList)
+				{
+					addToFunctionListBox(f);
+				}
+				foreach (FunctionDef f in functionList)
+				{
+					//if (treeView1.Nodes.ContainsKey(f.Category;))
+				}
 			}
-			foreach (FunctionDef f in functionList)
-			{
-				//if (treeView1.Nodes.ContainsKey(f.Category;))
-			}
+			
 		}
 
 		/// <summary>
@@ -140,7 +166,8 @@ namespace NVSE_Docs_Manager
 			textBoxTags.Clear();
 			richTextBoxDescription.Clear();
 			radioButtonCallingConventionEither.Checked = true;
-			radioButtonConditionalFalse.Checked = true;
+			checkBoxReturnType.Checked = false;
+			checkBoxConditional.Checked = false;
 
 			// save the settings to a global first, so we can revert if a bad change is made
 			currentEdittingBackup = func;
@@ -154,34 +181,36 @@ namespace NVSE_Docs_Manager
 			if (func.Tags != null)
 				foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
 
-			if (func.Convention == "B")
-				radioButtonCallingConventionBase.Checked = true;
-			else if (func.Convention == "E")
-				radioButtonCallingConventionEither.Checked = true;
-			else if (func.Convention == "R")
-				radioButtonCallingConventionRef.Checked = true;
+			switch (func.Convention)
+			{
+				case "B": radioButtonCallingConventionBase.Checked = true; break;
+				case "E": radioButtonCallingConventionEither.Checked = true; break;
+				case "R": radioButtonCallingConventionRef.Checked = true; break;
+				default: radioButtonCallingConventionEither.Checked = true; break;
+			}
 
 			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-			if (func.Condition == "Yes")
-				radioButtonConditionalTrue.Checked = true;
-			else
-				radioButtonConditionalFalse.Checked = true;
-
+			switch(func.Condition)
+			{
+				case "True": checkBoxConditional.Checked = true; break;
+				default: checkBoxConditional.Checked = false; break;
+			}
+			
 			populateParameterList(func.Parameters);
 
-			if (func.ReturnType.Count > 0)
-				if (!String.IsNullOrEmpty(func.ReturnType[0].type))
-				{
-					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
-					comboBoxReturnTypeType.Text = func.ReturnType[0].type;
-					checkBoxReturnType.Checked = true;
-				}
-				else
-				{
+			switch (func.ReturnType == null)
+			{
+				case true:
 					comboBoxReturnTypeURL.Text = "";
 					comboBoxReturnTypeType.Text = "";
 					checkBoxReturnType.Checked = false;
-				}
+					break;
+				default:
+					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
+					comboBoxReturnTypeType.Text = func.ReturnType[0].type;
+					checkBoxReturnType.Checked = true;
+					break;
+			}
 			
 			if (func.Description != null)
 				foreach (string s in func.Description) { richTextBoxDescription.Text += s + System.Environment.NewLine + System.Environment.NewLine; }
@@ -211,63 +240,76 @@ namespace NVSE_Docs_Manager
 		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
 		private FunctionDef windowToFunction(FunctionDef function)
 		{
-			function.Name = textBoxName.Text;
-			function.Alias = textBoxAlias.Text;
-			function.Version = textBoxVersion.Text;
-			function.FromPlugin = textBoxOrigin.Text;
-			function.Category = textBoxCategory.Text;
+			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
+			if (!String.IsNullOrEmpty(textBoxAlias.Text)) { function.Alias = textBoxAlias.Text; }
+			else { function.Alias = null;  }
+			if (!String.IsNullOrEmpty(textBoxVersion.Text)) { function.Version = textBoxVersion.Text; }
+			else { function.Version = null; }
+			if (!String.IsNullOrEmpty(textBoxOrigin.Text)) { function.FromPlugin = textBoxOrigin.Text; }
+			else { function.FromPlugin = null; }
+			if (!String.IsNullOrEmpty(textBoxCategory.Text)) { function.Category = textBoxCategory.Text; }
+			else { function.Category = null; }
 
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
 			{
 				foreach (string line in textBoxTags.Lines)
 				{
-					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-						function.Tags.Add(line);
+					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line)) { function.Tags.Add(line); }
 				}
 			}
 
-			if (radioButtonCallingConventionBase.Checked == true)
-				function.Convention = "B";
-			else if (radioButtonCallingConventionEither.Checked == true)
-				function.Convention = "E";
-			else if (radioButtonCallingConventionRef.Checked == true)
-				function.Convention = "R";
+			if (radioButtonCallingConventionBase.Checked == true) { function.Convention = "B"; }
+			else if (radioButtonCallingConventionEither.Checked == true) { function.Convention = "E"; }
+			else if (radioButtonCallingConventionRef.Checked == true) { function.Convention = "R"; }
+				
 
-			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-			if (radioButtonConditionalFalse.Checked == true)
-				function.Condition = "No";
-			else
-				function.Condition = "Yes";
+			// TODO: Update javascript to handle true/false
+			if (checkBoxConditional.Checked == true) { function.Condition = checkBoxConditional.Checked.ToString(); }
+			else { function.Condition = null; }
 
-			function.Parameters.Clear();
-			foreach (Control c in parametersList)
+			if (parametersList.Count > 0 && function.Parameters == null)
 			{
-				Parameter newParam = new Parameter();
+				function.Parameters = new List<Parameter>();
+				function.Parameters.Clear();
+				foreach (Control c in parametersList)
+				{
+					Parameter newParam = new Parameter();
 
-				System.Windows.Forms.ComboBox cBox;
-				System.Windows.Forms.CheckBox cBox2;
+					System.Windows.Forms.ComboBox cBox;
+					System.Windows.Forms.CheckBox cBox2;
 
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
-				newParam.url = cBox.Text;
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
+					if (!String.IsNullOrEmpty(cBox.Text)) { newParam.url = cBox.Text; }
+					
+					string s = "";
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
+					s = cBox.Text + ":";
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxName"];
+					s += cBox.Text;
+					if(!String.IsNullOrEmpty(s)) { newParam.type = s; }
 
-				cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
-				newParam.type = cBox.Text;
+					cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
+					if(!String.IsNullOrEmpty(cBox2.Checked.ToString())) { newParam.optional = cBox2.Checked.ToString(); }
 
-				cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
-				newParam.optional = cBox2.Checked.ToString();
-
-				function.Parameters.Add(newParam);
+					function.Parameters.Add(newParam);
+				}
 			}
+			else { function.Parameters = null; }
+
+			
 
 			if (checkBoxReturnType.Checked)
 			{
-				function.ReturnType[0].type = comboBoxReturnTypeURL.Text;
-				function.ReturnType[0].type = comboBoxReturnTypeType.Text;
+				if (function.ReturnType == null) { function.ReturnType = new List<ReturnType>(); function.ReturnType.Add(new ReturnType()); }
+				//function.ReturnType.Clear();
+				if(!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].type = comboBoxReturnTypeURL.Text; }
+				if(!String.IsNullOrEmpty(comboBoxReturnTypeType.Text)) { function.ReturnType[0].type = comboBoxReturnTypeType.Text; } 
 			}
 
-			function.Description.Clear();
 			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
 			{
+				if (function.Description == null) { function.Description = new List<string>(); }
+				function.Description.Clear();
 				foreach (string line in richTextBoxDescription.Lines)
 				{
 					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
@@ -350,6 +392,11 @@ namespace NVSE_Docs_Manager
 			if (toCheck.Equals(currentEdittingBackup))
 				return false;
 			return true;
+		}
+
+		private void resetEverythingToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			clearEntireForm();
 		}
 		
 	}

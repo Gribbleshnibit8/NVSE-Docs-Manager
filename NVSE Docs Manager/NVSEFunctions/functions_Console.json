@@ -4,7 +4,7 @@
 		"Alias": "printc",
 		"NumParameters": "21",
 		"Parameters": [
-			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"url": "Format_Specifiers", "type": "format string:String"},
 			{"type": "Variable", "optional": "true"},
 			{"type": "Variable", "optional": "true"},
 			{"type": "Variable", "optional": "true"},
@@ -39,7 +39,7 @@
 		"Alias": "dbprintc",
 		"NumParameters": "21",
 		"Parameters": [
-			{"url": "FormatSpecifiers", "type": "format string:String"},
+			{"url": "Format_Specifiers", "type": "format string:String"},
 			{"type": "Variable", "optional": "true"},
 			{"type": "Variable", "optional": "true"},
 			{"type": "Variable", "optional": "true"},

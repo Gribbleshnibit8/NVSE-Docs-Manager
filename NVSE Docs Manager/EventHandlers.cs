@@ -39,11 +39,8 @@ namespace NVSE_Docs_Manager
 			else if (sender == radioButtonCallingConventionEither)
 				s = "A function called by either of the above. Most functions work this way";
 
-			else if (sender == radioButtonConditionalTrue)
+			else if (sender == checkBoxConditional)
 				s = "If this function can be used as a conditional in the condition dialog";
-
-			else if (sender == radioButtonConditionalFalse)
-				s = "If this function cannot be used as a conditional in the condition dialog";
 
 			else if (sender == textBoxTags)
 				s = "Any other means of searching this function. Ex. Array, String, Inventory";
@@ -92,6 +89,7 @@ namespace NVSE_Docs_Manager
 			openFileDialog1.Multiselect = true;
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
+				clearEntireForm();
 				foreach (String file in openFileDialog1.FileNames)
 				{
 					StreamReader sr = new StreamReader(file);
@@ -109,7 +107,15 @@ namespace NVSE_Docs_Manager
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				StreamWriter sw = new StreamWriter(saveFileDialog1.OpenFile());
-				sw.Write(JsonConvert.SerializeObject(LoadedFunctionsList, Formatting.Indented));
+				JsonSerializerSettings settings = new JsonSerializerSettings()
+				{
+					Formatting = Formatting.None,
+					DefaultValueHandling = DefaultValueHandling.Ignore,
+					NullValueHandling = NullValueHandling.Ignore,
+				};
+
+
+				sw.Write(JsonConvert.SerializeObject(LoadedFunctionsList, settings));
 				sw.Close();
 			}
 		}
@@ -124,20 +130,17 @@ namespace NVSE_Docs_Manager
 		#region Function Panel Events
 
 		/// <summary>
-		/// Save all the form data and add the function as a new function to the list box
+		/// Enables the Save button only when a function name has been entered
 		/// </summary>
-		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
+		private void textBoxName_TextChanged(object sender, EventArgs e)
 		{
-			if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text)) { saveNewFunction(); }
+			System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
+			if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
+				buttonSaveCurrentChanges.Enabled = false;
 			else
-			{
-				// Update existing function
-				DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-				if (d == DialogResult.Yes)
-					updateCurrentFunction(); // Update existing function
-			} // end else
-		} // end buttonSaveCurrentChanges_Click
-		
+				buttonSaveCurrentChanges.Enabled = true;
+		}
+
 		/// <summary>
 		/// Toggles the fields in the return type group.
 		/// </summary>
@@ -158,6 +161,25 @@ namespace NVSE_Docs_Manager
 		}
 
 		/// <summary>
+		/// Save all the form data and add the function as a new function to the list box
+		/// </summary>
+		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
+		{
+			if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text)) 
+			{
+				saveNewFunction();
+			}
+			else
+			{
+				// Update existing function
+				DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+				if (d == DialogResult.Yes)
+					updateCurrentFunction(); // Update existing function
+			} // end else
+			updateParameterTypeLists();
+		} // end buttonSaveCurrentChanges_Click
+
+		/// <summary>
 		/// Reverts changes to the state when the form was loaded
 		/// If working at start, will produce a clean form
 		/// If working on an existing function will revert to pre-edit
@@ -167,18 +189,6 @@ namespace NVSE_Docs_Manager
 			DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (d == DialogResult.Yes)
 				populateFunctionForm(currentEdittingBackup);
-		}
-
-		/// <summary>
-		/// Enables the Save button only when a function name has been entered
-		/// </summary>
-		private void textBoxName_TextChanged(object sender, EventArgs e)
-		{
-			System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
-			if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
-				buttonSaveCurrentChanges.Enabled = false;
-			else
-				buttonSaveCurrentChanges.Enabled = true;
 		}
 
 		/// <summary>
@@ -275,6 +285,25 @@ namespace NVSE_Docs_Manager
 
 		#endregion Function List Events
 
+
+
+		private void clearEntireForm()
+		{
+			listboxFunctionList.Items.Clear();
+			LoadedFunctionsList.Clear();
+			flowLayoutPanelParameters.Controls.Clear();
+			parametersList.Clear();
+			textBoxName.Clear();
+			textBoxAlias.Clear();
+			textBoxVersion.Clear();
+			textBoxOrigin.Clear();
+			textBoxCategory.Clear();
+			textBoxTags.Clear();
+			richTextBoxDescription.Clear();
+			radioButtonCallingConventionEither.Checked = true;
+			checkBoxReturnType.Checked = false;
+			checkBoxConditional.Checked = false;
+		}
 
 		/// <summary>
 		/// When closing the form, ask if data has been saved before allowing an exit
