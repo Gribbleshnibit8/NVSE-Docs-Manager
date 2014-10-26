@@ -16,8 +16,11 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow : Form
 	{
 
-		// array for parameters groups for each ParameterDef
+		/// <summary>
+		/// A list of Parameter Control objects displayed in the current form
+		/// </summary>
 		List<Control> parametersList = new List<Control>();
+
 		List<string> parameterURLList = new List<string>() { 
 			"Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
 			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Format_Specifiers", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
@@ -154,74 +157,6 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		/// <summary>
-		/// Takes a function and fills in all the window fields
-		/// with their appropriate data
-		/// </summary>
-		public void populateFunctionForm(FunctionDef func)
-		{
-			flowLayoutPanelParameters.Controls.Clear();
-			parametersList.Clear();
-			textBoxName.Clear();
-			textBoxAlias.Clear();
-			textBoxVersion.Clear();
-			textBoxOrigin.Clear();
-			textBoxCategory.Clear();
-			textBoxTags.Clear();
-			richTextBoxDescription.Clear();
-			radioButtonCallingConventionEither.Checked = true;
-			checkBoxReturnType.Checked = false;
-			checkBoxConditional.Checked = false;
-
-			// save the settings to a global first, so we can revert if a bad change is made
-			currentEdittingBackup = func;
-
-			textBoxName.Text = func.Name;
-			textBoxAlias.Text = func.Alias;
-			textBoxVersion.Text = func.Version;
-			textBoxOrigin.Text = func.FromPlugin;
-			textBoxCategory.Text = func.Category;
-
-			if (func.Tags != null)
-				foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
-
-			switch (func.Convention)
-			{
-				case "B": radioButtonCallingConventionBase.Checked = true; break;
-				case "E": radioButtonCallingConventionEither.Checked = true; break;
-				case "R": radioButtonCallingConventionRef.Checked = true; break;
-				default: radioButtonCallingConventionEither.Checked = true; break;
-			}
-
-			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
-			switch(func.Condition)
-			{
-				case "True": checkBoxConditional.Checked = true; break;
-				default: checkBoxConditional.Checked = false; break;
-			}
-			
-			populateParameterList(func.Parameters);
-
-			switch (func.ReturnType == null)
-			{
-				case true:
-					comboBoxReturnTypeURL.Text = "";
-					comboBoxReturnTypeType.Text = "";
-					comboBoxReturnTypeName.Text = "";
-					checkBoxReturnType.Checked = false;
-					break;
-				default: 
-					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
-					string[] s = func.ReturnType[0].type.Split(':');
-					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
-					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
-					checkBoxReturnType.Checked = true;
-					break;
-			}
-			
-			if (func.Description != null)
-				foreach (string s in func.Description) { richTextBoxDescription.Text += s + System.Environment.NewLine + System.Environment.NewLine; }
-		}
 
 		/// <summary>
 		/// Takes all the info in the window and creates a new function from it
@@ -241,90 +176,6 @@ namespace NVSE_Docs_Manager
 			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
 
-		/// <summary>
-		/// Converts the window data into a function object
-		/// </summary>
-		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
-		private FunctionDef windowToFunction(FunctionDef function)
-		{
-			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
-			if (!String.IsNullOrEmpty(textBoxAlias.Text)) { function.Alias = textBoxAlias.Text; }
-			else { function.Alias = null;  }
-			if (!String.IsNullOrEmpty(textBoxVersion.Text)) { function.Version = textBoxVersion.Text; }
-			else { function.Version = null; }
-			if (!String.IsNullOrEmpty(textBoxOrigin.Text)) { function.FromPlugin = textBoxOrigin.Text; }
-			else { function.FromPlugin = null; }
-			if (!String.IsNullOrEmpty(textBoxCategory.Text)) { function.Category = textBoxCategory.Text; }
-			else { function.Category = null; }
-
-			if (!String.IsNullOrEmpty(textBoxTags.Text))
-			{
-				foreach (string line in textBoxTags.Lines)
-				{
-					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line)) { function.Tags.Add(line); }
-				}
-			}
-
-			if (radioButtonCallingConventionBase.Checked == true) { function.Convention = "B"; }
-			else if (radioButtonCallingConventionEither.Checked == true) { function.Convention = "E"; }
-			else if (radioButtonCallingConventionRef.Checked == true) { function.Convention = "R"; }
-				
-
-			// TODO: Update javascript to handle true/false
-			if (checkBoxConditional.Checked == true) { function.Condition = checkBoxConditional.Checked.ToString(); }
-			else { function.Condition = null; }
-
-			if (parametersList.Count > 0 && function.Parameters == null)
-			{
-				function.Parameters = new List<ParameterDef>();
-				function.Parameters.Clear();
-				foreach (Control c in parametersList)
-				{
-					ParameterDef newParam = new ParameterDef();
-
-					System.Windows.Forms.ComboBox cBox;
-					System.Windows.Forms.CheckBox cBox2;
-
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
-					if (!String.IsNullOrEmpty(cBox.Text)) { newParam.url = cBox.Text; }
-					
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
-					string s = cBox.Text + ":";
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxName"];
-					s += cBox.Text;
-					if(!String.IsNullOrEmpty(s)) { newParam.type = s; }
-
-					cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
-					if(!String.IsNullOrEmpty(cBox2.Checked.ToString())) { newParam.optional = cBox2.Checked.ToString(); }
-
-					function.Parameters.Add(newParam);
-				}
-			}
-			else { function.Parameters = null; }
-
-			
-
-			if (checkBoxReturnType.Checked)
-			{
-				if (function.ReturnType == null) { function.ReturnType = new List<ReturnTypeDef>(); function.ReturnType.Add(new ReturnTypeDef()); }
-				if(!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].type = comboBoxReturnTypeURL.Text; }
-				string s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
-				if(!String.IsNullOrEmpty(s)) { function.ReturnType[0].type = s; } 
-			}
-
-			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
-			{
-				if (function.Description == null) { function.Description = new List<string>(); }
-				function.Description.Clear();
-				foreach (string line in richTextBoxDescription.Lines)
-				{
-					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-						function.Description.Add(line);
-				}
-			}
-
-			return function;
-		}
 
 
 		private bool hasChanged()
@@ -336,7 +187,7 @@ namespace NVSE_Docs_Manager
 		}
 
 
-		#region Reusable Form Functions
+	#region Reusable Form Functions
 		/// <summary>
 		/// Presents a Yes/No dialog option asking if the user has saved.
 		/// Returns Yes or No
@@ -400,7 +251,7 @@ namespace NVSE_Docs_Manager
 			value = textBox.Text;
 			return dialogResult;
 		}
-		#endregion
+	#endregion
 
 
 		/// <summary>
@@ -428,10 +279,276 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 		}
 
+	#region Function Panel
 
 		#region Events
+			/// <summary>
+			/// Enables the Save button only when a function name has been entered
+			/// </summary>
+			private void textBoxName_TextChanged(object sender, EventArgs e)
+			{
+				System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
+				if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
+					buttonSaveCurrentChanges.Enabled = false;
+				else
+					buttonSaveCurrentChanges.Enabled = true;
+			}
 
-		#region Mouse Event Handlers
+			private void buttonNewParameter_Click(object sender, EventArgs e)
+			{
+				Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
+				parametersList.Add(c);
+				flowLayoutPanelParameters.Controls.Add(c);
+				rebuildParamaterPanel();
+			}
+
+			/// <summary>
+			/// Copy a Parameter and add it to the panel. Then recalculate the numbers of all Parameters
+			/// </summary>
+			/// <param name="sender"></param>
+			/// <param name="e"></param>
+			private void buttonCopyParameter_Click(object sender, EventArgs e)
+			{
+				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)parametersList.Last());
+				parametersList.Add(newParam);
+				flowLayoutPanelParameters.Controls.Add(newParam);
+				rebuildParamaterPanel();
+			}
+
+			/// <summary>
+			/// Toggles the fields in the return type group.
+			/// </summary>
+			private void checkBoxReturnType_CheckedChanged(object sender, EventArgs e)
+			{
+				System.Windows.Forms.CheckBox box = (System.Windows.Forms.CheckBox)sender;
+
+				foreach (Control c in box.Parent.Controls)
+				{
+					if (c != box)
+					{
+						if (c.Enabled == true)
+							c.Enabled = false;
+						else
+							c.Enabled = true;
+					}
+				}
+			}
+
+			/// <summary>
+			/// Save all the form data and add the function as a new function to the list box
+			/// </summary>
+			private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
+			{
+				if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text))
+				{
+					saveNewFunction();
+				}
+				else
+				{
+					// Update existing function
+					DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+					if (d == DialogResult.Yes)
+						updateCurrentFunction(); // Update existing function
+				} // end else
+				updateParameterTypeLists();
+			} // end buttonSaveCurrentChanges_Click
+
+			/// <summary>
+			/// Reverts changes to the state when the form was loaded
+			/// If working at start, will produce a clean form
+			/// If working on an existing function will revert to pre-edit
+			/// </summary>
+			private void buttonDiscardChanges_Click(object sender, EventArgs e)
+			{
+				DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (d == DialogResult.Yes)
+					populateFunctionForm(currentEdittingBackup);
+			}
+
+			/// <summary>
+			/// Prompts to ensure the user wants to clear the form, then clears all form entry if yes
+			/// </summary>
+			private void buttonNewFunction_Click(object sender, EventArgs e)
+		{
+			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (d == DialogResult.Yes)
+				populateFunctionForm(new FunctionDef());
+		}
+
+		#endregion Events
+
+		/// <summary>
+		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
+		/// </summary>
+		private void rebuildParamaterPanel()
+		{
+			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
+			{
+				flowLayoutPanelParameters.Controls[i].Text = "Parameter " + (i + 1).ToString();
+			}
+		}
+
+		/// <summary>
+		/// Takes a function and fills in all the window fields
+		/// with their appropriate data
+		/// </summary>
+		public void populateFunctionForm(FunctionDef func)
+		{
+			flowLayoutPanelParameters.Controls.Clear();
+			parametersList.Clear();
+			textBoxName.Clear();
+			textBoxAlias.Clear();
+			textBoxVersion.Clear();
+			textBoxOrigin.Clear();
+			textBoxCategory.Clear();
+			textBoxTags.Clear();
+			richTextBoxDescription.Clear();
+			radioButtonCallingConventionEither.Checked = true;
+			checkBoxReturnType.Checked = false;
+			checkBoxConditional.Checked = false;
+
+			// save the settings to a global first, so we can revert if a bad change is made
+			currentEdittingBackup = func;
+
+			textBoxName.Text = func.Name;
+			textBoxAlias.Text = func.Alias;
+			textBoxVersion.Text = func.Version;
+			textBoxOrigin.Text = func.FromPlugin;
+			textBoxCategory.Text = func.Category;
+
+			if (func.Tags != null)
+				foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
+
+			switch (func.Convention)
+			{
+				case "B": radioButtonCallingConventionBase.Checked = true; break;
+				case "E": radioButtonCallingConventionEither.Checked = true; break;
+				case "R": radioButtonCallingConventionRef.Checked = true; break;
+				default: radioButtonCallingConventionEither.Checked = true; break;
+			}
+
+			// TODO: Change from Yes/No to T/F or Y/N and update javascript to match
+			switch (func.Condition)
+			{
+				case "True": checkBoxConditional.Checked = true; break;
+				default: checkBoxConditional.Checked = false; break;
+			}
+
+			populateParameterList(func.Parameters);
+
+			switch (func.ReturnType == null)
+			{
+				case true:
+					comboBoxReturnTypeURL.Text = "";
+					comboBoxReturnTypeType.Text = "";
+					comboBoxReturnTypeName.Text = "";
+					checkBoxReturnType.Checked = false;
+					break;
+				default:
+					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
+					string[] s = func.ReturnType[0].type.Split(':');
+					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
+					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
+					checkBoxReturnType.Checked = true;
+					break;
+			}
+
+			if (func.Description != null)
+				foreach (string s in func.Description) { richTextBoxDescription.Text += s + System.Environment.NewLine + System.Environment.NewLine; }
+		}
+
+		/// <summary>
+		/// Converts the window data into a function object
+		/// </summary>
+		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
+		private FunctionDef windowToFunction(FunctionDef function)
+		{
+			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
+			if (!String.IsNullOrEmpty(textBoxAlias.Text)) { function.Alias = textBoxAlias.Text; }
+			else { function.Alias = null; }
+			if (!String.IsNullOrEmpty(textBoxVersion.Text)) { function.Version = textBoxVersion.Text; }
+			else { function.Version = null; }
+			if (!String.IsNullOrEmpty(textBoxOrigin.Text)) { function.FromPlugin = textBoxOrigin.Text; }
+			else { function.FromPlugin = null; }
+			if (!String.IsNullOrEmpty(textBoxCategory.Text)) { function.Category = textBoxCategory.Text; }
+			else { function.Category = null; }
+
+			if (!String.IsNullOrEmpty(textBoxTags.Text))
+			{
+				foreach (string line in textBoxTags.Lines)
+				{
+					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line)) { function.Tags.Add(line); }
+				}
+			}
+
+			if (radioButtonCallingConventionBase.Checked == true) { function.Convention = "B"; }
+			else if (radioButtonCallingConventionEither.Checked == true) { function.Convention = "E"; }
+			else if (radioButtonCallingConventionRef.Checked == true) { function.Convention = "R"; }
+
+
+			// TODO: Update javascript to handle true/false
+			if (checkBoxConditional.Checked == true) { function.Condition = checkBoxConditional.Checked.ToString(); }
+			else { function.Condition = null; }
+
+			if (parametersList.Count > 0 && function.Parameters == null)
+			{
+				function.Parameters = new List<ParameterDef>();
+				function.Parameters.Clear();
+				foreach (Control c in parametersList)
+				{
+					ParameterDef newParam = new ParameterDef();
+
+					System.Windows.Forms.ComboBox cBox;
+					System.Windows.Forms.CheckBox cBox2;
+
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
+					if (!String.IsNullOrEmpty(cBox.Text)) { newParam.url = cBox.Text; }
+
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
+					string s = cBox.Text + ":";
+					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxName"];
+					s += cBox.Text;
+					if (!String.IsNullOrEmpty(s)) { newParam.type = s; }
+
+					cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
+					if (!String.IsNullOrEmpty(cBox2.Checked.ToString())) { newParam.optional = cBox2.Checked.ToString(); }
+
+					function.Parameters.Add(newParam);
+				}
+			}
+			else { function.Parameters = null; }
+
+
+
+			if (checkBoxReturnType.Checked)
+			{
+				if (function.ReturnType == null) { function.ReturnType = new List<ReturnTypeDef>(); function.ReturnType.Add(new ReturnTypeDef()); }
+				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].type = comboBoxReturnTypeURL.Text; }
+				string s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
+				if (!String.IsNullOrEmpty(s)) { function.ReturnType[0].type = s; }
+			}
+
+			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
+			{
+				if (function.Description == null) { function.Description = new List<string>(); }
+				function.Description.Clear();
+				foreach (string line in richTextBoxDescription.Lines)
+				{
+					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
+						function.Description.Add(line);
+				}
+			}
+
+			return function;
+		}
+
+
+	#endregion
+
+
+	#region Events
+
+	#region Mouse Event Handlers
 		// Update the mouse event label to indicate the MouseEnter event occurred.
 		private void formMouseEventHandler_MouseEnter(object sender, System.EventArgs e)
 		{
@@ -494,7 +611,7 @@ namespace NVSE_Docs_Manager
 		}
 		#endregion
 
-		#region Tool Strip Handlers
+	#region Tool Strip Handlers
 
 		string fileName;
 
@@ -558,83 +675,7 @@ namespace NVSE_Docs_Manager
 		}
 		#endregion
 
-		#region Function Panel Events
-
-		/// <summary>
-		/// Enables the Save button only when a function name has been entered
-		/// </summary>
-		private void textBoxName_TextChanged(object sender, EventArgs e)
-		{
-			System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
-			if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
-				buttonSaveCurrentChanges.Enabled = false;
-			else
-				buttonSaveCurrentChanges.Enabled = true;
-		}
-
-		/// <summary>
-		/// Toggles the fields in the return type group.
-		/// </summary>
-		private void checkBoxReturnType_CheckedChanged(object sender, EventArgs e)
-		{
-			System.Windows.Forms.CheckBox box = (System.Windows.Forms.CheckBox)sender;
-
-			foreach (Control c in box.Parent.Controls)
-			{
-				if (c != box)
-				{
-					if (c.Enabled == true)
-						c.Enabled = false;
-					else
-						c.Enabled = true;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Save all the form data and add the function as a new function to the list box
-		/// </summary>
-		private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
-		{
-			if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text))
-			{
-				saveNewFunction();
-			}
-			else
-			{
-				// Update existing function
-				DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-				if (d == DialogResult.Yes)
-					updateCurrentFunction(); // Update existing function
-			} // end else
-			updateParameterTypeLists();
-		} // end buttonSaveCurrentChanges_Click
-
-		/// <summary>
-		/// Reverts changes to the state when the form was loaded
-		/// If working at start, will produce a clean form
-		/// If working on an existing function will revert to pre-edit
-		/// </summary>
-		private void buttonDiscardChanges_Click(object sender, EventArgs e)
-		{
-			DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (d == DialogResult.Yes)
-				populateFunctionForm(currentEdittingBackup);
-		}
-
-		/// <summary>
-		/// Prompts to ensure the user wants to clear the form, then clears all form entry if yes
-		/// </summary>
-		private void buttonNewFunction_Click(object sender, EventArgs e)
-		{
-			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (d == DialogResult.Yes)
-				populateFunctionForm(new FunctionDef());
-		}
-
-		#endregion
-
-		#region Function List Events
+	#region Function List Events
 
 		/// <summary>
 		/// Uses MouseUp event to catch when the selcted count changes.
@@ -720,7 +761,7 @@ namespace NVSE_Docs_Manager
 
 		#endregion Function List Events
 
-		#endregion Events
+	#endregion Events
 		
 	}
 }

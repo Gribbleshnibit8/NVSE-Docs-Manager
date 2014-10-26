@@ -9,120 +9,143 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using System.Reflection;
-
 namespace NVSE_Docs_Manager
 {
-	public partial class MainWindow : Form
+	public class Parameter : GroupBox
 	{
 
-		private void buttonNewParameter_Click(object sender, EventArgs e)
+		Control panel;
+		public string Url { get; set; }
+		public string Type { get; set; }
+		public string[] urlBoxContents { get; set; }
+		public string[] typeBoxContents { get; set; }
+		public string[] nameBoxContents { get; set; }
+
+		/// <summary>
+		/// Shows the numerical position of this control in a list
+		/// </summary>
+		public int Position { get; set; }
+		public bool Optional { get; set; }
+
+		public Parameter()
 		{
-			Control newParam = createNewParameter();
-			parametersList.Add(newParam);
-			flowLayoutPanelParameters.Controls.Add(newParam);
+			Url = "";
+			Type = ":";
+			Optional = false;
+			urlBoxContents = new string[1] { "" };
+			typeBoxContents = new string[1] { "" };
+			nameBoxContents = new string[1] { "" };
+			panel = buildNewParameterForm();
 		}
 
-		private void buttonCopyParameter_Click(object sender, EventArgs e)
+		/// <summary>
+		/// Represents a groupbox of default controls consistent with the Parameter data type
+		/// </summary>
+		/// <param name="urlBoxArray">A list of url hash strings</param>
+		/// <param name="typeBoxArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
+		/// <param name="nameBoxArray">A list of all values that can be a name</param>
+		public Parameter(string[] urlArray, string[] typeArray, string[] nameArray)
 		{
-			Control toCopy = parametersList.Last();
-			Control newParam = createNewParameter();
+			Url = "";
+			Type = ":";
+			Optional = false;
+			urlBoxContents = urlArray;
+			typeBoxContents = typeArray;
+			nameBoxContents = nameArray;
+			panel = buildNewParameterForm();
+		}
 
-			System.Windows.Forms.ComboBox oldBox, newBox;
+		/// <summary>
+		/// Represents a groupbox of default controls consistent with the Parameter data type
+		/// </summary>
+		/// <param name="url">The page hash with information of this data type</param>
+		/// <param name="type">The data represented by this parameter</param>
+		/// <param name="optional">Is an optional parameter</param>
+		/// <param name="urlBoxArray">A list of url hash strings</param>
+		/// <param name="typeBoxArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
+		/// <param name="nameBoxArray">A list of all values that can be a name</param>
+		public Parameter(string url, string type, bool optional, string[] urlArray, string[] typeArray, string[] nameArray)
+		{
+			Url = url;
+			Type = type;
+			Optional = optional;
+			urlBoxContents = urlArray;
+			typeBoxContents = typeArray;
+			nameBoxContents = nameArray;
+			panel = buildNewParameterForm();
+		}
 
-			// URL Box values
-			oldBox = (System.Windows.Forms.ComboBox)toCopy.Controls["comboBoxURL"];
-			newBox = (System.Windows.Forms.ComboBox)newParam.Controls["comboBoxURL"];
-			newBox.SelectedIndex = oldBox.SelectedIndex;
+		public Parameter(Parameter toCopy)
+		{
+			Url = toCopy.Url;
+			Type = toCopy.Type;
+			Optional = toCopy.Optional;
+			urlBoxContents = toCopy.urlBoxContents;
+			typeBoxContents = toCopy.typeBoxContents;
+			nameBoxContents = toCopy.nameBoxContents;
+			panel = buildNewParameterForm();
+		}
 
-			// Type Box values
-			oldBox = (System.Windows.Forms.ComboBox)toCopy.Controls["comboBoxType"];
-			newBox = (System.Windows.Forms.ComboBox)newParam.Controls["comboBoxType"];
-			newBox.Text = oldBox.Text;
+		public override string ToString()
+		{
+			string s = "URL: " + Url + Environment.NewLine + "Type: " + Type + Environment.NewLine + "Optional: " + Optional.ToString();
+			return s;
+		}
 
-			// Type Box values
-			oldBox = (System.Windows.Forms.ComboBox)toCopy.Controls["comboBoxOptional"];
-			newBox = (System.Windows.Forms.ComboBox)newParam.Controls["comboBoxOptional"];
-			newBox.SelectedIndex = oldBox.SelectedIndex;
+		private string getTypeType(string type)
+		{
+			string[] s = type.Split(':');
+			if (s.Length >= 1)
+				return s[0];
+			return "";
+		}
 
-
-			parametersList.Add(newParam);
-			flowLayoutPanelParameters.Controls.Add(newParam);
-			rebuildParamaterPanel();
+		private string getTypeName(string type)
+		{
+			string[] s = type.Split(':');
+			if (s.Length >= 2)
+				return s[1];
+			return "";
 		}
 
 		private void removeParameter_Click(object sender, System.EventArgs e)
 		{
 			Control parent = (sender as System.Windows.Forms.Button).Parent;
-			flowLayoutPanelParameters.Controls.Remove(parent);
-			parametersList.Remove(parent);
-			rebuildParamaterPanel();
+			Control grandparent = (parent as System.Windows.Forms.GroupBox).Parent;
+			grandparent.Controls.Remove(parent);
+			//rebuildParamaterPanel();
 		}
 
-		/// <summary>
-		/// Creates a new ParameterDef groupbox
-		/// </summary>
-		/// <returns>Returns a groupbox populated with ParameterDef list form controls.</returns>
-		private Control createNewParameter()
+		private void urlBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Control newParam = buildNewParameterForm();
-			return newParam;
+			Url = ((System.Windows.Forms.ComboBox)sender).Text;
 		}
 
-		/// <summary>
-		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
-		/// </summary>
-		private void rebuildParamaterPanel()
+		private void typeBox_KeyUp(object sender, EventArgs e)
 		{
-			for (int i = 0; i < parametersList.Count(); i++)
-			{
-				parametersList[i].Text = "ParameterDef " + (i + 1).ToString();
-			}
+			string s = ((System.Windows.Forms.ComboBox)sender).Text;
+			string[] t = Type.Split(':');
+			t[0] = s;
+			if (t.Length == 1)
+				Type = t[0] + ":";
+			else
+				Type = t[0] + ":" + t[1];
 		}
 
-		/// <summary>
-		/// Creates a ParameterDef list and populates all the groupboxes with
-		/// the values from a function's parameters
-		/// </summary>
-		/// <param name="paramList">List of parameters</param>
-		private void populateParameterList(List<ParameterDef> paramList)
+		private void nameBox_KeyUp(object sender, EventArgs e)
 		{
-			if (paramList != null)
-			{
-				foreach (ParameterDef param in paramList)
-				{
-					System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
+			string s = ((System.Windows.Forms.ComboBox)sender).Text;
+			string[] t = Type.Split(':');
+			t[1] = s;
+			if (String.IsNullOrEmpty(t[0]))
+				Type = ":" + t[1];
+			else
+				Type = t[0] + ":" + t[1];
+		}
 
-					System.Windows.Forms.ComboBox cBox;
-					System.Windows.Forms.CheckBox cBox2;
-
-					if (!String.IsNullOrEmpty(param.url))
-					{
-						cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
-						cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
-					}
-
-					string[] s = param.type.Split(':');
-					if (s.Length >= 1)
-					{
-						cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
-						cBox.Text = s[0];
-					}
-					if (s.Length >= 2)
-					{
-						cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxName"];
-						cBox.Text = s[1];
-					}
-
-					if (!String.IsNullOrEmpty(param.optional))
-					{
-						cBox2 = (System.Windows.Forms.CheckBox)newParameter.Controls["checkBoxOptional"];
-						cBox2.Checked = true;
-					}
-					parametersList.Add(newParameter);
-					flowLayoutPanelParameters.Controls.Add(newParameter);
-				}
-			}
+		private void optionalBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Optional = ((System.Windows.Forms.CheckBox)sender).Checked;
 		}
 
 		/// <summary>
@@ -132,80 +155,159 @@ namespace NVSE_Docs_Manager
 		private Control buildNewParameterForm()
 		{
 			// create a new group box for the new ParameterDef
-				System.Windows.Forms.GroupBox newParameter = new System.Windows.Forms.GroupBox();
-				newParameter.Size = new System.Drawing.Size(523, 60);
-				newParameter.Text = "Parameter " + (parametersList.Count() + 1).ToString();
+			this.Size = new System.Drawing.Size(523, 60);
+			this.Text = "Parameter " + Position.ToString();
 
 			// create the remove button
-				System.Windows.Forms.Button removeButton = new System.Windows.Forms.Button();
-				removeButton.Click += new System.EventHandler(this.removeParameter_Click);
-				removeButton.Text = "X";
-				removeButton.Location = new System.Drawing.Point(6, 16);
-				removeButton.Size = new System.Drawing.Size(23, 37);
-				newParameter.Controls.Add(removeButton);
+			System.Windows.Forms.Button removeButton = new System.Windows.Forms.Button();
+			removeButton.Click += new System.EventHandler(this.removeParameter_Click);
+			removeButton.Text = "X";
+			removeButton.Location = new System.Drawing.Point(6, 16);
+			removeButton.Size = new System.Drawing.Size(23, 37);
+			this.Controls.Add(removeButton);
 
 
 			// URL
 			// create the URL label and add it to the group box
-				System.Windows.Forms.Label urlLabel = new System.Windows.Forms.Label();
-				urlLabel.Text = "URL:";
-				urlLabel.Location = new System.Drawing.Point(33, 16);
-				urlLabel.AutoSize = true;
-				newParameter.Controls.Add(urlLabel);
+			System.Windows.Forms.Label urlLabel = new System.Windows.Forms.Label();
+			urlLabel.Text = "URL:";
+			urlLabel.Location = new System.Drawing.Point(33, 16);
+			urlLabel.AutoSize = true;
+			this.Controls.Add(urlLabel);
 			// create the URL combobox and add it to the group box
-				System.Windows.Forms.ComboBox urlCombobox = new System.Windows.Forms.ComboBox();
-				urlCombobox.Name = "comboBoxURL";
-				urlCombobox.Items.AddRange(parameterURLList.ToArray());
-				urlCombobox.Sorted = true;
-				urlCombobox.Location = new System.Drawing.Point(36, 32);
-				urlCombobox.Size = new System.Drawing.Size(140, 21);
-				urlCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
-				newParameter.Controls.Add(urlCombobox);
+			System.Windows.Forms.ComboBox urlCombobox = new System.Windows.Forms.ComboBox();
+			urlCombobox.SelectedIndexChanged += new EventHandler(this.urlBox_SelectedIndexChanged);
+			urlCombobox.Name = "comboBoxURL";
+			urlCombobox.Items.AddRange(urlBoxContents);
+			urlCombobox.Sorted = true;
+			urlCombobox.Location = new System.Drawing.Point(36, 32);
+			urlCombobox.Size = new System.Drawing.Size(140, 21);
+			urlCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+			urlCombobox.Text = Url;
+			this.Controls.Add(urlCombobox);
 
 			// Type
 			// create the Type label and add it to the group box
-				System.Windows.Forms.Label typeLabel = new System.Windows.Forms.Label();
-				typeLabel.Text = "Type:";
-				typeLabel.Location = new System.Drawing.Point(179, 16);
-				typeLabel.AutoSize = true;
-				newParameter.Controls.Add(typeLabel);
+			System.Windows.Forms.Label typeLabel = new System.Windows.Forms.Label();
+			typeLabel.Text = "Type:";
+			typeLabel.Location = new System.Drawing.Point(179, 16);
+			typeLabel.AutoSize = true;
+			this.Controls.Add(typeLabel);
 			// create the Type combobox and add it to the group box
-				System.Windows.Forms.ComboBox typeCombobox = new System.Windows.Forms.ComboBox();
-				typeCombobox.Name = "comboBoxType";
-				typeCombobox.Items.AddRange(parameterTypesList.ToArray());
-				typeCombobox.Sorted = true;
-				typeCombobox.Location = new System.Drawing.Point(182, 32);
-				typeCombobox.Size = new System.Drawing.Size(140, 21);
-				newParameter.Controls.Add(typeCombobox);
+			System.Windows.Forms.ComboBox typeCombobox = new System.Windows.Forms.ComboBox();
+			typeCombobox.KeyUp += new KeyEventHandler(this.typeBox_KeyUp);
+			typeCombobox.Name = "comboBoxType";
+			typeCombobox.Items.AddRange(typeBoxContents);
+			typeCombobox.Sorted = true;
+			typeCombobox.Location = new System.Drawing.Point(182, 32);
+			typeCombobox.Size = new System.Drawing.Size(140, 21);
+			typeCombobox.Text = getTypeType(Type);
+			this.Controls.Add(typeCombobox);
 
 			// Name
 			// create the Type label and add it to the group box
-				System.Windows.Forms.Label nameLabel = new System.Windows.Forms.Label();
-				nameLabel.Text = "Name:";
-				nameLabel.Location = new System.Drawing.Point(325, 16);
-				nameLabel.AutoSize = true;
-				newParameter.Controls.Add(nameLabel);
+			System.Windows.Forms.Label nameLabel = new System.Windows.Forms.Label();
+			nameLabel.Text = "Name:";
+			nameLabel.Location = new System.Drawing.Point(325, 16);
+			nameLabel.AutoSize = true;
+			this.Controls.Add(nameLabel);
 			// create the Type combobox and add it to the group box
-				System.Windows.Forms.ComboBox nameCombobox = new System.Windows.Forms.ComboBox();
-				nameCombobox.Name = "comboBoxName";
-				nameCombobox.Items.AddRange(parameterNamesList.ToArray());
-				nameCombobox.Sorted = true;
-				nameCombobox.Location = new System.Drawing.Point(328, 32);
-				nameCombobox.Size = new System.Drawing.Size(140, 21);
-				newParameter.Controls.Add(nameCombobox);
+			System.Windows.Forms.ComboBox nameCombobox = new System.Windows.Forms.ComboBox();
+			nameCombobox.KeyUp += new KeyEventHandler(this.nameBox_KeyUp);
+			nameCombobox.Name = "comboBoxName";
+			nameCombobox.Items.AddRange(nameBoxContents);
+			nameCombobox.Sorted = true;
+			nameCombobox.Location = new System.Drawing.Point(328, 32);
+			nameCombobox.Size = new System.Drawing.Size(140, 21);
+			nameCombobox.Text = getTypeName(Type);
+			this.Controls.Add(nameCombobox);
 
 			// Optional
-				System.Windows.Forms.CheckBox optionalCheckbox = new System.Windows.Forms.CheckBox();
-				optionalCheckbox.Name = "checkBoxOptional";
-				optionalCheckbox.Text = "Optional";
-				optionalCheckbox.Location = new System.Drawing.Point(471, 15);
-				optionalCheckbox.AutoSize = true;
-				optionalCheckbox.CheckAlign = ContentAlignment.BottomCenter;
-				optionalCheckbox.TextAlign = ContentAlignment.TopCenter;
-				newParameter.Controls.Add(optionalCheckbox);
+			System.Windows.Forms.CheckBox optionalCheckbox = new System.Windows.Forms.CheckBox();
+			optionalCheckbox.CheckedChanged += new EventHandler(this.optionalBox_CheckedChanged);
+			optionalCheckbox.Name = "checkBoxOptional";
+			optionalCheckbox.Text = "Optional";
+			optionalCheckbox.Location = new System.Drawing.Point(471, 15);
+			optionalCheckbox.AutoSize = true;
+			optionalCheckbox.CheckAlign = ContentAlignment.BottomCenter;
+			optionalCheckbox.TextAlign = ContentAlignment.TopCenter;
+			optionalCheckbox.Checked = Optional;
+			this.Controls.Add(optionalCheckbox);
 
-			return newParameter;
-		}		
+			return this;
+		}
+
+	}
+
+
+
+
+
+
+	public partial class MainWindow : Form
+	{
+		/// <summary>
+		/// Creates a ParameterDef list and populates all the groupboxes with
+		/// the values from a function's parameters
+		/// </summary>
+		/// <param name="paramList">List of parameters</param>
+		private void populateParameterList(List<ParameterDef> parameterList)
+		{
+			if (parameterList != null)
+			{
+				foreach (ParameterDef parameter in parameterList)
+				{
+					//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
+					Control c = new Parameter(parameter.url, 
+						parameter.type, 
+						parameter.optional.Equals("True"), 
+						parameterURLList.ToArray(), 
+						parameterTypesList.ToArray(), 
+						parameterNamesList.ToArray());
+
+					parametersList.Add(c);
+					flowLayoutPanelParameters.Controls.Add(c);
+					rebuildParamaterPanel();
+				}
+			}
+			//if (paramList != null)
+			//{
+			//	foreach (ParameterDef param in paramList)
+			//	{
+			//		System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
+
+			//		System.Windows.Forms.ComboBox cBox;
+			//		System.Windows.Forms.CheckBox cBox2;
+
+			//		if (!String.IsNullOrEmpty(param.url))
+			//		{
+			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
+			//			cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
+			//		}
+
+			//		string[] s = param.type.Split(':');
+			//		if (s.Length >= 1)
+			//		{
+			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
+			//			cBox.Text = s[0];
+			//		}
+			//		if (s.Length >= 2)
+			//		{
+			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxName"];
+			//			cBox.Text = s[1];
+			//		}
+
+			//		if (!String.IsNullOrEmpty(param.optional))
+			//		{
+			//			cBox2 = (System.Windows.Forms.CheckBox)newParameter.Controls["checkBoxOptional"];
+			//			cBox2.Checked = true;
+			//		}
+			//		parametersList.Add(newParameter);
+			//		flowLayoutPanelParameters.Controls.Add(newParameter);
+			//	}
+			//}
+		}
+
 
 	}
 }

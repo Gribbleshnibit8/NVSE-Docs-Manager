@@ -92,13 +92,14 @@
 			this.checkBoxConditional = new System.Windows.Forms.CheckBox();
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
 			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
+			this.panel1 = new System.Windows.Forms.Panel();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
 			this.groupBoxReturnType.SuspendLayout();
-			this.flowLayoutPanelParameters.SuspendLayout();
 			this.groupBoxParameterTemplate.SuspendLayout();
 			this.groupBoxCallingConvention.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -407,7 +408,6 @@
 			// 
 			this.flowLayoutPanelParameters.AutoScroll = true;
 			this.flowLayoutPanelParameters.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.flowLayoutPanelParameters.Controls.Add(this.groupBoxParameterTemplate);
 			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(190, 35);
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
 			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(550, 328);
@@ -423,12 +423,12 @@
 			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
 			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
 			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateType);
-			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(3, 3);
+			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(3, 7);
 			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
 			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(525, 59);
 			this.groupBoxParameterTemplate.TabIndex = 31;
 			this.groupBoxParameterTemplate.TabStop = false;
-			this.groupBoxParameterTemplate.Text = "ParameterDef 1";
+			this.groupBoxParameterTemplate.Text = "Parameter 1";
 			this.groupBoxParameterTemplate.Visible = false;
 			// 
 			// labelParameterTemplateName
@@ -539,9 +539,9 @@
 			this.buttonParametersNew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonParametersNew.Location = new System.Drawing.Point(253, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
-			this.buttonParametersNew.Size = new System.Drawing.Size(107, 23);
+			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
 			this.buttonParametersNew.TabIndex = 10;
-			this.buttonParametersNew.Text = "New ParameterDef";
+			this.buttonParametersNew.Text = "New Parameter";
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
 			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
 			// 
@@ -747,11 +747,23 @@
 			this.buttonListBoxChangeCategory.UseVisualStyleBackColor = true;
 			this.buttonListBoxChangeCategory.Click += new System.EventHandler(this.buttonListBoxChangeCategory_Click);
 			// 
+			// panel1
+			// 
+			this.panel1.AutoSize = true;
+			this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.panel1.Controls.Add(this.groupBoxParameterTemplate);
+			this.panel1.Location = new System.Drawing.Point(294, 0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(531, 69);
+			this.panel1.TabIndex = 506;
+			this.panel1.Visible = false;
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1082, 680);
+			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.buttonListBoxChangeCategory);
 			this.Controls.Add(this.buttonListBoxDeleteItem);
 			this.Controls.Add(this.groupSelectionEditor);
@@ -774,11 +786,11 @@
 			this.groupSelectionEditor.PerformLayout();
 			this.groupBoxReturnType.ResumeLayout(false);
 			this.groupBoxReturnType.PerformLayout();
-			this.flowLayoutPanelParameters.ResumeLayout(false);
 			this.groupBoxParameterTemplate.ResumeLayout(false);
 			this.groupBoxParameterTemplate.PerformLayout();
 			this.groupBoxCallingConvention.ResumeLayout(false);
 			this.groupBoxCallingConvention.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -847,6 +859,7 @@
 		private System.Windows.Forms.Label labelReturnTypeType;
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeURL;
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
+		private System.Windows.Forms.Panel panel1;
 	}
 }
 
