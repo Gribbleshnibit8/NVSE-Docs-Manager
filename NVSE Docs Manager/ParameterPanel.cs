@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Reflection;
+
 namespace NVSE_Docs_Manager
 {
 	public partial class MainWindow : Form
@@ -58,9 +60,9 @@ namespace NVSE_Docs_Manager
 		}
 
 		/// <summary>
-		/// Creates a new parameter groupbox
+		/// Creates a new ParameterDef groupbox
 		/// </summary>
-		/// <returns>Returns a groupbox populated with parameter list form controls.</returns>
+		/// <returns>Returns a groupbox populated with ParameterDef list form controls.</returns>
 		private Control createNewParameter()
 		{
 			Control newParam = buildNewParameterForm();
@@ -68,26 +70,26 @@ namespace NVSE_Docs_Manager
 		}
 
 		/// <summary>
-		/// Renumbers the groupbox text on all groupboxes in the parameter list
+		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
 		/// </summary>
 		private void rebuildParamaterPanel()
 		{
 			for (int i = 0; i < parametersList.Count(); i++)
 			{
-				parametersList[i].Text = "Parameter " + (i + 1).ToString();
+				parametersList[i].Text = "ParameterDef " + (i + 1).ToString();
 			}
 		}
 
 		/// <summary>
-		/// Creates a parameter list and populates all the groupboxes with
+		/// Creates a ParameterDef list and populates all the groupboxes with
 		/// the values from a function's parameters
 		/// </summary>
 		/// <param name="paramList">List of parameters</param>
-		private void populateParameterList(List<Parameter> paramList)
+		private void populateParameterList(List<ParameterDef> paramList)
 		{
 			if (paramList != null)
 			{
-				foreach (Parameter param in paramList)
+				foreach (ParameterDef param in paramList)
 				{
 					System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
 
@@ -124,12 +126,12 @@ namespace NVSE_Docs_Manager
 		}
 
 		/// <summary>
-		/// Builds a parameter panel form
+		/// Builds a ParameterDef panel form
 		/// </summary>
-		/// <returns>Returns a parameter groupbox with all forms</returns>
+		/// <returns>Returns a ParameterDef groupbox with all forms</returns>
 		private Control buildNewParameterForm()
 		{
-			// create a new group box for the new parameter
+			// create a new group box for the new ParameterDef
 				System.Windows.Forms.GroupBox newParameter = new System.Windows.Forms.GroupBox();
 				newParameter.Size = new System.Drawing.Size(523, 60);
 				newParameter.Text = "Parameter " + (parametersList.Count() + 1).ToString();

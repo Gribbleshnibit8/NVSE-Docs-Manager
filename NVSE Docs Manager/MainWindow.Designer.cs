@@ -50,9 +50,11 @@
 			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
 			this.buttonNewFunction = new System.Windows.Forms.Button();
 			this.groupBoxReturnType = new System.Windows.Forms.GroupBox();
+			this.labelReturnTypeName = new System.Windows.Forms.Label();
 			this.checkBoxReturnType = new System.Windows.Forms.CheckBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
+			this.comboBoxReturnTypeName = new System.Windows.Forms.ComboBox();
+			this.labelReturnTypeURL = new System.Windows.Forms.Label();
+			this.labelReturnTypeType = new System.Windows.Forms.Label();
 			this.comboBoxReturnTypeURL = new System.Windows.Forms.ComboBox();
 			this.comboBoxReturnTypeType = new System.Windows.Forms.ComboBox();
 			this.buttonDiscardChanges = new System.Windows.Forms.Button();
@@ -88,7 +90,6 @@
 			this.labelAlias = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.checkBoxConditional = new System.Windows.Forms.CheckBox();
-			this.panel1 = new System.Windows.Forms.Panel();
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
 			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
@@ -108,7 +109,7 @@
             this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(1075, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1082, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "mainMenu";
 			// 
@@ -145,15 +146,15 @@
 			this.resetEverythingToolStripMenuItem.Name = "resetEverythingToolStripMenuItem";
 			this.resetEverythingToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.L)));
-			this.resetEverythingToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-			this.resetEverythingToolStripMenuItem.Text = "Clear List";
-			this.resetEverythingToolStripMenuItem.Click += new System.EventHandler(this.resetEverythingToolStripMenuItem_Click);
+			this.resetEverythingToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.resetEverythingToolStripMenuItem.Text = "Reset";
+			this.resetEverythingToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -176,9 +177,9 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 655);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 658);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1075, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1082, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -200,12 +201,10 @@
 			// listboxFunctionList
 			// 
 			this.listboxFunctionList.AllowDrop = true;
-			this.listboxFunctionList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
 			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listboxFunctionList.FormattingEnabled = true;
 			this.listboxFunctionList.ItemHeight = 16;
-			this.listboxFunctionList.Location = new System.Drawing.Point(12, 36);
+			this.listboxFunctionList.Location = new System.Drawing.Point(12, 33);
 			this.listboxFunctionList.Name = "listboxFunctionList";
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
 			this.listboxFunctionList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -245,16 +244,16 @@
 			this.groupSelectionEditor.Controls.Add(this.labelAlias);
 			this.groupSelectionEditor.Controls.Add(this.labelName);
 			this.groupSelectionEditor.Controls.Add(this.checkBoxConditional);
-			this.groupSelectionEditor.Location = new System.Drawing.Point(318, 30);
+			this.groupSelectionEditor.Location = new System.Drawing.Point(318, 27);
 			this.groupSelectionEditor.Name = "groupSelectionEditor";
-			this.groupSelectionEditor.Size = new System.Drawing.Size(746, 612);
+			this.groupSelectionEditor.Size = new System.Drawing.Size(753, 615);
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
 			// 
 			// labelDescription
 			// 
 			this.labelDescription.AutoSize = true;
-			this.labelDescription.Location = new System.Drawing.Point(187, 438);
+			this.labelDescription.Location = new System.Drawing.Point(187, 450);
 			this.labelDescription.Name = "labelDescription";
 			this.labelDescription.Size = new System.Drawing.Size(60, 13);
 			this.labelDescription.TabIndex = 504;
@@ -263,9 +262,10 @@
 			// richTextBoxDescription
 			// 
 			this.richTextBoxDescription.AcceptsTab = true;
-			this.richTextBoxDescription.Location = new System.Drawing.Point(190, 454);
+			this.richTextBoxDescription.EnableAutoDragDrop = true;
+			this.richTextBoxDescription.Location = new System.Drawing.Point(190, 466);
 			this.richTextBoxDescription.Name = "richTextBoxDescription";
-			this.richTextBoxDescription.Size = new System.Drawing.Size(373, 152);
+			this.richTextBoxDescription.Size = new System.Drawing.Size(550, 140);
 			this.richTextBoxDescription.TabIndex = 13;
 			this.richTextBoxDescription.Text = "";
 			this.richTextBoxDescription.ZoomFactor = 1.2F;
@@ -284,47 +284,68 @@
 			// 
 			this.groupBoxReturnType.AutoSize = true;
 			this.groupBoxReturnType.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.groupBoxReturnType.Controls.Add(this.labelReturnTypeName);
 			this.groupBoxReturnType.Controls.Add(this.checkBoxReturnType);
-			this.groupBoxReturnType.Controls.Add(this.label3);
-			this.groupBoxReturnType.Controls.Add(this.label5);
+			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeName);
+			this.groupBoxReturnType.Controls.Add(this.labelReturnTypeURL);
+			this.groupBoxReturnType.Controls.Add(this.labelReturnTypeType);
 			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeURL);
 			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeType);
 			this.groupBoxReturnType.Location = new System.Drawing.Point(190, 369);
 			this.groupBoxReturnType.Name = "groupBoxReturnType";
-			this.groupBoxReturnType.Size = new System.Drawing.Size(373, 60);
+			this.groupBoxReturnType.Size = new System.Drawing.Size(469, 72);
 			this.groupBoxReturnType.TabIndex = 12;
 			this.groupBoxReturnType.TabStop = false;
 			this.groupBoxReturnType.Text = "Return Type";
 			// 
+			// labelReturnTypeName
+			// 
+			this.labelReturnTypeName.AutoSize = true;
+			this.labelReturnTypeName.Enabled = false;
+			this.labelReturnTypeName.Location = new System.Drawing.Point(320, 16);
+			this.labelReturnTypeName.Name = "labelReturnTypeName";
+			this.labelReturnTypeName.Size = new System.Drawing.Size(35, 13);
+			this.labelReturnTypeName.TabIndex = 35;
+			this.labelReturnTypeName.Text = "Name";
+			// 
 			// checkBoxReturnType
 			// 
 			this.checkBoxReturnType.AutoSize = true;
-			this.checkBoxReturnType.Location = new System.Drawing.Point(6, 24);
+			this.checkBoxReturnType.Location = new System.Drawing.Point(6, 35);
 			this.checkBoxReturnType.Name = "checkBoxReturnType";
 			this.checkBoxReturnType.Size = new System.Drawing.Size(15, 14);
 			this.checkBoxReturnType.TabIndex = 11;
 			this.checkBoxReturnType.UseVisualStyleBackColor = true;
 			this.checkBoxReturnType.CheckedChanged += new System.EventHandler(this.checkBoxReturnType_CheckedChanged);
 			// 
-			// label3
+			// comboBoxReturnTypeName
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Enabled = false;
-			this.label3.Location = new System.Drawing.Point(28, 24);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(29, 13);
-			this.label3.TabIndex = 0;
-			this.label3.Text = "URL";
+			this.comboBoxReturnTypeName.Enabled = false;
+			this.comboBoxReturnTypeName.FormattingEnabled = true;
+			this.comboBoxReturnTypeName.Location = new System.Drawing.Point(323, 32);
+			this.comboBoxReturnTypeName.Name = "comboBoxReturnTypeName";
+			this.comboBoxReturnTypeName.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxReturnTypeName.TabIndex = 36;
 			// 
-			// label5
+			// labelReturnTypeURL
 			// 
-			this.label5.AutoSize = true;
-			this.label5.Enabled = false;
-			this.label5.Location = new System.Drawing.Point(192, 24);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(31, 13);
-			this.label5.TabIndex = 2;
-			this.label5.Text = "Type";
+			this.labelReturnTypeURL.AutoSize = true;
+			this.labelReturnTypeURL.Enabled = false;
+			this.labelReturnTypeURL.Location = new System.Drawing.Point(28, 16);
+			this.labelReturnTypeURL.Name = "labelReturnTypeURL";
+			this.labelReturnTypeURL.Size = new System.Drawing.Size(32, 13);
+			this.labelReturnTypeURL.TabIndex = 31;
+			this.labelReturnTypeURL.Text = "URL:";
+			// 
+			// labelReturnTypeType
+			// 
+			this.labelReturnTypeType.AutoSize = true;
+			this.labelReturnTypeType.Enabled = false;
+			this.labelReturnTypeType.Location = new System.Drawing.Point(174, 16);
+			this.labelReturnTypeType.Name = "labelReturnTypeType";
+			this.labelReturnTypeType.Size = new System.Drawing.Size(31, 13);
+			this.labelReturnTypeType.TabIndex = 33;
+			this.labelReturnTypeType.Text = "Type";
 			// 
 			// comboBoxReturnTypeURL
 			// 
@@ -346,20 +367,20 @@
             "Weapon_Hand_Grips",
             "Weapon_Mod",
             "Weapon_Type"});
-			this.comboBoxReturnTypeURL.Location = new System.Drawing.Point(64, 20);
+			this.comboBoxReturnTypeURL.Location = new System.Drawing.Point(31, 32);
 			this.comboBoxReturnTypeURL.Name = "comboBoxReturnTypeURL";
-			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(121, 21);
+			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeURL.Sorted = true;
-			this.comboBoxReturnTypeURL.TabIndex = 1;
+			this.comboBoxReturnTypeURL.TabIndex = 32;
 			// 
 			// comboBoxReturnTypeType
 			// 
 			this.comboBoxReturnTypeType.Enabled = false;
 			this.comboBoxReturnTypeType.FormattingEnabled = true;
-			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(230, 20);
+			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(177, 32);
 			this.comboBoxReturnTypeType.Name = "comboBoxReturnTypeType";
-			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(137, 21);
-			this.comboBoxReturnTypeType.TabIndex = 3;
+			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxReturnTypeType.TabIndex = 34;
 			// 
 			// buttonDiscardChanges
 			// 
@@ -407,7 +428,7 @@
 			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(525, 59);
 			this.groupBoxParameterTemplate.TabIndex = 31;
 			this.groupBoxParameterTemplate.TabStop = false;
-			this.groupBoxParameterTemplate.Text = "Parameter 1";
+			this.groupBoxParameterTemplate.Text = "ParameterDef 1";
 			this.groupBoxParameterTemplate.Visible = false;
 			// 
 			// labelParameterTemplateName
@@ -518,9 +539,9 @@
 			this.buttonParametersNew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonParametersNew.Location = new System.Drawing.Point(253, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
-			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
+			this.buttonParametersNew.Size = new System.Drawing.Size(107, 23);
 			this.buttonParametersNew.TabIndex = 10;
-			this.buttonParametersNew.Text = "New Parameter";
+			this.buttonParametersNew.Text = "New ParameterDef";
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
 			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
 			// 
@@ -578,7 +599,7 @@
 			// 
 			this.labelReturnType.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.labelReturnType.AutoSize = true;
-			this.labelReturnType.Location = new System.Drawing.Point(187, 384);
+			this.labelReturnType.Location = new System.Drawing.Point(187, 386);
 			this.labelReturnType.Name = "labelReturnType";
 			this.labelReturnType.Size = new System.Drawing.Size(66, 13);
 			this.labelReturnType.TabIndex = 18;
@@ -700,13 +721,6 @@
 			this.checkBoxConditional.Text = "Conditional Function";
 			this.checkBoxConditional.UseVisualStyleBackColor = true;
 			// 
-			// panel1
-			// 
-			this.panel1.Location = new System.Drawing.Point(319, 120);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(436, 436);
-			this.panel1.TabIndex = 503;
-			// 
 			// buttonListBoxDeleteItem
 			// 
 			this.buttonListBoxDeleteItem.AutoSize = true;
@@ -737,20 +751,19 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1075, 677);
+			this.ClientSize = new System.Drawing.Size(1082, 680);
 			this.Controls.Add(this.buttonListBoxChangeCategory);
 			this.Controls.Add(this.buttonListBoxDeleteItem);
 			this.Controls.Add(this.groupSelectionEditor);
 			this.Controls.Add(this.listboxFunctionList);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
-			this.Controls.Add(this.panel1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(1091, 715);
-			this.MinimumSize = new System.Drawing.Size(1091, 715);
+			this.MaximumSize = new System.Drawing.Size(1098, 718);
+			this.MinimumSize = new System.Drawing.Size(1098, 718);
 			this.Name = "MainWindow";
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainMenu_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
@@ -773,7 +786,6 @@
 
 		#endregion
 
-		#region Form Declarations
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
@@ -812,18 +824,12 @@
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
 		private System.Windows.Forms.Button buttonDiscardChanges;
 		private System.Windows.Forms.GroupBox groupBoxReturnType;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ComboBox comboBoxReturnTypeURL;
-		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
 		private System.Windows.Forms.CheckBox checkBoxReturnType;
 		private System.Windows.Forms.Button buttonNewFunction;
-		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button buttonListBoxDeleteItem;
 		private System.Windows.Forms.Button buttonListBoxChangeCategory;
 		private System.Windows.Forms.Label labelDescription;
 		private System.Windows.Forms.RichTextBox richTextBoxDescription;
-		#endregion
 		private System.Windows.Forms.ToolStripMenuItem resetEverythingToolStripMenuItem;
 		private System.Windows.Forms.GroupBox groupBoxParameterTemplate;
 		private System.Windows.Forms.Label labelParameterTemplateName;
@@ -835,6 +841,12 @@
 		private System.Windows.Forms.ComboBox comboBoxParameterTemplateURL;
 		private System.Windows.Forms.ComboBox comboBoxParameterTemplateType;
 		private System.Windows.Forms.CheckBox checkBoxConditional;
+		private System.Windows.Forms.Label labelReturnTypeName;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeName;
+		private System.Windows.Forms.Label labelReturnTypeURL;
+		private System.Windows.Forms.Label labelReturnTypeType;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeURL;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeType;
 	}
 }
 

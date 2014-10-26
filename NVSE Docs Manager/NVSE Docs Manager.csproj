@@ -50,8 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers.cs">
+    <Compile Include="ExamplesWindow.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExamplesWindow.Designer.cs">
+      <DependentUpon>ExamplesWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="FunctionDef.cs" />
     <Compile Include="MainWindow.cs">
@@ -65,6 +68,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ExamplesWindow.resx">
+      <DependentUpon>ExamplesWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
