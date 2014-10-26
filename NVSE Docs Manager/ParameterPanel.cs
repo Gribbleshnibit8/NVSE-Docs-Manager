@@ -17,21 +17,17 @@ namespace NVSE_Docs_Manager
 		Control panel;
 		public string Url { get; set; }
 		public string Type { get; set; }
+		public string Optional { get; set; }
 		public string[] urlBoxContents { get; set; }
 		public string[] typeBoxContents { get; set; }
 		public string[] nameBoxContents { get; set; }
 
-		/// <summary>
-		/// Shows the numerical position of this control in a list
-		/// </summary>
-		public int Position { get; set; }
-		public bool Optional { get; set; }
-
+		#region Constructors
 		public Parameter()
 		{
 			Url = "";
 			Type = ":";
-			Optional = false;
+			Optional = "False";
 			urlBoxContents = new string[1] { "" };
 			typeBoxContents = new string[1] { "" };
 			nameBoxContents = new string[1] { "" };
@@ -48,7 +44,7 @@ namespace NVSE_Docs_Manager
 		{
 			Url = "";
 			Type = ":";
-			Optional = false;
+			Optional = "False";
 			urlBoxContents = urlArray;
 			typeBoxContents = typeArray;
 			nameBoxContents = nameArray;
@@ -64,7 +60,7 @@ namespace NVSE_Docs_Manager
 		/// <param name="urlBoxArray">A list of url hash strings</param>
 		/// <param name="typeBoxArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
 		/// <param name="nameBoxArray">A list of all values that can be a name</param>
-		public Parameter(string url, string type, bool optional, string[] urlArray, string[] typeArray, string[] nameArray)
+		public Parameter(string url, string type, string optional, string[] urlArray, string[] typeArray, string[] nameArray)
 		{
 			Url = url;
 			Type = type;
@@ -75,6 +71,10 @@ namespace NVSE_Docs_Manager
 			panel = buildNewParameterForm();
 		}
 
+		/// <summary>
+		/// Copies one Parameter to a new one
+		/// </summary>
+		/// <param name="toCopy">Parameter Control to be copied</param>
 		public Parameter(Parameter toCopy)
 		{
 			Url = toCopy.Url;
@@ -85,13 +85,9 @@ namespace NVSE_Docs_Manager
 			nameBoxContents = toCopy.nameBoxContents;
 			panel = buildNewParameterForm();
 		}
+		#endregion
 
-		public override string ToString()
-		{
-			string s = "URL: " + Url + Environment.NewLine + "Type: " + Type + Environment.NewLine + "Optional: " + Optional.ToString();
-			return s;
-		}
-
+		#region Getters/Setters
 		private string getTypeType(string type)
 		{
 			string[] s = type.Split(':');
@@ -108,6 +104,28 @@ namespace NVSE_Docs_Manager
 			return "";
 		}
 
+		private string setTypeType(string type)
+		{
+			string[] t = Type.Split(':');
+			t[0] = type;
+			if (t.Length == 1)
+				return t[0] + ":";
+			else
+				return t[0] + ":" + t[1];
+		}
+
+		private string setTypeName(string type)
+		{
+			string[] t = Type.Split(':');
+			t[1] = type;
+			if (String.IsNullOrEmpty(t[0]))
+				return ":" + t[1];
+			else
+				return t[0] + ":" + t[1];
+		}
+		#endregion
+
+		#region Event Handlers
 		private void removeParameter_Click(object sender, System.EventArgs e)
 		{
 			Control parent = (sender as System.Windows.Forms.Button).Parent;
@@ -124,28 +142,25 @@ namespace NVSE_Docs_Manager
 		private void typeBox_KeyUp(object sender, EventArgs e)
 		{
 			string s = ((System.Windows.Forms.ComboBox)sender).Text;
-			string[] t = Type.Split(':');
-			t[0] = s;
-			if (t.Length == 1)
-				Type = t[0] + ":";
-			else
-				Type = t[0] + ":" + t[1];
+			Type = setTypeType(s);
 		}
 
 		private void nameBox_KeyUp(object sender, EventArgs e)
 		{
 			string s = ((System.Windows.Forms.ComboBox)sender).Text;
-			string[] t = Type.Split(':');
-			t[1] = s;
-			if (String.IsNullOrEmpty(t[0]))
-				Type = ":" + t[1];
-			else
-				Type = t[0] + ":" + t[1];
+			Type = setTypeName(s);
 		}
 
 		private void optionalBox_CheckedChanged(object sender, EventArgs e)
 		{
-			Optional = ((System.Windows.Forms.CheckBox)sender).Checked;
+			Optional = ((System.Windows.Forms.CheckBox)sender).Checked.ToString();
+		}
+		#endregion
+
+		public override string ToString()
+		{
+			string s = "URL: " + Url + Environment.NewLine + "Type: " + Type + Environment.NewLine + "Optional: " + Optional.ToString();
+			return s;
 		}
 
 		/// <summary>
@@ -156,7 +171,7 @@ namespace NVSE_Docs_Manager
 		{
 			// create a new group box for the new ParameterDef
 			this.Size = new System.Drawing.Size(523, 60);
-			this.Text = "Parameter " + Position.ToString();
+			this.Text = "Parameter";
 
 			// create the remove button
 			System.Windows.Forms.Button removeButton = new System.Windows.Forms.Button();
@@ -231,83 +246,13 @@ namespace NVSE_Docs_Manager
 			optionalCheckbox.AutoSize = true;
 			optionalCheckbox.CheckAlign = ContentAlignment.BottomCenter;
 			optionalCheckbox.TextAlign = ContentAlignment.TopCenter;
-			optionalCheckbox.Checked = Optional;
+			if (!String.IsNullOrEmpty(Optional))
+				optionalCheckbox.Checked = Optional.ToLower().Equals("true");
+			else { optionalCheckbox.Checked = false; }
 			this.Controls.Add(optionalCheckbox);
 
 			return this;
 		}
-
-	}
-
-
-
-
-
-
-	public partial class MainWindow : Form
-	{
-		/// <summary>
-		/// Creates a ParameterDef list and populates all the groupboxes with
-		/// the values from a function's parameters
-		/// </summary>
-		/// <param name="paramList">List of parameters</param>
-		private void populateParameterList(List<ParameterDef> parameterList)
-		{
-			if (parameterList != null)
-			{
-				foreach (ParameterDef parameter in parameterList)
-				{
-					//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
-					Control c = new Parameter(parameter.url, 
-						parameter.type, 
-						parameter.optional.Equals("True"), 
-						parameterURLList.ToArray(), 
-						parameterTypesList.ToArray(), 
-						parameterNamesList.ToArray());
-
-					parametersList.Add(c);
-					flowLayoutPanelParameters.Controls.Add(c);
-					rebuildParamaterPanel();
-				}
-			}
-			//if (paramList != null)
-			//{
-			//	foreach (ParameterDef param in paramList)
-			//	{
-			//		System.Windows.Forms.GroupBox newParameter = (System.Windows.Forms.GroupBox)createNewParameter();
-
-			//		System.Windows.Forms.ComboBox cBox;
-			//		System.Windows.Forms.CheckBox cBox2;
-
-			//		if (!String.IsNullOrEmpty(param.url))
-			//		{
-			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxURL"];
-			//			cBox.SelectedIndex = parameterURLList.IndexOf(param.url.ToString());
-			//		}
-
-			//		string[] s = param.type.Split(':');
-			//		if (s.Length >= 1)
-			//		{
-			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxType"];
-			//			cBox.Text = s[0];
-			//		}
-			//		if (s.Length >= 2)
-			//		{
-			//			cBox = (System.Windows.Forms.ComboBox)newParameter.Controls["comboBoxName"];
-			//			cBox.Text = s[1];
-			//		}
-
-			//		if (!String.IsNullOrEmpty(param.optional))
-			//		{
-			//			cBox2 = (System.Windows.Forms.CheckBox)newParameter.Controls["checkBoxOptional"];
-			//			cBox2.Checked = true;
-			//		}
-			//		parametersList.Add(newParameter);
-			//		flowLayoutPanelParameters.Controls.Add(newParameter);
-			//	}
-			//}
-		}
-
 
 	}
 }

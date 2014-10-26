@@ -157,7 +157,6 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-
 		/// <summary>
 		/// Takes all the info in the window and creates a new function from it
 		/// then adds it to the listbox and LoadedFunctionsList
@@ -176,7 +175,30 @@ namespace NVSE_Docs_Manager
 			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
 
-
+		/// <summary>
+		/// Resets the entire form to the state of program start
+		/// </summary>
+		private void clearEntireForm()
+		{
+			listboxFunctionList.Items.Clear();
+			LoadedFunctionsList.Clear();
+			parameterNamesList.Clear();
+			parameterTypesList.Clear();
+			parametersList.Clear();
+			currentEdittingBackup = new FunctionDef();
+			flowLayoutPanelParameters.Controls.Clear();
+			parametersList.Clear();
+			textBoxName.Clear();
+			textBoxAlias.Clear();
+			textBoxVersion.Clear();
+			textBoxOrigin.Clear();
+			textBoxCategory.Clear();
+			textBoxTags.Clear();
+			richTextBoxDescription.Clear();
+			radioButtonCallingConventionEither.Checked = true;
+			checkBoxReturnType.Checked = false;
+			checkBoxConditional.Checked = false;
+		}
 
 		private bool hasChanged()
 		{
@@ -252,32 +274,6 @@ namespace NVSE_Docs_Manager
 			return dialogResult;
 		}
 	#endregion
-
-
-		/// <summary>
-		/// Resets the entire form to the state of program start
-		/// </summary>
-		private void clearEntireForm()
-		{
-			listboxFunctionList.Items.Clear();
-			LoadedFunctionsList.Clear();
-			parameterNamesList.Clear();
-			parameterTypesList.Clear();
-			parametersList.Clear();
-			currentEdittingBackup = new FunctionDef();
-			flowLayoutPanelParameters.Controls.Clear();
-			parametersList.Clear();
-			textBoxName.Clear();
-			textBoxAlias.Clear();
-			textBoxVersion.Clear();
-			textBoxOrigin.Clear();
-			textBoxCategory.Clear();
-			textBoxTags.Clear();
-			richTextBoxDescription.Clear();
-			radioButtonCallingConventionEither.Checked = true;
-			checkBoxReturnType.Checked = false;
-			checkBoxConditional.Checked = false;
-		}
 
 	#region Function Panel
 
@@ -376,6 +372,34 @@ namespace NVSE_Docs_Manager
 		}
 
 		#endregion Events
+
+		/// <summary>
+		/// Creates a ParameterDef list and populates all the groupboxes with
+		/// the values from a function's parameters
+		/// </summary>
+		/// <param name="paramList">List of parameters</param>
+		private void populateParameterList(List<ParameterDef> parameterList)
+			{
+				if (parameterList != null)
+				{
+					foreach (ParameterDef parameter in parameterList)
+					{
+						//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
+						Control c = new Parameter(
+							parameter.url,
+							parameter.type,
+							parameter.optional,
+							parameterURLList.ToArray(),
+							parameterTypesList.ToArray(),
+							parameterNamesList.ToArray()
+						);
+
+						parametersList.Add(c);
+						flowLayoutPanelParameters.Controls.Add(c);
+						rebuildParamaterPanel();
+					}
+				}
+			}
 
 		/// <summary>
 		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
@@ -494,31 +518,20 @@ namespace NVSE_Docs_Manager
 			{
 				function.Parameters = new List<ParameterDef>();
 				function.Parameters.Clear();
-				foreach (Control c in parametersList)
+				foreach (Parameter c in parametersList)
 				{
 					ParameterDef newParam = new ParameterDef();
 
-					System.Windows.Forms.ComboBox cBox;
-					System.Windows.Forms.CheckBox cBox2;
-
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxURL"];
-					if (!String.IsNullOrEmpty(cBox.Text)) { newParam.url = cBox.Text; }
-
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxType"];
-					string s = cBox.Text + ":";
-					cBox = (System.Windows.Forms.ComboBox)c.Controls["comboBoxName"];
-					s += cBox.Text;
-					if (!String.IsNullOrEmpty(s)) { newParam.type = s; }
-
-					cBox2 = (System.Windows.Forms.CheckBox)c.Controls["checkBoxOptional"];
-					if (!String.IsNullOrEmpty(cBox2.Checked.ToString())) { newParam.optional = cBox2.Checked.ToString(); }
+					if (!String.IsNullOrEmpty(c.Url)) { newParam.url = c.Url; }
+					if (!String.IsNullOrEmpty(c.Type)) { newParam.type = c.Type; }
+					if (!String.IsNullOrEmpty(c.Optional))
+						if(c.Optional.ToLower().Equals("true"))
+							newParam.optional = c.Optional;
 
 					function.Parameters.Add(newParam);
 				}
 			}
 			else { function.Parameters = null; }
-
-
 
 			if (checkBoxReturnType.Checked)
 			{
@@ -544,7 +557,6 @@ namespace NVSE_Docs_Manager
 
 
 	#endregion
-
 
 	#region Events
 
