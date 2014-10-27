@@ -16,6 +16,7 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow : Form
 	{
 
+		#region Variables
 		/// <summary>
 		/// A list of Parameter Control objects displayed in the current form
 		/// </summary>
@@ -48,43 +49,15 @@ namespace NVSE_Docs_Manager
 		FunctionDef currentEdittingBackup = new FunctionDef();
 
 		ExamplesWindow exampleWindowInstance = null;
+		#endregion
+
+
+		FunctionDef currentFunctionDef;
 
 
 		public MainWindow()
 		{
 			InitializeComponent();
-
-			#region Register Mouse Event Handlers
-			this.textBoxName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.textBoxAlias.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxAlias.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.textBoxVersion.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxVersion.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.groupBoxCallingConvention.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.groupBoxCallingConvention.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			this.radioButtonCallingConventionRef.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionRef.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			this.radioButtonCallingConventionBase.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionBase.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.checkBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.checkBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.textBoxOrigin.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxOrigin.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.textBoxCategory.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxCategory.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-
-			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			#endregion
 		}
 
 		/// <summary>
@@ -296,7 +269,6 @@ namespace NVSE_Docs_Manager
 				Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
 				parametersList.Add(c);
 				flowLayoutPanelParameters.Controls.Add(c);
-				rebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -309,7 +281,6 @@ namespace NVSE_Docs_Manager
 				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)parametersList.Last());
 				parametersList.Add(newParam);
 				flowLayoutPanelParameters.Controls.Add(newParam);
-				rebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -397,21 +368,9 @@ namespace NVSE_Docs_Manager
 
 						parametersList.Add(c);
 						flowLayoutPanelParameters.Controls.Add(c);
-						rebuildParamaterPanel();
 					}
 				}
 			}
-
-		/// <summary>
-		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
-		/// </summary>
-		private void rebuildParamaterPanel()
-		{
-			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
-			{
-				flowLayoutPanelParameters.Controls[i].Text = "Parameter " + (i + 1).ToString();
-			}
-		}
 
 		/// <summary>
 		/// Takes a function and fills in all the window fields
@@ -559,6 +518,17 @@ namespace NVSE_Docs_Manager
 
 	#endregion
 
+		private void setFocus(object sender)
+		{
+			((System.Windows.Forms.Control)sender).Focus();
+		}
+
+		private void clearFocus(object sender)
+		{
+			labelName.Focus();
+		}
+
+
 	#region Events
 
 	#region Mouse Event Handlers
@@ -596,9 +566,6 @@ namespace NVSE_Docs_Manager
 			else if (sender == textBoxCategory)
 				s = "The class type of the function";
 
-			else if (sender == groupSelectionEditor)
-				s = "";
-
 			else
 				s = "";
 
@@ -620,6 +587,7 @@ namespace NVSE_Docs_Manager
 		// When mouse enters flowLayout panel, set focus so scroll wheel works
 		private void flowLayoutPanelParameters_MouseEnter(object sender, EventArgs e)
 		{
+			outputToStatusbar("A list of parameters for the function");
 			flowLayoutPanelParameters.Focus();
 		}
 		#endregion
@@ -718,7 +686,8 @@ namespace NVSE_Docs_Manager
 		{
 			if (listboxFunctionList.SelectedItem != null)
 			{
-				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
+				currentFunctionDef = LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString());
+				populateFunctionForm(currentFunctionDef);
 			}
 		}
 
@@ -770,8 +739,16 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
+		private void listboxFunctionList_MouseEnter(object sender, EventArgs e)
+		{
+			setFocus(sender);
+		}
 
-		#endregion Function List Events
+		private void listboxFunctionList_MouseLeave(object sender, EventArgs e)
+		{
+			clearFocus(sender);
+		}
+	#endregion Function List Events
 
 		private void buttonShowExamples_Click(object sender, EventArgs e)
 		{
@@ -783,12 +760,10 @@ namespace NVSE_Docs_Manager
 				exampleWindowInstance.Focus();
 		}
 
-		
-
-
-
-
 	#endregion Events
+
+
+		
 
 	}
 }

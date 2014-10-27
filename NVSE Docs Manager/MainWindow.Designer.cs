@@ -46,6 +46,7 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
+			this.buttonShowExamples = new System.Windows.Forms.Button();
 			this.labelDescription = new System.Windows.Forms.Label();
 			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
 			this.buttonNewFunction = new System.Windows.Forms.Button();
@@ -93,7 +94,6 @@
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
 			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.buttonShowExamples = new System.Windows.Forms.Button();
 			this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -219,6 +219,8 @@
 			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
+			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.listboxFunctionList_MouseEnter);
+			this.listboxFunctionList.MouseLeave += new System.EventHandler(this.listboxFunctionList_MouseLeave);
 			this.listboxFunctionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseUp);
 			// 
 			// groupSelectionEditor
@@ -257,6 +259,16 @@
 			this.groupSelectionEditor.Size = new System.Drawing.Size(753, 615);
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
+			// 
+			// buttonShowExamples
+			// 
+			this.buttonShowExamples.Location = new System.Drawing.Point(6, 444);
+			this.buttonShowExamples.Name = "buttonShowExamples";
+			this.buttonShowExamples.Size = new System.Drawing.Size(158, 23);
+			this.buttonShowExamples.TabIndex = 12;
+			this.buttonShowExamples.Text = "Edit Examples";
+			this.buttonShowExamples.UseVisualStyleBackColor = true;
+			this.buttonShowExamples.Click += new System.EventHandler(this.buttonShowExamples_Click);
 			// 
 			// labelDescription
 			// 
@@ -419,6 +431,8 @@
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
 			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(550, 328);
 			this.flowLayoutPanelParameters.TabIndex = 11;
+			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.flowLayoutPanelParameters_MouseEnter);
+			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonParameterCopy
 			// 
@@ -451,6 +465,8 @@
 			this.textBoxCategory.Name = "textBoxCategory";
 			this.textBoxCategory.Size = new System.Drawing.Size(158, 20);
 			this.textBoxCategory.TabIndex = 9;
+			this.textBoxCategory.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxCategory.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelCategory
 			// 
@@ -467,6 +483,8 @@
 			this.textBoxOrigin.Name = "textBoxOrigin";
 			this.textBoxOrigin.Size = new System.Drawing.Size(158, 20);
 			this.textBoxOrigin.TabIndex = 8;
+			this.textBoxOrigin.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxOrigin.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelOrigin
 			// 
@@ -494,6 +512,8 @@
 			this.textBoxTags.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.textBoxTags.Size = new System.Drawing.Size(158, 60);
 			this.textBoxTags.TabIndex = 7;
+			this.textBoxTags.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxTags.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelReturnType
 			// 
@@ -540,6 +560,8 @@
 			this.radioButtonCallingConventionEither.TabStop = true;
 			this.radioButtonCallingConventionEither.Text = "By Either";
 			this.radioButtonCallingConventionEither.UseVisualStyleBackColor = true;
+			this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// radioButtonCallingConventionBase
 			// 
@@ -550,6 +572,8 @@
 			this.radioButtonCallingConventionBase.TabIndex = 13;
 			this.radioButtonCallingConventionBase.Text = "By Base";
 			this.radioButtonCallingConventionBase.UseVisualStyleBackColor = true;
+			this.radioButtonCallingConventionBase.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionBase.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// radioButtonCallingConventionRef
 			// 
@@ -560,6 +584,8 @@
 			this.radioButtonCallingConventionRef.TabIndex = 12;
 			this.radioButtonCallingConventionRef.Text = "By Reference";
 			this.radioButtonCallingConventionRef.UseVisualStyleBackColor = true;
+			this.radioButtonCallingConventionRef.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.radioButtonCallingConventionRef.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelVersion
 			// 
@@ -567,7 +593,7 @@
 			this.labelVersion.Location = new System.Drawing.Point(6, 100);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(42, 13);
-			this.labelVersion.TabIndex = 5;
+			this.labelVersion.TabIndex = 4;
 			this.labelVersion.Text = "Version";
 			// 
 			// textBoxVersion
@@ -576,6 +602,8 @@
 			this.textBoxVersion.Name = "textBoxVersion";
 			this.textBoxVersion.Size = new System.Drawing.Size(158, 20);
 			this.textBoxVersion.TabIndex = 4;
+			this.textBoxVersion.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxVersion.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// textBoxAlias
 			// 
@@ -583,6 +611,8 @@
 			this.textBoxAlias.Name = "textBoxAlias";
 			this.textBoxAlias.Size = new System.Drawing.Size(158, 20);
 			this.textBoxAlias.TabIndex = 3;
+			this.textBoxAlias.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxAlias.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// textBoxName
 			// 
@@ -591,6 +621,8 @@
 			this.textBoxName.Size = new System.Drawing.Size(158, 20);
 			this.textBoxName.TabIndex = 2;
 			this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
+			this.textBoxName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.textBoxName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelAlias
 			// 
@@ -598,7 +630,7 @@
 			this.labelAlias.Location = new System.Drawing.Point(6, 58);
 			this.labelAlias.Name = "labelAlias";
 			this.labelAlias.Size = new System.Drawing.Size(29, 13);
-			this.labelAlias.TabIndex = 1;
+			this.labelAlias.TabIndex = 3;
 			this.labelAlias.Text = "Alias";
 			// 
 			// labelName
@@ -607,7 +639,7 @@
 			this.labelName.Location = new System.Drawing.Point(6, 16);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(35, 13);
-			this.labelName.TabIndex = 0;
+			this.labelName.TabIndex = 2;
 			this.labelName.Text = "Name";
 			// 
 			// checkBoxConditional
@@ -620,6 +652,8 @@
 			this.checkBoxConditional.TabIndex = 6;
 			this.checkBoxConditional.Text = "Conditional Function";
 			this.checkBoxConditional.UseVisualStyleBackColor = true;
+			this.checkBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.checkBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// groupBoxParameterTemplate
 			// 
@@ -759,21 +793,11 @@
 			this.panel1.AutoSize = true;
 			this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.panel1.Controls.Add(this.groupBoxParameterTemplate);
-			this.panel1.Location = new System.Drawing.Point(294, 0);
+			this.panel1.Location = new System.Drawing.Point(551, 0);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(531, 69);
 			this.panel1.TabIndex = 506;
 			this.panel1.Visible = false;
-			// 
-			// buttonShowExamples
-			// 
-			this.buttonShowExamples.Location = new System.Drawing.Point(6, 444);
-			this.buttonShowExamples.Name = "buttonShowExamples";
-			this.buttonShowExamples.Size = new System.Drawing.Size(158, 23);
-			this.buttonShowExamples.TabIndex = 12;
-			this.buttonShowExamples.Text = "Edit Examples";
-			this.buttonShowExamples.UseVisualStyleBackColor = true;
-			this.buttonShowExamples.Click += new System.EventHandler(this.buttonShowExamples_Click);
 			// 
 			// BottomToolStripPanel
 			// 
