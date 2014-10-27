@@ -15,6 +15,27 @@ namespace NVSE_Docs_Manager
 		public ExamplesWindow()
 		{
 			InitializeComponent();
+
+			
 		}
+
+		public ExamplesWindow(ref List<Examples> list)
+		{
+			InitializeComponent();
+
+			examplesList = list;
+
+		}
+
+
+		List<Examples> examplesList;
+
+
+
+
+
+
+
+
 	}
 }

@@ -37,12 +37,17 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		List<string> parameterNamesList = new List<string>();
 
-
-		// array of read in functions
+		/// <summary>
+		/// List of all loaded functions
+		/// </summary>
 		List<FunctionDef> LoadedFunctionsList = new List<FunctionDef>();
 
-		// Stores a backup of the function currently being edited for restore and comparison purposes
+		/// <summary>
+		/// Stores the current function prior to any changes
+		/// </summary>
 		FunctionDef currentEdittingBackup = new FunctionDef();
+
+		ExamplesWindow exampleWindowInstance = null;
 
 
 		public MainWindow()
@@ -81,8 +86,6 @@ namespace NVSE_Docs_Manager
 			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			#endregion
 		}
-
-
 
 		/// <summary>
 		/// Outputs a string to the statusbar
@@ -261,13 +264,11 @@ namespace NVSE_Docs_Manager
 			form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
 			form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
 			form.FormBorderStyle = FormBorderStyle.FixedDialog;
-			form.StartPosition = FormStartPosition.CenterScreen;
+			form.StartPosition = FormStartPosition.CenterParent;
 			form.MinimizeBox = false;
 			form.MaximizeBox = false;
 			form.AcceptButton = buttonOk;
 			form.CancelButton = buttonCancel;
-
-			form.StartPosition = FormStartPosition.CenterParent;
 
 			DialogResult dialogResult = form.ShowDialog();
 			value = textBox.Text;
@@ -717,7 +718,6 @@ namespace NVSE_Docs_Manager
 		{
 			if (listboxFunctionList.SelectedItem != null)
 			{
-				//LoadedFunctionsList.Find(f => f.Name == treeView1.SelectedNode.Text)
 				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
 			}
 		}
@@ -750,7 +750,7 @@ namespace NVSE_Docs_Manager
 
 				} // end dialog if
 			} // end size if
-		} // end buttonListBoxDeleteItem_Click
+		}
 
 		/// <summary>
 		/// Bulk change the category of all selected functions.
@@ -773,7 +773,22 @@ namespace NVSE_Docs_Manager
 
 		#endregion Function List Events
 
-	#endregion Events
+		private void buttonShowExamples_Click(object sender, EventArgs e)
+		{
+			if (exampleWindowInstance == null || exampleWindowInstance.IsDisposed)
+				exampleWindowInstance = new ExamplesWindow();
+			exampleWindowInstance.Show();
+
+			if (exampleWindowInstance.Focused == false)
+				exampleWindowInstance.Focus();
+		}
+
 		
+
+
+
+
+	#endregion Events
+
 	}
 }
