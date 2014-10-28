@@ -28,33 +28,33 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.listBoxExamples = new System.Windows.Forms.ListBox();
+			this.richTextBoxExampleEditor = new System.Windows.Forms.RichTextBox();
 			this.buttonAddExample = new System.Windows.Forms.Button();
 			this.buttonDone = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// listBox1
+			// listBoxExamples
 			// 
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Items.AddRange(new object[] {
-            "Example 1",
-            "Example 2"});
-			this.listBox1.Location = new System.Drawing.Point(12, 12);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.ScrollAlwaysVisible = true;
-			this.listBox1.Size = new System.Drawing.Size(135, 108);
-			this.listBox1.TabIndex = 0;
+			this.listBoxExamples.FormattingEnabled = true;
+			this.listBoxExamples.Location = new System.Drawing.Point(12, 12);
+			this.listBoxExamples.Name = "listBoxExamples";
+			this.listBoxExamples.ScrollAlwaysVisible = true;
+			this.listBoxExamples.Size = new System.Drawing.Size(135, 108);
+			this.listBoxExamples.TabIndex = 0;
+			this.listBoxExamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxExamples_MouseClick);
 			// 
-			// richTextBox1
+			// richTextBoxExampleEditor
 			// 
-			this.richTextBox1.AcceptsTab = true;
-			this.richTextBox1.EnableAutoDragDrop = true;
-			this.richTextBox1.Location = new System.Drawing.Point(153, 12);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(469, 288);
-			this.richTextBox1.TabIndex = 1;
-			this.richTextBox1.Text = "";
+			this.richTextBoxExampleEditor.AcceptsTab = true;
+			this.richTextBoxExampleEditor.EnableAutoDragDrop = true;
+			this.richTextBoxExampleEditor.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.richTextBoxExampleEditor.Location = new System.Drawing.Point(153, 12);
+			this.richTextBoxExampleEditor.Name = "richTextBoxExampleEditor";
+			this.richTextBoxExampleEditor.Size = new System.Drawing.Size(619, 342);
+			this.richTextBoxExampleEditor.TabIndex = 1;
+			this.richTextBoxExampleEditor.Text = "";
+			this.richTextBoxExampleEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ExampleEditor_KeyUp);
 			// 
 			// buttonAddExample
 			// 
@@ -67,7 +67,7 @@
 			// 
 			// buttonDone
 			// 
-			this.buttonDone.Location = new System.Drawing.Point(12, 272);
+			this.buttonDone.Location = new System.Drawing.Point(12, 326);
 			this.buttonDone.Name = "buttonDone";
 			this.buttonDone.Size = new System.Drawing.Size(135, 28);
 			this.buttonDone.TabIndex = 3;
@@ -78,11 +78,11 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(634, 312);
+			this.ClientSize = new System.Drawing.Size(784, 366);
 			this.Controls.Add(this.buttonDone);
 			this.Controls.Add(this.buttonAddExample);
-			this.Controls.Add(this.richTextBox1);
-			this.Controls.Add(this.listBox1);
+			this.Controls.Add(this.richTextBoxExampleEditor);
+			this.Controls.Add(this.listBoxExamples);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "ExamplesWindow";
 			this.ShowInTaskbar = false;
@@ -94,8 +94,8 @@
 
 		#endregion
 
-		private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.ListBox listBoxExamples;
+		private System.Windows.Forms.RichTextBox richTextBoxExampleEditor;
 		private System.Windows.Forms.Button buttonAddExample;
 		private System.Windows.Forms.Button buttonDone;
 	}

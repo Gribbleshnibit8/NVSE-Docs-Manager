@@ -131,10 +131,7 @@ namespace NVSE_Docs_Manager
 			Control parent = (sender as System.Windows.Forms.Button).Parent;
 			Control grandparent = (parent as System.Windows.Forms.GroupBox).Parent;
 			grandparent.Controls.Remove(parent);
-			for (int i = 0; i < grandparent.Controls.Count; i++)
-			{
-				grandparent.Controls[i].Text = "Parameter " + (i + 1).ToString();
-			}
+			//rebuildParamaterPanel();
 		}
 
 		private void urlBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -158,19 +155,6 @@ namespace NVSE_Docs_Manager
 		{
 			Optional = ((System.Windows.Forms.CheckBox)sender).Checked.ToString();
 		}
-
-		private void mouseEnter_MouseEnter(object sender, EventArgs e)
-		{
-			Control parent = (sender as System.Windows.Forms.GroupBox).Parent;
-			parent.Focus();
-		}
-
-		private void mouseLeave_MouseLeave(object sender, EventArgs e)
-		{
-			Control parent = (sender as System.Windows.Forms.Control).Parent;
-			Control grandparent = (parent as System.Windows.Forms.Control).Parent;
-			grandparent.Focus();
-		}
 		#endregion
 
 		public override string ToString()
@@ -188,8 +172,6 @@ namespace NVSE_Docs_Manager
 			// create a new group box for the new ParameterDef
 			this.Size = new System.Drawing.Size(523, 60);
 			this.Text = "Parameter";
-			this.MouseEnter += new System.EventHandler(this.mouseEnter_MouseEnter);
-			this.MouseLeave += new System.EventHandler(this.mouseLeave_MouseLeave);
 
 			// create the remove button
 			System.Windows.Forms.Button removeButton = new System.Windows.Forms.Button();

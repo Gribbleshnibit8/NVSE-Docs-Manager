@@ -12,23 +12,74 @@ namespace NVSE_Docs_Manager
 {
 	public partial class ExamplesWindow : Form
 	{
+
+		List<string> exampleText;
+
 		public ExamplesWindow()
 		{
 			InitializeComponent();
-
-			
+			populateForm();
 		}
 
-		public ExamplesWindow(ref List<Examples> list)
+		public static void updateTrgger()
 		{
-			InitializeComponent();
+			populateForm();
+		}
 
-			examplesList = list;
-
+		private void populateForm()
+		{
+			if (Variables.ExampleList != null)
+				for (int i = 0; i < Variables.ExampleList.Count; i++)
+				{
+					listBoxExamples.Items.Add("Example " + (i+1));
+				}
 		}
 
 
-		List<Examples> examplesList;
+		#region Events
+			private void listBoxExamples_MouseClick(object sender, MouseEventArgs e)
+			{
+				if (listBoxExamples.SelectedItem != null)
+				{
+					richTextBoxExampleEditor.Clear();
+					exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Example;
+					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Example)
+					{
+						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
+					}
+				}
+			}
+
+			/// <summary>
+			/// Saves the contents of the Example Editor field on each key up
+			/// </summary>
+			private void ExampleEditor_KeyUp(object sender, KeyEventArgs e)
+			{
+				if (listBoxExamples.SelectedItem != null)
+				{
+					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Example)
+					{
+						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
+					}
+				}
+
+
+				//if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
+				//{
+				//	if (function.Description == null) { function.Description = new List<string>(); }
+				//	function.Description.Clear();
+				//	foreach (string line in richTextBoxDescription.Lines)
+				//	{
+				//		if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
+				//			function.Description.Add(System.Web.HttpUtility.HtmlEncode(line));
+				//	}
+				//}
+
+			}
+
+		#endregion Events
+
+
 
 
 

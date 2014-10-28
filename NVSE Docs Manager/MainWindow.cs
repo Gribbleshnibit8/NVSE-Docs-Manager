@@ -16,7 +16,6 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow : Form
 	{
 
-		#region Variables
 		/// <summary>
 		/// A list of Parameter Control objects displayed in the current form
 		/// </summary>
@@ -43,16 +42,9 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		List<FunctionDef> LoadedFunctionsList = new List<FunctionDef>();
 
-		/// <summary>
-		/// Stores the current function prior to any changes
-		/// </summary>
-		FunctionDef currentEdittingBackup = new FunctionDef();
+		
 
 		ExamplesWindow exampleWindowInstance = null;
-		#endregion
-
-
-		FunctionDef currentFunctionDef;
 
 
 		public MainWindow()
@@ -161,7 +153,7 @@ namespace NVSE_Docs_Manager
 			parameterNamesList.Clear();
 			parameterTypesList.Clear();
 			parametersList.Clear();
-			currentEdittingBackup = new FunctionDef();
+			Variables.currentEditingBackup = new FunctionDef();
 			flowLayoutPanelParameters.Controls.Clear();
 			parametersList.Clear();
 			textBoxName.Clear();
@@ -179,7 +171,7 @@ namespace NVSE_Docs_Manager
 		private bool hasChanged()
 		{
 			FunctionDef toCheck = windowToFunction(new FunctionDef());
-			if (toCheck.Equals(currentEdittingBackup))
+			if (toCheck.Equals(Variables.currentEditingBackup))
 				return false;
 			return true;
 		}
@@ -269,6 +261,7 @@ namespace NVSE_Docs_Manager
 				Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
 				parametersList.Add(c);
 				flowLayoutPanelParameters.Controls.Add(c);
+				rebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -281,6 +274,7 @@ namespace NVSE_Docs_Manager
 				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)parametersList.Last());
 				parametersList.Add(newParam);
 				flowLayoutPanelParameters.Controls.Add(newParam);
+				rebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -330,7 +324,10 @@ namespace NVSE_Docs_Manager
 			{
 				DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (d == DialogResult.Yes)
-					populateFunctionForm(currentEdittingBackup);
+					if (Variables.currentEditingBackup == null)
+						populateFunctionForm(new FunctionDef());
+					else
+						populateFunctionForm(Variables.currentEditingBackup);
 			}
 
 			/// <summary>
@@ -344,33 +341,6 @@ namespace NVSE_Docs_Manager
 		}
 
 		#endregion Events
-
-		/// <summary>
-		/// Creates a ParameterDef list and populates all the groupboxes with
-		/// the values from a function's parameters
-		/// </summary>
-		/// <param name="paramList">List of parameters</param>
-		private void populateParameterList(List<ParameterDef> parameterList)
-			{
-				if (parameterList != null)
-				{
-					foreach (ParameterDef parameter in parameterList)
-					{
-						//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
-						Control c = new Parameter(
-							parameter.url,
-							parameter.type,
-							parameter.optional,
-							parameterURLList.ToArray(),
-							parameterTypesList.ToArray(),
-							parameterNamesList.ToArray()
-						);
-
-						parametersList.Add(c);
-						flowLayoutPanelParameters.Controls.Add(c);
-					}
-				}
-			}
 
 		/// <summary>
 		/// Takes a function and fills in all the window fields
@@ -392,7 +362,10 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 
 			// save the settings to a global first, so we can revert if a bad change is made
-			currentEdittingBackup = func;
+			Variables.currentEditingBackup = func;
+			Variables.ExampleList = func.ExampleList;
+
+			exampleWindowInstance.updateTrgger();
 
 			textBoxName.Text = func.Name;
 			textBoxAlias.Text = func.Alias;
@@ -438,7 +411,46 @@ namespace NVSE_Docs_Manager
 			}
 
 			if (func.Description != null)
-				foreach (string s in func.Description) { richTextBoxDescription.Text += s + System.Environment.NewLine + System.Environment.NewLine; }
+				foreach (string s in func.Description) { richTextBoxDescription.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine + System.Environment.NewLine; }
+		}
+
+		/// <summary>
+		/// Creates a ParameterDef list and populates all the groupboxes with
+		/// the values from a function's parameters
+		/// </summary>
+		/// <param name="paramList">List of parameters</param>
+		private void populateParameterList(List<ParameterDef> parameterList)
+			{
+				if (parameterList != null)
+				{
+					foreach (ParameterDef parameter in parameterList)
+					{
+						//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
+						Control c = new Parameter(
+							parameter.url,
+							parameter.type,
+							parameter.optional,
+							parameterURLList.ToArray(),
+							parameterTypesList.ToArray(),
+							parameterNamesList.ToArray()
+						);
+
+						parametersList.Add(c);
+						flowLayoutPanelParameters.Controls.Add(c);
+						rebuildParamaterPanel();
+					}
+				}
+			}
+
+		/// <summary>
+		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
+		/// </summary>
+		private void rebuildParamaterPanel()
+		{
+			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
+			{
+				flowLayoutPanelParameters.Controls[i].Text = "Parameter " + (i + 1).ToString();
+			}
 		}
 
 		/// <summary>
@@ -508,26 +520,14 @@ namespace NVSE_Docs_Manager
 				foreach (string line in richTextBoxDescription.Lines)
 				{
 					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-						function.Description.Add(line);
+						function.Description.Add(System.Web.HttpUtility.HtmlEncode(line));
 				}
 			}
 
 			return function;
 		}
 
-
 	#endregion
-
-		private void setFocus(object sender)
-		{
-			((System.Windows.Forms.Control)sender).Focus();
-		}
-
-		private void clearFocus(object sender)
-		{
-			labelName.Focus();
-		}
-
 
 	#region Events
 
@@ -566,6 +566,9 @@ namespace NVSE_Docs_Manager
 			else if (sender == textBoxCategory)
 				s = "The class type of the function";
 
+			else if (sender == groupSelectionEditor)
+				s = "";
+
 			else
 				s = "";
 
@@ -587,7 +590,6 @@ namespace NVSE_Docs_Manager
 		// When mouse enters flowLayout panel, set focus so scroll wheel works
 		private void flowLayoutPanelParameters_MouseEnter(object sender, EventArgs e)
 		{
-			outputToStatusbar("A list of parameters for the function");
 			flowLayoutPanelParameters.Focus();
 		}
 		#endregion
@@ -686,8 +688,7 @@ namespace NVSE_Docs_Manager
 		{
 			if (listboxFunctionList.SelectedItem != null)
 			{
-				currentFunctionDef = LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString());
-				populateFunctionForm(currentFunctionDef);
+				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
 			}
 		}
 
@@ -739,16 +740,8 @@ namespace NVSE_Docs_Manager
 			}
 		}
 
-		private void listboxFunctionList_MouseEnter(object sender, EventArgs e)
-		{
-			setFocus(sender);
-		}
 
-		private void listboxFunctionList_MouseLeave(object sender, EventArgs e)
-		{
-			clearFocus(sender);
-		}
-	#endregion Function List Events
+		#endregion Function List Events
 
 		private void buttonShowExamples_Click(object sender, EventArgs e)
 		{
@@ -760,10 +753,12 @@ namespace NVSE_Docs_Manager
 				exampleWindowInstance.Focus();
 		}
 
-	#endregion Events
-
-
 		
+
+
+
+
+	#endregion Events
 
 	}
 }

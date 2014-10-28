@@ -219,8 +219,8 @@
 			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
-			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.listboxFunctionList_MouseEnter);
-			this.listboxFunctionList.MouseLeave += new System.EventHandler(this.listboxFunctionList_MouseLeave);
+			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.listboxFunctionList.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			this.listboxFunctionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseUp);
 			// 
 			// groupSelectionEditor
@@ -269,6 +269,8 @@
 			this.buttonShowExamples.Text = "Edit Examples";
 			this.buttonShowExamples.UseVisualStyleBackColor = true;
 			this.buttonShowExamples.Click += new System.EventHandler(this.buttonShowExamples_Click);
+			this.buttonShowExamples.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonShowExamples.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelDescription
 			// 
@@ -289,6 +291,8 @@
 			this.richTextBoxDescription.TabIndex = 13;
 			this.richTextBoxDescription.Text = "";
 			this.richTextBoxDescription.ZoomFactor = 1.2F;
+			this.richTextBoxDescription.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.richTextBoxDescription.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonNewFunction
 			// 
@@ -299,6 +303,8 @@
 			this.buttonNewFunction.Text = "New Function";
 			this.buttonNewFunction.UseVisualStyleBackColor = true;
 			this.buttonNewFunction.Click += new System.EventHandler(this.buttonNewFunction_Click);
+			this.buttonNewFunction.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonNewFunction.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// groupBoxReturnType
 			// 
@@ -337,6 +343,8 @@
 			this.checkBoxReturnType.TabIndex = 11;
 			this.checkBoxReturnType.UseVisualStyleBackColor = true;
 			this.checkBoxReturnType.CheckedChanged += new System.EventHandler(this.checkBoxReturnType_CheckedChanged);
+			this.checkBoxReturnType.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.checkBoxReturnType.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// comboBoxReturnTypeName
 			// 
@@ -346,6 +354,8 @@
 			this.comboBoxReturnTypeName.Name = "comboBoxReturnTypeName";
 			this.comboBoxReturnTypeName.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeName.TabIndex = 36;
+			this.comboBoxReturnTypeName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.comboBoxReturnTypeName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelReturnTypeURL
 			// 
@@ -392,6 +402,8 @@
 			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeURL.Sorted = true;
 			this.comboBoxReturnTypeURL.TabIndex = 32;
+			this.comboBoxReturnTypeURL.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.comboBoxReturnTypeURL.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// comboBoxReturnTypeType
 			// 
@@ -401,6 +413,8 @@
 			this.comboBoxReturnTypeType.Name = "comboBoxReturnTypeType";
 			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeType.TabIndex = 34;
+			this.comboBoxReturnTypeType.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.comboBoxReturnTypeType.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonDiscardChanges
 			// 
@@ -411,6 +425,8 @@
 			this.buttonDiscardChanges.Text = " Discard Changes";
 			this.buttonDiscardChanges.UseVisualStyleBackColor = true;
 			this.buttonDiscardChanges.Click += new System.EventHandler(this.buttonDiscardChanges_Click);
+			this.buttonDiscardChanges.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonDiscardChanges.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonSaveCurrentChanges
 			// 
@@ -422,6 +438,8 @@
 			this.buttonSaveCurrentChanges.Text = "Save\r\nChanges";
 			this.buttonSaveCurrentChanges.UseVisualStyleBackColor = true;
 			this.buttonSaveCurrentChanges.Click += new System.EventHandler(this.buttonSaveCurrentChanges_Click);
+			this.buttonSaveCurrentChanges.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonSaveCurrentChanges.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// flowLayoutPanelParameters
 			// 
@@ -431,8 +449,6 @@
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
 			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(550, 328);
 			this.flowLayoutPanelParameters.TabIndex = 11;
-			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.flowLayoutPanelParameters_MouseEnter);
-			this.flowLayoutPanelParameters.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonParameterCopy
 			// 
@@ -593,7 +609,7 @@
 			this.labelVersion.Location = new System.Drawing.Point(6, 100);
 			this.labelVersion.Name = "labelVersion";
 			this.labelVersion.Size = new System.Drawing.Size(42, 13);
-			this.labelVersion.TabIndex = 4;
+			this.labelVersion.TabIndex = 5;
 			this.labelVersion.Text = "Version";
 			// 
 			// textBoxVersion
@@ -630,7 +646,7 @@
 			this.labelAlias.Location = new System.Drawing.Point(6, 58);
 			this.labelAlias.Name = "labelAlias";
 			this.labelAlias.Size = new System.Drawing.Size(29, 13);
-			this.labelAlias.TabIndex = 3;
+			this.labelAlias.TabIndex = 1;
 			this.labelAlias.Text = "Alias";
 			// 
 			// labelName
@@ -639,7 +655,7 @@
 			this.labelName.Location = new System.Drawing.Point(6, 16);
 			this.labelName.Name = "labelName";
 			this.labelName.Size = new System.Drawing.Size(35, 13);
-			this.labelName.TabIndex = 2;
+			this.labelName.TabIndex = 0;
 			this.labelName.Text = "Name";
 			// 
 			// checkBoxConditional
@@ -774,6 +790,8 @@
 			this.buttonListBoxDeleteItem.Text = "Delete Function";
 			this.buttonListBoxDeleteItem.UseVisualStyleBackColor = true;
 			this.buttonListBoxDeleteItem.Click += new System.EventHandler(this.buttonListBoxDeleteItem_Click);
+			this.buttonListBoxDeleteItem.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonListBoxDeleteItem.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonListBoxChangeCategory
 			// 
@@ -787,13 +805,15 @@
 			this.buttonListBoxChangeCategory.Text = "Change Category";
 			this.buttonListBoxChangeCategory.UseVisualStyleBackColor = true;
 			this.buttonListBoxChangeCategory.Click += new System.EventHandler(this.buttonListBoxChangeCategory_Click);
+			this.buttonListBoxChangeCategory.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.buttonListBoxChangeCategory.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// panel1
 			// 
 			this.panel1.AutoSize = true;
 			this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.panel1.Controls.Add(this.groupBoxParameterTemplate);
-			this.panel1.Location = new System.Drawing.Point(551, 0);
+			this.panel1.Location = new System.Drawing.Point(294, 0);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(531, 69);
 			this.panel1.TabIndex = 506;

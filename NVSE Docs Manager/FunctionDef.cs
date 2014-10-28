@@ -14,7 +14,6 @@ namespace NVSE_Docs_Manager
 	// Need a list to hold all ParameterDef and Return Type type fields
 
 	[JsonObject(MemberSerialization = MemberSerialization.OptOut)]
-	
 	public class FunctionDef
 	{
 
