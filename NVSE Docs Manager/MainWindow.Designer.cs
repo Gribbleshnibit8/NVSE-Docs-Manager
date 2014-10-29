@@ -218,6 +218,7 @@
 			this.listboxFunctionList.Size = new System.Drawing.Size(300, 580);
 			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
+			this.listboxFunctionList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxFuctionList_KeyUp);
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
 			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.listboxFunctionList.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
@@ -290,7 +291,7 @@
 			this.richTextBoxDescription.Size = new System.Drawing.Size(550, 140);
 			this.richTextBoxDescription.TabIndex = 13;
 			this.richTextBoxDescription.Text = "";
-			this.richTextBoxDescription.ZoomFactor = 1.2F;
+			this.richTextBoxDescription.ZoomFactor = 1.201F;
 			this.richTextBoxDescription.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.richTextBoxDescription.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 

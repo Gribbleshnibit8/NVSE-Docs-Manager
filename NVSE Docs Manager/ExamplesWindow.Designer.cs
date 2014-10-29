@@ -43,6 +43,7 @@
 			this.listBoxExamples.Size = new System.Drawing.Size(135, 108);
 			this.listBoxExamples.TabIndex = 0;
 			this.listBoxExamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxExamples_MouseClick);
+			this.listBoxExamples.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxExamples_KeyUp);
 			// 
 			// richTextBoxExampleEditor
 			// 
@@ -64,6 +65,7 @@
 			this.buttonAddExample.TabIndex = 2;
 			this.buttonAddExample.Text = "Add Example";
 			this.buttonAddExample.UseVisualStyleBackColor = true;
+			this.buttonAddExample.Click += new System.EventHandler(this.buttonAddExample_Click);
 			// 
 			// buttonDone
 			// 
@@ -73,6 +75,7 @@
 			this.buttonDone.TabIndex = 3;
 			this.buttonDone.Text = "Done";
 			this.buttonDone.UseVisualStyleBackColor = true;
+			this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
 			// 
 			// ExamplesWindow
 			// 

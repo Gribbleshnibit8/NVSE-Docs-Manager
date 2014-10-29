@@ -21,13 +21,10 @@ namespace NVSE_Docs_Manager
 			populateForm();
 		}
 
-		public static void updateTrgger()
+		public void populateForm()
 		{
-			populateForm();
-		}
-
-		private void populateForm()
-		{
+			listBoxExamples.Items.Clear();
+			richTextBoxExampleEditor.Clear();
 			if (Variables.ExampleList != null)
 				for (int i = 0; i < Variables.ExampleList.Count; i++)
 				{
@@ -37,13 +34,14 @@ namespace NVSE_Docs_Manager
 
 
 		#region Events
+
 			private void listBoxExamples_MouseClick(object sender, MouseEventArgs e)
 			{
 				if (listBoxExamples.SelectedItem != null)
 				{
 					richTextBoxExampleEditor.Clear();
-					exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Example;
-					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Example)
+					exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Contents;
+					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Contents)
 					{
 						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
 					}
@@ -57,34 +55,56 @@ namespace NVSE_Docs_Manager
 			{
 				if (listBoxExamples.SelectedItem != null)
 				{
-					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Example)
+					Variables.ExampleList[listBoxExamples.SelectedIndex].Contents.Clear();
+					foreach (string line in richTextBoxExampleEditor.Lines)
 					{
-						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
+						Variables.ExampleList[listBoxExamples.SelectedIndex].Contents.Add(System.Web.HttpUtility.HtmlEncode(line));
 					}
 				}
+			}
 
+			private void listboxExamples_KeyUp(object sender, KeyEventArgs e)
+			{
+				switch (e.KeyCode)
+				{
+					case Keys.Delete:
+						if (listBoxExamples.SelectedItems.Count > 0)
+						{
+							DialogResult d = MessageBox.Show("Are you sure you want to delete the selected Example(s)?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+							if (d == DialogResult.Yes)
+							{
+								for (int i = listBoxExamples.SelectedItems.Count - 1; i >= 0; i--)
+								{
+									Variables.ExampleList.RemoveAt(listBoxExamples.SelectedIndices[i]);
+									listBoxExamples.Items.Remove(listBoxExamples.SelectedItems[i]);
+								}
+							}
+						}
+						break;
 
-				//if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
-				//{
-				//	if (function.Description == null) { function.Description = new List<string>(); }
-				//	function.Description.Clear();
-				//	foreach (string line in richTextBoxDescription.Lines)
-				//	{
-				//		if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-				//			function.Description.Add(System.Web.HttpUtility.HtmlEncode(line));
-				//	}
-				//}
+					default:
+						break;
+				}
+			}
 
+			private void buttonAddExample_Click(object sender, EventArgs e)
+			{
+				int i = listBoxExamples.Items.Count + 1;
+				listBoxExamples.Items.Add("Example " + i);
+
+				if (Variables.ExampleList == null)
+				{
+					Variables.ExampleList = new List<Example>();
+				}
+				Variables.ExampleList.Add(new Example());
+			}
+
+			private void buttonDone_Click(object sender, EventArgs e)
+			{
+				this.Close();
 			}
 
 		#endregion Events
-
-
-
-
-
-
-
 
 
 

@@ -42,7 +42,7 @@ namespace NVSE_Docs_Manager
 		public List<string> Description;
 
 		[JsonProperty(PropertyName = "Examples")]
-		public List<Examples> ExampleList;
+		public List<Example> ExampleList;
 
 		[JsonProperty(PropertyName = "Tags")]
 		public List<string> Tags { get; set; }
@@ -74,8 +74,13 @@ namespace NVSE_Docs_Manager
 		public string type { get; set; }
 	}
 
-	public class Examples
+	public class Example
 	{
-		public List<string> Example { get; set; }
+		public List<string> Contents { get; set; }
+
+		public Example()
+		{
+			Contents = new List<string>();
+		}
 	}
 }

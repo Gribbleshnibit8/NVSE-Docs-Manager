@@ -365,7 +365,8 @@ namespace NVSE_Docs_Manager
 			Variables.currentEditingBackup = func;
 			Variables.ExampleList = func.ExampleList;
 
-			exampleWindowInstance.updateTrgger();
+			if (exampleWindowInstance != null)
+				exampleWindowInstance.populateForm();
 
 			textBoxName.Text = func.Name;
 			textBoxAlias.Text = func.Alias;
@@ -699,7 +700,7 @@ namespace NVSE_Docs_Manager
 		{
 			if (listboxFunctionList.SelectedItems.Count > 0)
 			{
-				DialogResult d = MessageBox.Show("Are you sure you want to delete the selected function?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				DialogResult d = MessageBox.Show("Are you sure you want to delete the selected function(s)?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (d == DialogResult.Yes)
 				{
 					for (int i = listboxFunctionList.SelectedItems.Count - 1; i >= 0; i--)
@@ -707,19 +708,8 @@ namespace NVSE_Docs_Manager
 						LoadedFunctionsList.Remove(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItems[i].ToString()));
 						listboxFunctionList.Items.Remove(listboxFunctionList.SelectedItems[i]);
 					}
-
-
-
-					//List<string> names = new List<string>();
-					//foreach (string s in listboxFunctionList.SelectedItems)
-					//{
-					//	FunctionDef func = LoadedFunctionsList.Find(f => f.Name == s);
-					//	LoadedFunctionsList.Remove(func);
-					//	listboxFunctionList.Items.RemoveAt(listboxFunctionList.SelectedItems.IndexOf(s));
-					//} // end foreach
-
-				} // end dialog if
-			} // end size if
+				}
+			}
 		}
 
 		/// <summary>
@@ -759,6 +749,16 @@ namespace NVSE_Docs_Manager
 
 
 	#endregion Events
+
+		private void listboxFuctionList_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
+					buttonListBoxDeleteItem_Click(sender, e);
+					break;
+			}
+		}
 
 	}
 }

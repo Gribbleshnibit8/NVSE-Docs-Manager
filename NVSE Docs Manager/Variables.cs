@@ -9,7 +9,7 @@ namespace NVSE_Docs_Manager
 	public class Variables
 	{
 
-		public static List<Examples> ExampleList { get; set; }
+		public static List<Example> ExampleList { get; set; }
 
 		/// <summary>
 		/// Stores the current function prior to any changes
