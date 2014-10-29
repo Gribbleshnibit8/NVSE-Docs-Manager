@@ -40,11 +40,16 @@ namespace NVSE_Docs_Manager
 				if (listBoxExamples.SelectedItem != null)
 				{
 					richTextBoxExampleEditor.Clear();
+					richTextBoxExampleEditor.Enabled = true;
 					exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Contents;
 					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Contents)
 					{
 						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
 					}
+				}
+				else
+				{
+					richTextBoxExampleEditor.Enabled = false;
 				}
 			}
 

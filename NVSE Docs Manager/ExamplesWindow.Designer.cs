@@ -49,6 +49,7 @@
 			// 
 			this.richTextBoxExampleEditor.AcceptsTab = true;
 			this.richTextBoxExampleEditor.EnableAutoDragDrop = true;
+			this.richTextBoxExampleEditor.Enabled = false;
 			this.richTextBoxExampleEditor.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxExampleEditor.Location = new System.Drawing.Point(153, 12);
 			this.richTextBoxExampleEditor.Name = "richTextBoxExampleEditor";

@@ -76,6 +76,7 @@ namespace NVSE_Docs_Manager
 
 	public class Example
 	{
+		[JsonProperty(PropertyName = "Example")]
 		public List<string> Contents { get; set; }
 
 		public Example()

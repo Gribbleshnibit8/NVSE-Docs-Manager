@@ -470,11 +470,21 @@ namespace NVSE_Docs_Manager
 			if (!String.IsNullOrEmpty(textBoxCategory.Text)) { function.Category = textBoxCategory.Text; }
 			else { function.Category = null; }
 
+
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
 			{
+				// if the tag variable is null, and there are tags to put in it, create a new list
+				if (function.Tags == null)
+					function.Tags = new List<string>();
+
+				// step through each line in the text box, each line is a tag, and store each one
+				// in the list. If there is an empty line, or the line exists already, skip it.
 				foreach (string line in textBoxTags.Lines)
 				{
-					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line)) { function.Tags.Add(line); }
+					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
+					{
+						function.Tags.Add(line);
+					}
 				}
 			}
 
@@ -512,6 +522,16 @@ namespace NVSE_Docs_Manager
 				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].type = comboBoxReturnTypeURL.Text; }
 				string s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
 				if (!String.IsNullOrEmpty(s)) { function.ReturnType[0].type = s; }
+			}
+
+			if (Variables.ExampleList != null)
+			{
+				foreach(Example e in Variables.ExampleList)
+				{
+					if (e.Contents == null)
+						Variables.ExampleList.Remove(e);
+				}
+				function.ExampleList = Variables.ExampleList;
 			}
 
 			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
