@@ -13,15 +13,15 @@ namespace NVSE_Docs_Manager
 	public partial class ExamplesWindow : Form
 	{
 
-		List<string> exampleText;
+		List<string> _exampleText;
 
 		public ExamplesWindow()
 		{
 			InitializeComponent();
-			populateForm();
+			PopulateForm();
 		}
 
-		public void populateForm()
+		public void PopulateForm()
 		{
 			listBoxExamples.Items.Clear();
 			richTextBoxExampleEditor.Clear();
@@ -32,7 +32,6 @@ namespace NVSE_Docs_Manager
 				}
 		}
 
-
 		#region Events
 
 			private void listBoxExamples_MouseClick(object sender, MouseEventArgs e)
@@ -41,8 +40,8 @@ namespace NVSE_Docs_Manager
 				{
 					richTextBoxExampleEditor.Clear();
 					richTextBoxExampleEditor.Enabled = true;
-					exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Contents;
-					foreach (string s in Variables.ExampleList[listBoxExamples.SelectedIndex].Contents)
+					_exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Contents;
+					foreach (var s in Variables.ExampleList[listBoxExamples.SelectedIndex].Contents)
 					{
 						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
 					}
@@ -58,12 +57,14 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void ExampleEditor_KeyUp(object sender, KeyEventArgs e)
 			{
+				int index = listBoxExamples.SelectedIndex;
 				if (listBoxExamples.SelectedItem != null)
 				{
-					Variables.ExampleList[listBoxExamples.SelectedIndex].Contents.Clear();
-					foreach (string line in richTextBoxExampleEditor.Lines)
+					Variables.ExampleList[index].Contents.Clear();
+
+					foreach (var line in richTextBoxExampleEditor.Lines)
 					{
-						Variables.ExampleList[listBoxExamples.SelectedIndex].Contents.Add(System.Web.HttpUtility.HtmlEncode(line));
+						Variables.ExampleList[index].Contents.Add(System.Web.HttpUtility.HtmlEncode(line));
 					}
 				}
 			}
@@ -73,16 +74,12 @@ namespace NVSE_Docs_Manager
 				switch (e.KeyCode)
 				{
 					case Keys.Delete:
-						if (listBoxExamples.SelectedItems.Count > 0)
+						if (listBoxExamples.SelectedItems.Count > 0 && Common.ConfirmDelete("Example(s)") == DialogResult.Yes)
 						{
-							DialogResult d = MessageBox.Show("Are you sure you want to delete the selected Example(s)?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-							if (d == DialogResult.Yes)
+							for (int i = listBoxExamples.SelectedItems.Count - 1; i >= 0; i--)
 							{
-								for (int i = listBoxExamples.SelectedItems.Count - 1; i >= 0; i--)
-								{
-									Variables.ExampleList.RemoveAt(listBoxExamples.SelectedIndices[i]);
-									listBoxExamples.Items.Remove(listBoxExamples.SelectedItems[i]);
-								}
+								Variables.ExampleList.RemoveAt(listBoxExamples.SelectedIndices[i]);
+								listBoxExamples.Items.Remove(listBoxExamples.SelectedItems[i]);
 							}
 						}
 						break;
@@ -98,20 +95,24 @@ namespace NVSE_Docs_Manager
 				listBoxExamples.Items.Add("Example " + i);
 
 				if (Variables.ExampleList == null)
-				{
 					Variables.ExampleList = new List<Example>();
-				}
+
 				Variables.ExampleList.Add(new Example());
+
+				// set the first item selected and enable the editing field
+				if (listBoxExamples.SelectedIndex == -1)
+				{
+					listBoxExamples.SelectedIndex = 0;
+					richTextBoxExampleEditor.Enabled = true;
+				}
 			}
 
 			private void buttonDone_Click(object sender, EventArgs e)
 			{
-				this.Close();
+				Close();
 			}
 
 		#endregion Events
-
-
 
 	}
 }

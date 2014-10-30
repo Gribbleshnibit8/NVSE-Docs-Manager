@@ -16,36 +16,8 @@ namespace NVSE_Docs_Manager
 	public partial class MainWindow : Form
 	{
 
-		/// <summary>
-		/// A list of Parameter Control objects displayed in the current form
-		/// </summary>
-		List<Control> parametersList = new List<Control>();
-
-		List<string> parameterURLList = new List<string>() { 
-			"Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
-			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Format_Specifiers", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
-			"Weapon_Mod", "Weapon_Type"
-		};
-
-		/// <summary>
-		/// A list of all the names from the left-hand side of the ParameterDef type
-		/// </summary>
-		List<string> parameterTypesList = new List<string>();
-
-		/// <summary>
-		/// A list of all the names from the right-hand side of the ParameterDef type
-		/// </summary>
-		List<string> parameterNamesList = new List<string>();
-
-		/// <summary>
-		/// List of all loaded functions
-		/// </summary>
-		List<FunctionDef> LoadedFunctionsList = new List<FunctionDef>();
-
-		
-
-		ExamplesWindow exampleWindowInstance = null;
-
+		ExamplesWindow _exampleWindowInstance = null;
+		string _fileName;
 
 		public MainWindow()
 		{
@@ -56,7 +28,7 @@ namespace NVSE_Docs_Manager
 		/// Outputs a string to the statusbar
 		/// </summary>
 		/// <param name="outString">A string of text to explain what the current action is.</param>
-		private void outputToStatusbar(string outString)
+		private void OutputToStatusbar(string outString)
 		{
 			toolStripStatusLabel1.Text = outString;
 		}
@@ -65,97 +37,68 @@ namespace NVSE_Docs_Manager
 		/// Turns a json encoded StreamReader file object into a list of FunctionDef objects.
 		/// </summary>
 		/// <param name="file">An input file object formatted in json.</param>
-		private void parseLoadedFile(StreamReader file)
+		private void ParseLoadedFile(StreamReader file)
 		{
-			populateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
-			updateParameterTypeLists();
+			PopulateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
+			UpdateParameterTypeLists();
 		}
 
 		/// <summary>
 		/// Updates the ParameterDef type and name lists from all parameters
 		/// </summary>
-		private void updateParameterTypeLists()
+		private void UpdateParameterTypeLists()
 		{
-			foreach (FunctionDef f in LoadedFunctionsList)
+			foreach (var s in from f in Variables.LoadedFunctionsList where f.Parameters != null from p in f.Parameters select p.Type.Split(':'))
 			{
-				if (f.Parameters != null)
-				{
-					foreach (ParameterDef p in f.Parameters)
-					{
-						string[] s = p.type.Split(':');
-						if (!parameterTypesList.Contains(s[0]) && !String.IsNullOrEmpty(s[0])) { parameterTypesList.Add(s[0]); }
-						if (s.Length >= 2 && !parameterNamesList.Contains(s[1]) && !String.IsNullOrEmpty(s[1])) { parameterNamesList.Add(s[1]); }
-					}
-				}
+				if (!Variables.ParameterTypesList.Contains(s[0]) && !String.IsNullOrEmpty(s[0])) { Variables.ParameterTypesList.Add(s[0]); }
+				if (s.Length >= 2 && !Variables.ParameterNamesList.Contains(s[1]) && !String.IsNullOrEmpty(s[1])) { Variables.ParameterNamesList.Add(s[1]); }
 			}
 			comboBoxReturnTypeURL.Items.Clear();
-			comboBoxReturnTypeURL.Items.AddRange(parameterURLList.ToArray());
+			comboBoxReturnTypeURL.Items.AddRange(Variables.ParameterUrlList.ToArray());
 			comboBoxReturnTypeType.Items.Clear();
-			comboBoxReturnTypeType.Items.AddRange(parameterTypesList.ToArray());
+			comboBoxReturnTypeType.Items.AddRange(Variables.ParameterTypesList.ToArray());
 			comboBoxReturnTypeName.Items.Clear();
-			comboBoxReturnTypeName.Items.AddRange(parameterNamesList.ToArray());
+			comboBoxReturnTypeName.Items.AddRange(Variables.ParameterNamesList.ToArray());
 		}
 
 		/// <summary>
 		/// Takes a list of function objects and adds their names to the listbox form.
 		/// </summary>
 		/// <param name="functionList">A List&lt;T&gt; of FunctionDefs that will be added to the working list of functions.</param>
-		private void populateFunctionListBox(List<FunctionDef> functionList)
+		private void PopulateFunctionListBox(List<FunctionDef> functionList)
 		{
 			if (functionList != null)
-			{
 				foreach (FunctionDef f in functionList)
-				{
-					addToFunctionListBox(f);
-				}
-			}
-			
+					AddToFunctionListBox(f);
+			RebuildParamaterPanel();
 		}
 
 		/// <summary>
 		/// Checks if a function exists in the list and, if it's not, adds it to the list and updates the listbox
 		/// </summary>
 		/// <param name="functionToAdd">A function to add to the list of loaded functions</param>
-		private void addToFunctionListBox(FunctionDef functionToAdd)
+		private void AddToFunctionListBox(FunctionDef functionToAdd)
 		{
-			if (!LoadedFunctionsList.Exists(n => n.Name == functionToAdd.Name))
+			if (!Variables.LoadedFunctionsList.Exists(n => n.Name == functionToAdd.Name))
 			{
 				listboxFunctionList.Items.Add(functionToAdd.Name);
-				LoadedFunctionsList.Add(functionToAdd);
+				Variables.LoadedFunctionsList.Add(functionToAdd);
 			}
-		}
-
-		/// <summary>
-		/// Takes all the info in the window and creates a new function from it
-		/// then adds it to the listbox and LoadedFunctionsList
-		/// </summary>
-		private void saveNewFunction()
-		{
-			FunctionDef func = windowToFunction(new FunctionDef());
-			addToFunctionListBox(func);
-		}
-
-		/// <summary>
-		/// Finds the current function by name and replaces its data with that in the window
-		/// </summary>
-		private void updateCurrentFunction()
-		{
-			windowToFunction(LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
 
 		/// <summary>
 		/// Resets the entire form to the state of program start
 		/// </summary>
-		private void clearEntireForm()
+		private void ClearEntireForm()
 		{
+			Variables.LoadedFunctionsList.Clear();
+			Variables.ParameterNamesList.Clear();
+			Variables.ParameterTypesList.Clear();
+			Variables.ParametersList.Clear();
+			Variables.ParametersList.Clear();
+			Variables.CurrentEditingBackup = new FunctionDef();
 			listboxFunctionList.Items.Clear();
-			LoadedFunctionsList.Clear();
-			parameterNamesList.Clear();
-			parameterTypesList.Clear();
-			parametersList.Clear();
-			Variables.currentEditingBackup = new FunctionDef();
 			flowLayoutPanelParameters.Controls.Clear();
-			parametersList.Clear();
 			textBoxName.Clear();
 			textBoxAlias.Clear();
 			textBoxVersion.Clear();
@@ -168,80 +111,7 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 		}
 
-		private bool hasChanged()
-		{
-			FunctionDef toCheck = windowToFunction(new FunctionDef());
-			if (toCheck.Equals(Variables.currentEditingBackup))
-				return false;
-			return true;
-		}
-
-
-	#region Reusable Form Functions
-		/// <summary>
-		/// Presents a Yes/No dialog option asking if the user has saved.
-		/// Returns Yes or No
-		/// </summary>
-		private DialogResult confirmCloseForm()
-		{
-			DialogResult d = MessageBox.Show("Have you saved?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-			if (d == DialogResult.Yes)
-			{
-				return DialogResult.Yes;
-			}
-			return DialogResult.No;
-		}
-
-		/// <summary>
-		/// Presents a dialog form with a text entry.
-		/// </summary>
-		/// <param name="title">Title of the form.</param>
-		/// <param name="promptText">Text prompt to inform what the entered string is for.</param>
-		/// <param name="value">String variable to hold the entered text.</param>
-		public static DialogResult InputBox(string title, string promptText, ref string value)
-		{
-			Form form = new Form();
-			Label label = new Label();
-			TextBox textBox = new TextBox();
-			Button buttonOk = new Button();
-			Button buttonCancel = new Button();
-
-			form.Text = title;
-			label.Text = promptText;
-			textBox.Text = value;
-
-			buttonOk.Text = "OK";
-			buttonCancel.Text = "Cancel";
-			buttonOk.DialogResult = DialogResult.OK;
-			buttonCancel.DialogResult = DialogResult.Cancel;
-
-			label.SetBounds(9, 20, 372, 13);
-			textBox.SetBounds(12, 36, 372, 20);
-			buttonOk.SetBounds(228, 72, 75, 23);
-			buttonCancel.SetBounds(309, 72, 75, 23);
-
-			label.AutoSize = true;
-			textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
-			buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-			buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-			form.ClientSize = new Size(396, 107);
-			form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
-			form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-			form.FormBorderStyle = FormBorderStyle.FixedDialog;
-			form.StartPosition = FormStartPosition.CenterParent;
-			form.MinimizeBox = false;
-			form.MaximizeBox = false;
-			form.AcceptButton = buttonOk;
-			form.CancelButton = buttonCancel;
-
-			DialogResult dialogResult = form.ShowDialog();
-			value = textBox.Text;
-			return dialogResult;
-		}
-	#endregion
-
-	#region Function Panel
+		#region Function Panel
 
 		#region Events
 			/// <summary>
@@ -258,10 +128,10 @@ namespace NVSE_Docs_Manager
 
 			private void buttonNewParameter_Click(object sender, EventArgs e)
 			{
-				Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
-				parametersList.Add(c);
+				Control c = new Parameter(Variables.ParameterUrlList.ToArray(), Variables.ParameterTypesList.ToArray(), Variables.ParameterNamesList.ToArray());
+				Variables.ParametersList.Add(c);
 				flowLayoutPanelParameters.Controls.Add(c);
-				rebuildParamaterPanel();
+				RebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -271,10 +141,10 @@ namespace NVSE_Docs_Manager
 			/// <param name="e"></param>
 			private void buttonCopyParameter_Click(object sender, EventArgs e)
 			{
-				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)parametersList.Last());
-				parametersList.Add(newParam);
+				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)Variables.ParametersList.Last());
+				Variables.ParametersList.Add(newParam);
 				flowLayoutPanelParameters.Controls.Add(newParam);
-				rebuildParamaterPanel();
+				RebuildParamaterPanel();
 			}
 
 			/// <summary>
@@ -301,18 +171,18 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
 			{
-				if (!LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text))
+				if (!Variables.LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text))
 				{
-					saveNewFunction();
+					SaveNewFunction();
 				}
 				else
 				{
 					// Update existing function
 					DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 					if (d == DialogResult.Yes)
-						updateCurrentFunction(); // Update existing function
+						UpdateCurrentFunction(); // Update existing function
 				} // end else
-				updateParameterTypeLists();
+				UpdateParameterTypeLists();
 			} // end buttonSaveCurrentChanges_Click
 
 			/// <summary>
@@ -324,10 +194,10 @@ namespace NVSE_Docs_Manager
 			{
 				DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (d == DialogResult.Yes)
-					if (Variables.currentEditingBackup == null)
-						populateFunctionForm(new FunctionDef());
+					if (Variables.CurrentEditingBackup == null)
+						PopulateFunctionForm(new FunctionDef());
 					else
-						populateFunctionForm(Variables.currentEditingBackup);
+						PopulateFunctionForm(Variables.CurrentEditingBackup);
 			}
 
 			/// <summary>
@@ -337,7 +207,7 @@ namespace NVSE_Docs_Manager
 		{
 			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (d == DialogResult.Yes)
-				populateFunctionForm(new FunctionDef());
+				PopulateFunctionForm(new FunctionDef());
 		}
 
 		#endregion Events
@@ -346,10 +216,10 @@ namespace NVSE_Docs_Manager
 		/// Takes a function and fills in all the window fields
 		/// with their appropriate data
 		/// </summary>
-		public void populateFunctionForm(FunctionDef func)
+		public void PopulateFunctionForm(FunctionDef func)
 		{
 			flowLayoutPanelParameters.Controls.Clear();
-			parametersList.Clear();
+			Variables.ParametersList.Clear();
 			textBoxName.Clear();
 			textBoxAlias.Clear();
 			textBoxVersion.Clear();
@@ -362,11 +232,11 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 
 			// save the settings to a global first, so we can revert if a bad change is made
-			Variables.currentEditingBackup = func;
+			Variables.CurrentEditingBackup = func;
 			Variables.ExampleList = func.ExampleList;
 
-			if (exampleWindowInstance != null)
-				exampleWindowInstance.populateForm();
+			if (_exampleWindowInstance != null)
+				_exampleWindowInstance.PopulateForm();
 
 			textBoxName.Text = func.Name;
 			textBoxAlias.Text = func.Alias;
@@ -392,7 +262,7 @@ namespace NVSE_Docs_Manager
 				default: checkBoxConditional.Checked = false; break;
 			}
 
-			populateParameterList(func.Parameters);
+			PopulateParameterList(func.Parameters);
 
 			switch (func.ReturnType == null)
 			{
@@ -403,8 +273,8 @@ namespace NVSE_Docs_Manager
 					checkBoxReturnType.Checked = false;
 					break;
 				default:
-					comboBoxReturnTypeURL.Text = func.ReturnType[0].type;
-					string[] s = func.ReturnType[0].type.Split(':');
+					comboBoxReturnTypeURL.Text = func.ReturnType[0].Type;
+					string[] s = func.ReturnType[0].Type.Split(':');
 					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
 					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
 					checkBoxReturnType.Checked = true;
@@ -420,25 +290,25 @@ namespace NVSE_Docs_Manager
 		/// the values from a function's parameters
 		/// </summary>
 		/// <param name="paramList">List of parameters</param>
-		private void populateParameterList(List<ParameterDef> parameterList)
+		private void PopulateParameterList(List<ParameterDef> parameterList)
 			{
 				if (parameterList != null)
 				{
 					foreach (ParameterDef parameter in parameterList)
 					{
-						//Control c = new Parameter(parameterURLList.ToArray(), parameterTypesList.ToArray(), parameterNamesList.ToArray());
+						//Control c = new Parameter(Variables.parameterURLList.ToArray(), Variables.parameterTypesList.ToArray(), Variables.parameterNamesList.ToArray());
 						Control c = new Parameter(
-							parameter.url,
-							parameter.type,
-							parameter.optional,
-							parameterURLList.ToArray(),
-							parameterTypesList.ToArray(),
-							parameterNamesList.ToArray()
+							parameter.Url,
+							parameter.Type,
+							parameter.Optional,
+							Variables.ParameterUrlList.ToArray(),
+							Variables.ParameterTypesList.ToArray(),
+							Variables.ParameterNamesList.ToArray()
 						);
 
-						parametersList.Add(c);
+						Variables.ParametersList.Add(c);
 						flowLayoutPanelParameters.Controls.Add(c);
-						rebuildParamaterPanel();
+						RebuildParamaterPanel();
 					}
 				}
 			}
@@ -446,7 +316,7 @@ namespace NVSE_Docs_Manager
 		/// <summary>
 		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
 		/// </summary>
-		private void rebuildParamaterPanel()
+		private void RebuildParamaterPanel()
 		{
 			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
 			{
@@ -458,7 +328,7 @@ namespace NVSE_Docs_Manager
 		/// Converts the window data into a function object
 		/// </summary>
 		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
-		private FunctionDef windowToFunction(FunctionDef function)
+		private FunctionDef WindowToFunction(FunctionDef function)
 		{
 			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
 			if (!String.IsNullOrEmpty(textBoxAlias.Text)) { function.Alias = textBoxAlias.Text; }
@@ -497,19 +367,19 @@ namespace NVSE_Docs_Manager
 			if (checkBoxConditional.Checked == true) { function.Condition = checkBoxConditional.Checked.ToString(); }
 			else { function.Condition = null; }
 
-			if (parametersList.Count > 0 && function.Parameters == null)
+			if (Variables.ParametersList.Count > 0 && function.Parameters == null)
 			{
 				function.Parameters = new List<ParameterDef>();
 				function.Parameters.Clear();
-				foreach (Parameter c in parametersList)
+				foreach (Parameter c in Variables.ParametersList)
 				{
 					ParameterDef newParam = new ParameterDef();
 
-					if (!String.IsNullOrEmpty(c.Url)) { newParam.url = c.Url; }
-					if (!String.IsNullOrEmpty(c.Type)) { newParam.type = c.Type; }
+					if (!String.IsNullOrEmpty(c.Url)) { newParam.Url = c.Url; }
+					if (!String.IsNullOrEmpty(c.Type)) { newParam.Type = c.Type; }
 					if (!String.IsNullOrEmpty(c.Optional))
 						if(c.Optional.ToLower().Equals("true"))
-							newParam.optional = c.Optional;
+							newParam.Optional = c.Optional;
 
 					function.Parameters.Add(newParam);
 				}
@@ -519,9 +389,9 @@ namespace NVSE_Docs_Manager
 			if (checkBoxReturnType.Checked)
 			{
 				if (function.ReturnType == null) { function.ReturnType = new List<ReturnTypeDef>(); function.ReturnType.Add(new ReturnTypeDef()); }
-				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].type = comboBoxReturnTypeURL.Text; }
+				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].Type = comboBoxReturnTypeURL.Text; }
 				string s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
-				if (!String.IsNullOrEmpty(s)) { function.ReturnType[0].type = s; }
+				if (!String.IsNullOrEmpty(s)) { function.ReturnType[0].Type = s; }
 			}
 
 			if (Variables.ExampleList != null)
@@ -548,7 +418,128 @@ namespace NVSE_Docs_Manager
 			return function;
 		}
 
+		/// <summary>
+		/// Takes all the info in the window and creates a new function from it
+		/// then adds it to the listbox and Variables.LoadedFunctionsList
+		/// </summary>
+		private void SaveNewFunction()
+		{
+			FunctionDef func = WindowToFunction(new FunctionDef());
+			AddToFunctionListBox(func);
+		}
+
+		/// <summary>
+		/// Finds the current function by name and replaces its data with that in the window
+		/// </summary>
+		private void UpdateCurrentFunction()
+		{
+			WindowToFunction(Variables.LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
+		}
+
+
+
 	#endregion
+
+	#region Function List
+
+		#region Events
+			/// <summary>
+		/// Uses MouseUp event to catch when the selcted count changes.
+		/// Checks how many are selected and enables the editing buttons.
+			/// </summary>
+			private void listboxFunctionList_MouseUp(object sender, MouseEventArgs e)
+			{
+				if (listboxFunctionList.SelectedItem != null)
+				{
+					if (listboxFunctionList.SelectedItems.Count > 1)
+					{
+						buttonListBoxDeleteItem.Enabled = true;
+						buttonListBoxChangeCategory.Enabled = true;
+					}
+					else
+					{
+						buttonListBoxDeleteItem.Enabled = true;
+						buttonListBoxChangeCategory.Enabled = false;
+					}
+				}
+			}
+
+			/// <summary>
+			/// On double click a name in the list box, load the function data into the fields
+			/// </summary>
+			private void listboxFunctionList_MouseDoubleClick(object sender, MouseEventArgs e)
+			{
+				LoadSelectedFunction();
+			}
+
+			/// <summary>
+			/// Delete the selected functions from the functions list and listbox
+			/// </summary>
+			private void buttonListBoxDeleteItem_Click(object sender, EventArgs e)
+			{
+				if (listboxFunctionList.SelectedItems.Count > 0)
+				{
+					if (Common.ConfirmDelete("function(s)") == DialogResult.Yes)
+					{
+						for (int i = listboxFunctionList.SelectedItems.Count - 1; i >= 0; i--)
+						{
+							Variables.LoadedFunctionsList.Remove(Variables.LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItems[i].ToString()));
+							listboxFunctionList.Items.Remove(listboxFunctionList.SelectedItems[i]);
+						}
+					}
+				}
+			}
+
+			/// <summary>
+			/// Bulk change the category of all selected functions.
+			/// </summary>
+			private void buttonListBoxChangeCategory_Click(object sender, EventArgs e)
+			{
+				string input = "";
+				DialogResult d = Common.InputBox("Change Category", "Enter the new Category", ref input);
+
+				// decided to bulk change category on selected functions
+				if (d == DialogResult.OK)
+				{
+					foreach (string s in listboxFunctionList.SelectedItems)
+					{
+						Variables.LoadedFunctionsList.Find(f => f.Name == s).Category = input;
+					}
+				}
+			}
+
+			/// <summary>
+			/// Handles key presses for listboxFunctionList
+			/// </summary>
+			private void listboxFuctionList_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Delete:
+					buttonListBoxDeleteItem_Click(sender, e);
+					break;
+				case Keys.Enter:
+					LoadSelectedFunction();
+					break;
+				default:
+					break;
+			}
+		}
+		#endregion
+
+		/// <summary>
+		/// Loads the function data from the selected index by name
+		/// </summary>
+		private void LoadSelectedFunction()
+		{
+			if (listboxFunctionList.SelectedItem != null)
+			{
+				PopulateFunctionForm(Variables.LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
+			}
+		}
+
+
+	#endregion Function List
 
 	#region Events
 
@@ -556,7 +547,7 @@ namespace NVSE_Docs_Manager
 		// Update the mouse event label to indicate the MouseEnter event occurred.
 		private void formMouseEventHandler_MouseEnter(object sender, System.EventArgs e)
 		{
-			string s = "";
+			var s = "";
 			if (sender == textBoxName)
 				s = "Enter the name of the function";
 
@@ -593,7 +584,7 @@ namespace NVSE_Docs_Manager
 			else
 				s = "";
 
-			outputToStatusbar(s);
+			OutputToStatusbar(s);
 		}
 
 		// Update the mouse event label to indicate the MouseHover event occurred.
@@ -605,7 +596,7 @@ namespace NVSE_Docs_Manager
 		// Update the mouse event label to indicate the MouseLeave event occurred.
 		private void formMouseEventHandler_MouseLeave(object sender, System.EventArgs e)
 		{
-			outputToStatusbar("");
+			OutputToStatusbar("");
 		}
 
 		// When mouse enters flowLayout panel, set focus so scroll wheel works
@@ -617,53 +608,56 @@ namespace NVSE_Docs_Manager
 
 	#region Tool Strip Handlers
 
-		string fileName;
-
 		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			openFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
+			openFileDialog1.Filter = @"Json Files (.json)|*.json|Text Files(*.*)|*.*";
 			openFileDialog1.Multiselect = true;
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
+			switch (openFileDialog1.ShowDialog())
 			{
-				clearEntireForm();
-				foreach (String file in openFileDialog1.FileNames)
-				{
-					StreamReader sr = new StreamReader(file);
-					parseLoadedFile(sr);
-					sr.Close();
-				}
-				fileName = openFileDialog1.SafeFileName;
+				case DialogResult.OK:
+					ClearEntireForm();
+					foreach (var sr in openFileDialog1.FileNames.Select(file => new StreamReader(file)))
+					{
+						ParseLoadedFile(sr);
+						sr.Close();
+					}
+					_fileName = openFileDialog1.SafeFileName;
+					break;
 			}
 		}
 
 		private void saveFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			saveFileDialog1.Filter = "Json Files (.json)|*.json|Text Files(*.*)|*.*";
-			saveFileDialog1.FileName = fileName;
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			saveFileDialog1.Filter = @"Json Files (.json)|*.json|Text Files(*.*)|*.*";
+			saveFileDialog1.FileName = _fileName;
+			switch (saveFileDialog1.ShowDialog())
 			{
-				StreamWriter sw = new StreamWriter(saveFileDialog1.OpenFile());
-				JsonSerializerSettings settings = new JsonSerializerSettings()
+				case DialogResult.OK:
 				{
-					Formatting = Formatting.None,
-					DefaultValueHandling = DefaultValueHandling.Ignore,
-					NullValueHandling = NullValueHandling.Ignore,
-				};
+					var sw = new StreamWriter(saveFileDialog1.OpenFile());
+					var settings = new JsonSerializerSettings()
+					{
+						Formatting = Formatting.None,
+						DefaultValueHandling = DefaultValueHandling.Ignore,
+						NullValueHandling = NullValueHandling.Ignore,
+					};
 
 
-				sw.Write(JsonConvert.SerializeObject(LoadedFunctionsList, settings));
-				sw.Close();
+					sw.Write(JsonConvert.SerializeObject(Variables.LoadedFunctionsList, settings));
+					sw.Close();
+				}
+					break;
 			}
 		}
 
 		private void resetToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			clearEntireForm();
+			ClearEntireForm();
 		} 
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (confirmCloseForm() == DialogResult.Yes)
+			if (Common.ConfirmCloseForm() == DialogResult.Yes)
 				System.Windows.Forms.Application.Exit();
 		}
 
@@ -673,94 +667,21 @@ namespace NVSE_Docs_Manager
 		private void mainMenu_FormClosing(object sender, FormClosingEventArgs e)
 		{
 #if !DEBUG
-			if (confirmCloseForm() == DialogResult.No)
+			if (Common.ConfirmCloseForm() == DialogResult.No)
 				e.Cancel = true;
 #endif
 		}
 		#endregion
 
-	#region Function List Events
-
-		/// <summary>
-		/// Uses MouseUp event to catch when the selcted count changes.
-		/// Checks how many are selected and enables the editing buttons.
-		/// </summary>
-		private void listboxFunctionList_MouseUp(object sender, MouseEventArgs e)
-		{
-			if (listboxFunctionList.SelectedItem != null)
-			{
-				if (listboxFunctionList.SelectedItems.Count > 1)
-				{
-					buttonListBoxDeleteItem.Enabled = true;
-					buttonListBoxChangeCategory.Enabled = true;
-				}
-				else
-				{
-					buttonListBoxDeleteItem.Enabled = true;
-					buttonListBoxChangeCategory.Enabled = false;
-				}
-			}
-		}
-
-		/// <summary>
-		/// On double click a name in the list box, load the function data into the fields
-		/// </summary>
-		private void listboxFunctionList_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (listboxFunctionList.SelectedItem != null)
-			{
-				populateFunctionForm(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
-			}
-		}
-
-		/// <summary>
-		/// Delete the selected functions from the functions list and listbox
-		/// </summary>
-		private void buttonListBoxDeleteItem_Click(object sender, EventArgs e)
-		{
-			if (listboxFunctionList.SelectedItems.Count > 0)
-			{
-				DialogResult d = MessageBox.Show("Are you sure you want to delete the selected function(s)?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (d == DialogResult.Yes)
-				{
-					for (int i = listboxFunctionList.SelectedItems.Count - 1; i >= 0; i--)
-					{
-						LoadedFunctionsList.Remove(LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItems[i].ToString()));
-						listboxFunctionList.Items.Remove(listboxFunctionList.SelectedItems[i]);
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Bulk change the category of all selected functions.
-		/// </summary>
-		private void buttonListBoxChangeCategory_Click(object sender, EventArgs e)
-		{
-			string input = "";
-			DialogResult d = InputBox("Change Category", "Enter the new Category", ref input);
-
-			// decided to bulk change category on selected functions
-			if (d == DialogResult.OK)
-			{
-				foreach (string s in listboxFunctionList.SelectedItems)
-				{
-					LoadedFunctionsList.Find(f => f.Name == s).Category = input;
-				}
-			}
-		}
-
-
-		#endregion Function List Events
 
 		private void buttonShowExamples_Click(object sender, EventArgs e)
 		{
-			if (exampleWindowInstance == null || exampleWindowInstance.IsDisposed)
-				exampleWindowInstance = new ExamplesWindow();
-			exampleWindowInstance.Show();
+			if (_exampleWindowInstance == null || _exampleWindowInstance.IsDisposed)
+				_exampleWindowInstance = new ExamplesWindow();
+			_exampleWindowInstance.Show();
 
-			if (exampleWindowInstance.Focused == false)
-				exampleWindowInstance.Focus();
+			if (_exampleWindowInstance.Focused == false)
+				_exampleWindowInstance.Focus();
 		}
 
 		
@@ -770,15 +691,7 @@ namespace NVSE_Docs_Manager
 
 	#endregion Events
 
-		private void listboxFuctionList_KeyUp(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Delete:
-					buttonListBoxDeleteItem_Click(sender, e);
-					break;
-			}
-		}
+		
 
 	}
 }

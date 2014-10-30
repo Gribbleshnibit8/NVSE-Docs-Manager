@@ -40,7 +40,8 @@
 			this.listBoxExamples.Location = new System.Drawing.Point(12, 12);
 			this.listBoxExamples.Name = "listBoxExamples";
 			this.listBoxExamples.ScrollAlwaysVisible = true;
-			this.listBoxExamples.Size = new System.Drawing.Size(135, 108);
+			this.listBoxExamples.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.listBoxExamples.Size = new System.Drawing.Size(135, 147);
 			this.listBoxExamples.TabIndex = 0;
 			this.listBoxExamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxExamples_MouseClick);
 			this.listBoxExamples.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxExamples_KeyUp);
@@ -60,7 +61,7 @@
 			// 
 			// buttonAddExample
 			// 
-			this.buttonAddExample.Location = new System.Drawing.Point(12, 126);
+			this.buttonAddExample.Location = new System.Drawing.Point(12, 165);
 			this.buttonAddExample.Name = "buttonAddExample";
 			this.buttonAddExample.Size = new System.Drawing.Size(135, 47);
 			this.buttonAddExample.TabIndex = 2;
@@ -89,7 +90,6 @@
 			this.Controls.Add(this.listBoxExamples);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "ExamplesWindow";
-			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "ExamplesWindow";
 			this.ResumeLayout(false);

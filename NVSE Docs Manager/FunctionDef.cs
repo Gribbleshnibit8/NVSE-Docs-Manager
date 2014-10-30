@@ -60,9 +60,14 @@ namespace NVSE_Docs_Manager
 	/// </summary>
 	public class ParameterDef
 	{
-		public string url { get; set; }
-		public string type { get; set; }
-		public string optional { get; set; }
+		[JsonProperty(PropertyName = "url")]
+		public string Url { get; set; }
+
+		[JsonProperty(PropertyName = "type")]
+		public string Type { get; set; }
+
+		[JsonProperty(PropertyName = "optional")]
+		public string Optional { get; set; }
 	}
 
 	/// <summary>
@@ -70,8 +75,11 @@ namespace NVSE_Docs_Manager
 	/// </summary>
 	public class ReturnTypeDef
 	{
-		public string url { get; set; }
-		public string type { get; set; }
+		[JsonProperty(PropertyName = "url")]
+		public string Url { get; set; }
+
+		[JsonProperty(PropertyName = "type")]
+		public string Type { get; set; }
 	}
 
 	public class Example
