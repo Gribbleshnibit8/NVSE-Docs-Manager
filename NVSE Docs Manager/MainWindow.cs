@@ -48,7 +48,7 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		private void UpdateParameterTypeLists()
 		{
-			foreach (var s in from f in Variables.LoadedFunctionsList where f.Parameters != null from p in f.Parameters select p.Type.Split(':'))
+			foreach (var s in from f in Variables.LoadedFunctionsList where f.Parameters != null from p in f.Parameters where p.Type != null select p.Type.Split(':'))
 			{
 				if (!Variables.ParameterTypesList.Contains(s[0]) && !String.IsNullOrEmpty(s[0])) { Variables.ParameterTypesList.Add(s[0]); }
 				if (s.Length >= 2 && !Variables.ParameterNamesList.Contains(s[1]) && !String.IsNullOrEmpty(s[1])) { Variables.ParameterNamesList.Add(s[1]); }
@@ -111,7 +111,7 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 		}
 
-		#region Function Panel
+	#region Function Panel
 
 		#region Events
 			/// <summary>
@@ -210,6 +210,15 @@ namespace NVSE_Docs_Manager
 				PopulateFunctionForm(new FunctionDef());
 		}
 
+			private void buttonShowExamples_Click(object sender, EventArgs e)
+			{
+				if (_exampleWindowInstance == null || _exampleWindowInstance.IsDisposed)
+					_exampleWindowInstance = new ExamplesWindow();
+				_exampleWindowInstance.Show();
+
+				if (_exampleWindowInstance.Focused == false)
+					_exampleWindowInstance.Focus();
+			}
 		#endregion Events
 
 		/// <summary>
@@ -308,8 +317,8 @@ namespace NVSE_Docs_Manager
 
 						Variables.ParametersList.Add(c);
 						flowLayoutPanelParameters.Controls.Add(c);
-						RebuildParamaterPanel();
 					}
+					RebuildParamaterPanel();
 				}
 			}
 
@@ -331,14 +340,10 @@ namespace NVSE_Docs_Manager
 		private FunctionDef WindowToFunction(FunctionDef function)
 		{
 			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
-			if (!String.IsNullOrEmpty(textBoxAlias.Text)) { function.Alias = textBoxAlias.Text; }
-			else { function.Alias = null; }
-			if (!String.IsNullOrEmpty(textBoxVersion.Text)) { function.Version = textBoxVersion.Text; }
-			else { function.Version = null; }
-			if (!String.IsNullOrEmpty(textBoxOrigin.Text)) { function.FromPlugin = textBoxOrigin.Text; }
-			else { function.FromPlugin = null; }
-			if (!String.IsNullOrEmpty(textBoxCategory.Text)) { function.Category = textBoxCategory.Text; }
-			else { function.Category = null; }
+			function.Alias = !String.IsNullOrEmpty(textBoxAlias.Text) ? textBoxAlias.Text : null;
+			function.Version = !String.IsNullOrEmpty(textBoxVersion.Text) ? textBoxVersion.Text : null;
+			function.FromPlugin = !String.IsNullOrEmpty(textBoxOrigin.Text) ? textBoxOrigin.Text : null;
+			function.Category = !String.IsNullOrEmpty(textBoxCategory.Text) ? textBoxCategory.Text : null;
 
 
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
@@ -349,7 +354,7 @@ namespace NVSE_Docs_Manager
 
 				// step through each line in the text box, each line is a tag, and store each one
 				// in the list. If there is an empty line, or the line exists already, skip it.
-				foreach (string line in textBoxTags.Lines)
+				foreach (var line in textBoxTags.Lines)
 				{
 					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
 					{
@@ -364,19 +369,18 @@ namespace NVSE_Docs_Manager
 
 
 			// TODO: Update javascript to handle true/false
-			if (checkBoxConditional.Checked == true) { function.Condition = checkBoxConditional.Checked.ToString(); }
-			else { function.Condition = null; }
+			function.Condition = checkBoxConditional.Checked == true ? checkBoxConditional.Checked.ToString() : null;
 
-			if (Variables.ParametersList.Count > 0 && function.Parameters == null)
+			if (Variables.ParametersList.Count > 0)
 			{
 				function.Parameters = new List<ParameterDef>();
 				function.Parameters.Clear();
 				foreach (Parameter c in Variables.ParametersList)
 				{
-					ParameterDef newParam = new ParameterDef();
+					var newParam = new ParameterDef();
 
 					if (!String.IsNullOrEmpty(c.Url)) { newParam.Url = c.Url; }
-					if (!String.IsNullOrEmpty(c.Type)) { newParam.Type = c.Type; }
+					if (!String.IsNullOrEmpty(c.Type) && c.Type != ":") { newParam.Type = c.Type; }
 					if (!String.IsNullOrEmpty(c.Optional))
 						if(c.Optional.ToLower().Equals("true"))
 							newParam.Optional = c.Optional;
@@ -435,8 +439,6 @@ namespace NVSE_Docs_Manager
 		{
 			WindowToFunction(Variables.LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
 		}
-
-
 
 	#endregion
 
@@ -642,6 +644,9 @@ namespace NVSE_Docs_Manager
 						NullValueHandling = NullValueHandling.Ignore,
 					};
 
+					if (outputReadableFileToolStripMenuItem.Checked == true)
+						settings.Formatting = Formatting.Indented;
+
 
 					sw.Write(JsonConvert.SerializeObject(Variables.LoadedFunctionsList, settings));
 					sw.Close();
@@ -661,6 +666,19 @@ namespace NVSE_Docs_Manager
 				System.Windows.Forms.Application.Exit();
 		}
 
+		private void checkToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			switch (((ToolStripMenuItem)sender).Checked)
+			{
+				case true:
+					((ToolStripMenuItem)sender).Checked = false;
+					break;
+				default:
+					((ToolStripMenuItem)sender).Checked = true;
+					break;
+			}
+		}
+
 		/// <summary>
 		/// When closing the form, ask if data has been saved before allowing an exit
 		/// </summary>
@@ -672,22 +690,6 @@ namespace NVSE_Docs_Manager
 #endif
 		}
 		#endregion
-
-
-		private void buttonShowExamples_Click(object sender, EventArgs e)
-		{
-			if (_exampleWindowInstance == null || _exampleWindowInstance.IsDisposed)
-				_exampleWindowInstance = new ExamplesWindow();
-			_exampleWindowInstance.Show();
-
-			if (_exampleWindowInstance.Focused == false)
-				_exampleWindowInstance.Focus();
-		}
-
-		
-
-
-
 
 	#endregion Events
 

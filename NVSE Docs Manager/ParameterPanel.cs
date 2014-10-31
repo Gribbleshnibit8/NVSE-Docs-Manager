@@ -18,9 +18,9 @@ namespace NVSE_Docs_Manager
 		public string Url { get; set; }
 		public string Type { get; set; }
 		public string Optional { get; set; }
-		public string[] UrlBoxContents { get; set; }
-		public string[] TypeBoxContents { get; set; }
-		public string[] NameBoxContents { get; set; }
+		public object[] UrlBoxContents { get; set; }
+		public object[] TypeBoxContents { get; set; }
+		public object[] NameBoxContents { get; set; }
 
 		#region Constructors
 		public Parameter()
@@ -28,9 +28,9 @@ namespace NVSE_Docs_Manager
 			Url = "";
 			Type = ":";
 			Optional = "False";
-			UrlBoxContents = new string[1] { "" };
-			TypeBoxContents = new string[1] { "" };
-			NameBoxContents = new string[1] { "" };
+			UrlBoxContents = new object[1] { "" };
+			TypeBoxContents = new object[1] { "" };
+			NameBoxContents = new object[1] { "" };
 			_panel = BuildNewParameterForm();
 		}
 
@@ -40,7 +40,7 @@ namespace NVSE_Docs_Manager
 		/// <param name="urlArray">A list of url hash strings</param>
 		/// <param name="typeArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
 		/// <param name="nameArray">A list of all values that can be a name</param>
-		public Parameter(string[] urlArray, string[] typeArray, string[] nameArray)
+		public Parameter(object[] urlArray, object[] typeArray, object[] nameArray)
 		{
 			Url = "";
 			Type = ":";
@@ -60,7 +60,7 @@ namespace NVSE_Docs_Manager
 		/// <param name="urlArray">A list of url hash strings</param>
 		/// <param name="typeArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
 		/// <param name="nameArray">A list of all values that can be a name</param>
-		public Parameter(string url, string type, string optional, string[] urlArray, string[] typeArray, string[] nameArray)
+		public Parameter(string url, string type, string optional, object[] urlArray, object[] typeArray, object[] nameArray)
 		{
 			Url = url;
 			Type = type;
@@ -88,63 +88,85 @@ namespace NVSE_Docs_Manager
 		#endregion
 
 		#region Getters/Setters
-		private static string GetTypeType(string type)
-		{
-			var s = type.Split(':');
-			return s.Length >= 1 ? s[0] : "";
-		}
+			private static string GetTypeType(string type)
+			{
+				if (type != null)
+				{
+					var s = type.Split(':');
+					return s.Length >= 1 ? s[0] : "";
+				}
+				return null;
+			}
 
-		private static string GetTypeName(string type)
-		{
-			var s = type.Split(':');
-			return s.Length >= 2 ? s[1] : "";
-		}
+			private static string GetTypeName(string type)
+			{
+				if (type != null)
+				{
+					var s = type.Split(':');
+					return s.Length >= 2 ? s[1] : "";
+				}
+				return null;
+			}
 
-		internal string SetTypeType(string type)
-		{
-			var t = Type.Split(':');
-			t[0] = type;
-			return t.Length == 1 ? t[0] + ":" : t[0] + ":" + t[1];
-		}
+			internal string SetTypeType(string type)
+			{
+				if (Type != null)
+					{
+						var t = Type.Split(':');
+						t[0] = type;
+						return t.Length == 1 ? t[0] + ":" : t[0] + ":" + t[1];
+					}
+				return null;
+			}
 
-		internal string SetTypeName(string type)
-		{
-			var t = Type.Split(':');
-			t[1] = type;
-			return String.IsNullOrEmpty(t[0]) ? ":" + t[1] : t[0] + ":" + t[1];
-		}
+			internal string SetTypeName(string type)
+			{
+				if (Type != null)
+					{
+						var t = Type.Split(':');
+						t[1] = type;
+						return String.IsNullOrEmpty(t[0]) ? ":" + t[1] : t[0] + ":" + t[1];
+					}
+				return null;
+			}
+
 		#endregion
 
 		#region Event Handlers
-		private void removeParameter_Click(object sender, System.EventArgs e)
-		{
-			Control parent = (sender as System.Windows.Forms.Button).Parent;
-			Control grandparent = (parent as System.Windows.Forms.GroupBox).Parent;
-			grandparent.Controls.Remove(parent);
-			//rebuildParamaterPanel();
-		}
+			private void removeParameter_Click(object sender, System.EventArgs e)
+			{
+				var parent = ((Button) sender).Parent;
+				var grandparent = ((GroupBox) parent).Parent;
+				grandparent.Controls.Remove(parent);
+				//rebuildParamaterPanel();
+			}
 
-		private void urlBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			Url = ((System.Windows.Forms.ComboBox)sender).Text;
-		}
+			protected void urlBox_SelectedIndexChanged(object sender, EventArgs e)
+			{
+				Url = ((ComboBox)sender).Text;
+			}
 
-		private void typeBox_KeyUp(object sender, EventArgs e)
-		{
-			string s = ((System.Windows.Forms.ComboBox)sender).Text;
-			Type = SetTypeType(s);
-		}
+			protected void typeBox_KeyUp(object sender, EventArgs e)
+			{
+				//if (((ComboBox) sender).DroppedDown == false)
+				//	((ComboBox) sender).DroppedDown = true;
 
-		private void nameBox_KeyUp(object sender, EventArgs e)
-		{
-			string s = ((System.Windows.Forms.ComboBox)sender).Text;
-			Type = SetTypeName(s);
-		}
+				var s = ((ComboBox)sender).Text;
+				Type = SetTypeType(s);
+			}
 
-		private void optionalBox_CheckedChanged(object sender, EventArgs e)
-		{
-			Optional = ((System.Windows.Forms.CheckBox)sender).Checked.ToString();
-		}
+			protected void nameBox_KeyUp(object sender, EventArgs e)
+			{
+				//if (((ComboBox)sender).DroppedDown == false)
+				//	((ComboBox)sender).DroppedDown = true;
+				var s = ((ComboBox)sender).Text;
+				Type = SetTypeName(s);
+			}
+
+			protected void optionalBox_CheckedChanged(object sender, EventArgs e)
+			{
+				Optional = ((CheckBox)sender).Checked.ToString();
+			}
 		#endregion
 
 		/// <summary>
@@ -154,68 +176,69 @@ namespace NVSE_Docs_Manager
 		private Control BuildNewParameterForm()
 		{
 			// create a new group box for the new ParameterDef
-			this.Size = new System.Drawing.Size(523, 60);
-			this.Text = "Parameter";
+			Size = new Size(523, 60);
+			Text = "Parameter";
 
 			// create the remove button
-			using (var removeButton = new System.Windows.Forms.Button())
+			var removeButton = new Button()
 			{
-				removeButton.Click += new System.EventHandler(this.removeParameter_Click);
-				removeButton.Text = "X";
-				removeButton.Location = new System.Drawing.Point(6, 16);
-				removeButton.Size = new System.Drawing.Size(23, 37);
-				this.Controls.Add(removeButton);
-			}
-
+				Text = "X",
+				Location = new Point(6,16),
+				Size = new Size(23, 37)
+			};
+			removeButton.Click += removeParameter_Click;
+			Controls.Add(removeButton);
 
 			// URL
 			// create the URL label and add it to the group box
-			var urlLabel = new System.Windows.Forms.Label
+			var urlLabel = new Label
 			{
 				Text = "URL:",
 				Location = new System.Drawing.Point(33, 16),
 				AutoSize = true
 			};
-			this.Controls.Add(urlLabel);
+			Controls.Add(urlLabel);
 			// create the URL combobox and add it to the group box
-			var urlCombobox = new System.Windows.Forms.ComboBox
+			var urlCombobox = new ComboBox
 			{
-				Location = new System.Drawing.Point(36, 32),
 				Name = "comboBoxURL",
+				Location = new Point(36, 32),
 				Sorted = true,
-				Size = new System.Drawing.Size(140, 21),
-				DropDownStyle = ComboBoxStyle.DropDownList,
-				Text = Url
+				Size = new Size(140, 21),
+				DropDownStyle = ComboBoxStyle.DropDownList
 			};
-			urlCombobox.SelectedIndexChanged += new EventHandler(this.urlBox_SelectedIndexChanged);
+			urlCombobox.SelectedIndexChanged += this.urlBox_SelectedIndexChanged;
 			urlCombobox.Items.AddRange(UrlBoxContents);
-			this.Controls.Add(urlCombobox);
+			urlCombobox.Text = Url;
+			Controls.Add(urlCombobox);
 
 			// Type
 			// create the Type label and add it to the group box
-			var typeLabel = new System.Windows.Forms.Label
+			var typeLabel = new Label
 			{
 				Text = "Type:",
 				Location = new System.Drawing.Point(179, 16),
 				AutoSize = true
 			};
-			this.Controls.Add(typeLabel);
+			Controls.Add(typeLabel);
 			// create the Type combobox and add it to the group box
-			var typeCombobox = new System.Windows.Forms.ComboBox
+			var typeCombobox = new ComboBox
 			{
-				Location = new System.Drawing.Point(182, 32),
-				Sorted = true,
 				Name = "comboBoxType",
-				Size = new System.Drawing.Size(140, 21)
+				Location = new Point(182, 32),
+				Sorted = true,
+				Size = new Size(140, 21),
+				AutoCompleteMode = AutoCompleteMode.Suggest,
+				AutoCompleteSource = AutoCompleteSource.ListItems
 			};
-			typeCombobox.KeyUp += new KeyEventHandler(this.typeBox_KeyUp);
+			typeCombobox.KeyUp += this.typeBox_KeyUp;
 			typeCombobox.Items.AddRange(TypeBoxContents);
 			typeCombobox.Text = GetTypeType(Type);
-			this.Controls.Add(typeCombobox);
+			Controls.Add(typeCombobox);
 
 			// Name
 			// create the Type label and add it to the group box
-			var nameLabel = new System.Windows.Forms.Label
+			var nameLabel = new Label
 			{
 				Location = new System.Drawing.Point(325, 16),
 				Text = "Name:",
@@ -223,33 +246,33 @@ namespace NVSE_Docs_Manager
 			};
 			this.Controls.Add(nameLabel);
 			// create the Type combobox and add it to the group box
-			var nameCombobox = new System.Windows.Forms.ComboBox
+			var nameCombobox = new ComboBox
 			{
-				Location = new System.Drawing.Point(328, 32),
+				Name = "comboBoxName",
+				Location = new Point(328, 32),
 				Sorted = true,
-				Size = new System.Drawing.Size(140, 21),
-				Text = GetTypeName(Type),
-				Name = "comboBoxName"
+				Size = new Size(140, 21),
+				AutoCompleteSource = AutoCompleteSource.ListItems,
+				AutoCompleteMode = AutoCompleteMode.SuggestAppend
 			};
-			nameCombobox.KeyUp += new KeyEventHandler(this.nameBox_KeyUp);
+			nameCombobox.KeyUp += this.nameBox_KeyUp;
 			nameCombobox.Items.AddRange(NameBoxContents);
-			this.Controls.Add(nameCombobox);
+			nameCombobox.Text = GetTypeName(Type);
+			Controls.Add(nameCombobox);
 
 			// Optional
-			var optionalCheckbox = new System.Windows.Forms.CheckBox
+			var optionalCheckbox = new CheckBox
 			{
-				Location = new System.Drawing.Point(471, 15),
 				Name = "checkBoxOptional",
 				Text = "Optional",
+				Location = new Point(471, 15),
 				AutoSize = true,
 				CheckAlign = ContentAlignment.BottomCenter,
 				TextAlign = ContentAlignment.TopCenter
 			};
-			optionalCheckbox.CheckedChanged += new EventHandler(this.optionalBox_CheckedChanged);
-			if (!String.IsNullOrEmpty(Optional))
-				optionalCheckbox.Checked = Optional.ToLower().Equals("true");
-			else { optionalCheckbox.Checked = false; }
-			this.Controls.Add(optionalCheckbox);
+			optionalCheckbox.CheckedChanged += this.optionalBox_CheckedChanged;
+			optionalCheckbox.Checked = !String.IsNullOrEmpty(Optional) && Optional.ToLower().Equals("true");
+			Controls.Add(optionalCheckbox);
 
 			return this;
 		}
