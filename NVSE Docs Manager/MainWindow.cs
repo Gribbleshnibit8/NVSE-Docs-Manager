@@ -6,7 +6,9 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Windows.Forms;
 
 using Newtonsoft.Json;
@@ -23,6 +25,86 @@ namespace NVSE_Docs_Manager
 		{
 			InitializeComponent();
 		}
+
+
+		private void WikiParser()
+		{
+			string rawFunction = richTextBoxDescription.Text;
+
+			// removes the "See Also" section and anything below it
+			var seeAlso = new Regex(@"(==[']*See Also[']*==.*)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			rawFunction = seeAlso.Replace(rawFunction, "");
+
+			var replaceCurlies = new Regex(@"}}{{", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			rawFunction = replaceCurlies.Replace(rawFunction, "}\n{");
+
+			// gets each section of the page under any headings
+			var dataGrabber = new Regex(@"([=]{2,5}[']*[\w\s]*[']*[=]{2,5})(.*?)([=]{2,5}[']*[\w\s]*[']*[=]{2,5})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			string[] parts = dataGrabber.Split(rawFunction);
+
+			string functionDefinition = parts[0];
+
+			string[] functionParts = functionDefinition.Split('|','}');
+
+			for (int index = 0; index < functionParts.Length; index++)
+			{
+				functionParts[index] = functionParts[index].Trim();
+			}
+
+			foreach (var str in parts)
+			{
+				MessageBox.Show(str);
+			}
+
+			#region parse
+
+			/*var stck = new Stack<string>();
+			bool functionArgumentFound = false;
+			foreach (string line in s.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+			{
+				string f="", l="";
+				string[] parts = line.Split('=');
+
+				if (parts.Any())
+				{
+					f = parts[0].Trim();
+					f = f.Remove(0, 1);
+				}
+
+				if (parts.Count() >= 2)
+					l = parts[1].Trim();
+
+
+				if (functionArgumentFound == true)
+				{
+					stck.Push(f);
+					stck.Push(l);
+				}
+
+				if (f.Contains("FunctionArgument") || l.Contains("FunctionArgument"))
+					functionArgumentFound = true;
+
+
+
+				if (f.Contains("origin"))
+					textBoxOrigin.Text = "Geck";
+
+				if (f.Contains("summary"))
+					richTextBoxDescription.Text = l;
+
+				if (f == "returnType")
+					checkBoxReturnType.Checked = true;
+
+				if (f.Contains("name"))
+					textBoxName.Text = l;*/
+
+			#endregion
+
+		}
+
+
+
+
 
 		/// <summary>
 		/// Outputs a string to the statusbar
@@ -42,7 +124,6 @@ namespace NVSE_Docs_Manager
 			PopulateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
 			UpdateParameterTypeLists();
 		}
-
 		/// <summary>
 		/// Updates the ParameterDef type and name lists from all parameters
 		/// </summary>
@@ -205,6 +286,7 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void buttonNewFunction_Click(object sender, EventArgs e)
 		{
+			WikiParser();
 			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (d == DialogResult.Yes)
 				PopulateFunctionForm(new FunctionDef());
@@ -647,7 +729,10 @@ namespace NVSE_Docs_Manager
 					if (outputReadableFileToolStripMenuItem.Checked == true)
 						settings.Formatting = Formatting.Indented;
 
-
+					foreach (var f in Variables.LoadedFunctionsList)
+					{
+						f.CleanFunctionDef();
+					}
 					sw.Write(JsonConvert.SerializeObject(Variables.LoadedFunctionsList, settings));
 					sw.Close();
 				}
@@ -692,8 +777,6 @@ namespace NVSE_Docs_Manager
 		#endregion
 
 	#endregion Events
-
-		
 
 	}
 }

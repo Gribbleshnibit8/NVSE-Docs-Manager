@@ -52,6 +52,41 @@ namespace NVSE_Docs_Manager
 
 		[JsonProperty(PropertyName = "Category")]
 		public string Category { get; set; }
+
+		public void CleanFunctionDef()
+		{
+			if (String.IsNullOrEmpty(Alias))
+				Alias = null;
+
+			if (String.IsNullOrEmpty(Version))
+				Version = null;
+
+			if (String.IsNullOrEmpty(Condition))
+				Condition = "False";
+			else if (Condition == "False")
+				Condition = null;
+
+			if (String.IsNullOrEmpty(Convention))
+				Convention = "E";
+
+			if (String.IsNullOrEmpty(FromPlugin))
+				FromPlugin = null;
+
+			if (String.IsNullOrEmpty(Category))
+				Category = null;
+
+			if (Parameters != null && Parameters.Count == 0)
+				Parameters = null;
+
+			if (ReturnType != null && ReturnType.Count == 0)
+				ReturnType = null;
+
+			if (ExampleList != null && ExampleList.Count == 0)
+				ExampleList = null;
+
+			if (Tags != null && Tags.Count == 0)
+				Tags = null;
+		}
 	}
 
 	/// <summary>
