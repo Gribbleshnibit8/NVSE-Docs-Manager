@@ -37,6 +37,7 @@
 			this.resetEverythingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.outputReadableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -97,7 +98,6 @@
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
-			this.outputReadableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
@@ -172,6 +172,13 @@
 			this.settingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
 			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.settingsToolStripMenuItem.Text = "Settings";
+			// 
+			// outputReadableFileToolStripMenuItem
+			// 
+			this.outputReadableFileToolStripMenuItem.Name = "outputReadableFileToolStripMenuItem";
+			this.outputReadableFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.outputReadableFileToolStripMenuItem.Text = "Output Readable File";
+			this.outputReadableFileToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -854,13 +861,6 @@
 			this.LeftToolStripPanel.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			this.LeftToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.LeftToolStripPanel.Size = new System.Drawing.Size(0, 0);
-			// 
-			// outputReadableFileToolStripMenuItem
-			// 
-			this.outputReadableFileToolStripMenuItem.Name = "outputReadableFileToolStripMenuItem";
-			this.outputReadableFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-			this.outputReadableFileToolStripMenuItem.Text = "Output Readable File";
-			this.outputReadableFileToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
 			// 
 			// MainWindow
 			// 

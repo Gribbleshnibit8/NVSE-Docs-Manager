@@ -35,6 +35,11 @@ namespace NVSE_Docs_Manager
 			var seeAlso = new Regex(@"(==[']*See Also[']*==.*)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 			rawFunction = seeAlso.Replace(rawFunction, "");
 
+			// for pages without the "See Also" section, remove the block of additional links
+			var linkBreaker = new Regex(@"^((\[\[)(\w*):(\w*)([\s\w\W]*?)(\]\]))$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+			rawFunction = linkBreaker.Replace(rawFunction, "");
+
+			// sets instances of double curlies to a single brace with a line break between
 			var replaceCurlies = new Regex(@"}}{{", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 			rawFunction = replaceCurlies.Replace(rawFunction, "}\n{");
 
@@ -42,9 +47,7 @@ namespace NVSE_Docs_Manager
 			var dataGrabber = new Regex(@"([=]{2,5}[']*[\w\s]*[']*[=]{2,5})(.*?)([=]{2,5}[']*[\w\s]*[']*[=]{2,5})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 			string[] parts = dataGrabber.Split(rawFunction);
 
-			string functionDefinition = parts[0];
-
-			string[] functionParts = functionDefinition.Split('|','}');
+			string[] functionParts = parts[0].Split('|','}');
 
 			for (int index = 0; index < functionParts.Length; index++)
 			{
@@ -775,6 +778,11 @@ namespace NVSE_Docs_Manager
 #endif
 		}
 		#endregion
+
+		private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+		{
+
+		}
 
 	#endregion Events
 
