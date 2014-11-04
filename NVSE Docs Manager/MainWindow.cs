@@ -47,61 +47,88 @@ namespace NVSE_Docs_Manager
 			var dataGrabber = new Regex(@"([=]{2,5}[']*[\w\s]*[']*[=]{2,5})(.*?)([=]{2,5}[']*[\w\s]*[']*[=]{2,5})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 			string[] parts = dataGrabber.Split(rawFunction);
 
-			string[] functionParts = parts[0].Split('|','}');
+			// get the function definition data out for further parsing
+			var functionParts = new List<string>(parts[0].Split('|','}'));
 
-			for (int index = 0; index < functionParts.Length; index++)
+			// clear all new
+			for (int index = 0; index < functionParts.Count; index++)
 			{
+				// remove excess spaces and newlines
 				functionParts[index] = functionParts[index].Trim();
+
+				// remove inline newlines except in summary
+				if (functionParts[index].Contains("\n") && !functionParts[index].Contains("summary"))
+					functionParts[index] = functionParts[index].Replace("\n", "");
+
+				// remove empty lines or lines that are only newlines
+				if (String.IsNullOrEmpty(functionParts[index]) || functionParts[index] == "\n")
+				{
+					functionParts.RemoveAt(index);
+					index--;
+				}
 			}
 
-			foreach (var str in parts)
+			// fill text boxes in form
+			if (functionParts.Find(s => s.ToLower().Contains("name")).Split('=').Length > 1)
+				textBoxName.Text = functionParts.Find(s => s.ToLower().Contains("name")).Split('=')[1].Trim();
+			if (functionParts.Find(s => s.ToLower().Contains("alias")).Split('=').Length > 1)
+				textBoxAlias.Text = functionParts.Find(s => s.ToLower().Contains("alias")).Split('=')[1].Trim();
+			if (functionParts.Find(s => s.ToLower().Contains("origin")).Split('=').Length > 1)
 			{
-				MessageBox.Show(str);
+				string t = functionParts.Find(s => s.ToLower().Contains("origin")).Split('=')[1].Trim();
+				textBoxVersion.Text = t;
+				textBoxOrigin.Text = t;
+				textBoxTags.Text = t;
 			}
 
-			#region parse
+			// TODO: Remove triple apostrophe groups
+			if (functionParts.Find(s => s.ToLower().Contains("summary")).Split('=').Length > 1)
+				richTextBoxDescription.Text = functionParts.Find(s => s.ToLower().Contains("summary")).Split('=')[1].Trim();
+			richTextBoxDescription.AppendText("\n\n");
 
-			/*var stck = new Stack<string>();
-			bool functionArgumentFound = false;
-			foreach (string line in s.Trim().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+			// TODO: write extra function to parse multiline examples into separate example lists
+			//Variables.ExampleList = new List<Example>();
+			//Variables.ExampleList.Add(new Example(functionParts.Find(s => s.ToLower().Contains("origin")).Split('=')[1].Trim()));
+
+
+
+			// get the parameters, and build the parameter list
+			for (int index = 0; index < functionParts.Count; index++)
 			{
-				string f="", l="";
-				string[] parts = line.Split('=');
-
-				if (parts.Any())
+				if (functionParts[index].ToLower().Contains("functionargument"))
 				{
-					f = parts[0].Trim();
-					f = f.Remove(0, 1);
+					int nextIndex = functionParts.FindIndex(index + 1, f => f.ToLower().Contains("functionargument"));
+					if (nextIndex == -1) nextIndex = functionParts.Count;
+
+					var param = new ParameterDef();
+					var typeString = new string[3]{"", ":", ""};
+
+					for (int index2 = index + 1; index2 < nextIndex; index2++)
+					{
+						if (functionParts[index2].ToLower().Contains("name"))
+							typeString[2] = functionParts[index2].Split('=')[1].Trim();
+
+						if (functionParts[index2].ToLower().Contains("type"))
+							typeString[0] = functionParts[index2].Split('=')[1].Trim();
+
+						if (functionParts[index2].ToLower().Contains("value"))
+							param.Value = functionParts[index2].Split('=')[1].Trim();
+
+						if (functionParts[index2].ToLower().Contains("optional") && functionParts[index2].Split('=')[1].Equals("y"))
+							param.Optional = "True";
+
+					}
+					param.Type = typeString.ToString();
+					Variables.ParametersList.Add();
 				}
-
-				if (parts.Count() >= 2)
-					l = parts[1].Trim();
-
-
-				if (functionArgumentFound == true)
-				{
-					stck.Push(f);
-					stck.Push(l);
-				}
-
-				if (f.Contains("FunctionArgument") || l.Contains("FunctionArgument"))
-					functionArgumentFound = true;
+			}
 
 
 
-				if (f.Contains("origin"))
-					textBoxOrigin.Text = "Geck";
-
-				if (f.Contains("summary"))
-					richTextBoxDescription.Text = l;
-
-				if (f == "returnType")
-					checkBoxReturnType.Checked = true;
-
-				if (f.Contains("name"))
-					textBoxName.Text = l;*/
-
-			#endregion
+			//foreach (var str in parts)
+			//{
+			//	MessageBox.Show(str);
+			//}
 
 		}
 
@@ -127,6 +154,7 @@ namespace NVSE_Docs_Manager
 			PopulateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
 			UpdateParameterTypeLists();
 		}
+
 		/// <summary>
 		/// Updates the ParameterDef type and name lists from all parameters
 		/// </summary>
@@ -288,12 +316,17 @@ namespace NVSE_Docs_Manager
 			/// Prompts to ensure the user wants to clear the form, then clears all form entry if yes
 			/// </summary>
 			private void buttonNewFunction_Click(object sender, EventArgs e)
-		{
-			WikiParser();
-			DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (d == DialogResult.Yes)
-				PopulateFunctionForm(new FunctionDef());
-		}
+			{
+				if (convertWikiPagesToolStripMenuItem.Checked == true)
+					WikiParser();
+				else
+				{
+					DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+					if (d == DialogResult.Yes)
+						PopulateFunctionForm(new FunctionDef());
+				}
+				
+			}
 
 			private void buttonShowExamples_Click(object sender, EventArgs e)
 			{
@@ -778,11 +811,6 @@ namespace NVSE_Docs_Manager
 #endif
 		}
 		#endregion
-
-		private void toolStripStatusLabel2_Click(object sender, EventArgs e)
-		{
-
-		}
 
 	#endregion Events
 

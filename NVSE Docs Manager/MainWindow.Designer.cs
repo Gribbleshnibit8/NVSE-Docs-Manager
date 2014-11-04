@@ -98,6 +98,7 @@
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
+			this.convertWikiPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
@@ -167,7 +168,8 @@
 			// settingsToolStripMenuItem
 			// 
 			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.outputReadableFileToolStripMenuItem});
+            this.outputReadableFileToolStripMenuItem,
+            this.convertWikiPagesToolStripMenuItem});
 			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
 			this.settingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.S)));
 			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -862,6 +864,13 @@
 			this.LeftToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.LeftToolStripPanel.Size = new System.Drawing.Size(0, 0);
 			// 
+			// convertWikiPagesToolStripMenuItem
+			// 
+			this.convertWikiPagesToolStripMenuItem.Name = "convertWikiPagesToolStripMenuItem";
+			this.convertWikiPagesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.convertWikiPagesToolStripMenuItem.Text = "Convert Wiki Pages";
+			this.convertWikiPagesToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -971,6 +980,7 @@
 		private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
 		private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
 		private System.Windows.Forms.ToolStripMenuItem outputReadableFileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem convertWikiPagesToolStripMenuItem;
 	}
 }
 

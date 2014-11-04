@@ -18,6 +18,7 @@ namespace NVSE_Docs_Manager
 		public string Url { get; set; }
 		public string Type { get; set; }
 		public string Optional { get; set; }
+		public string Value { get; set; }
 		public object[] UrlBoxContents { get; set; }
 		public object[] TypeBoxContents { get; set; }
 		public object[] NameBoxContents { get; set; }

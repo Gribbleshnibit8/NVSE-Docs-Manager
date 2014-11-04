@@ -103,6 +103,9 @@ namespace NVSE_Docs_Manager
 
 		[JsonProperty(PropertyName = "optional")]
 		public string Optional { get; set; }
+
+		[JsonProperty(PropertyName = "value")]
+		public string Value { get; set; }
 	}
 
 	/// <summary>
@@ -125,6 +128,13 @@ namespace NVSE_Docs_Manager
 		public Example()
 		{
 			Contents = new List<string>();
+		}
+
+		public Example(string example)
+		{
+			Contents = new List<string>(
+						   example.Split(new[] { "\n" },
+						   StringSplitOptions.RemoveEmptyEntries));
 		}
 	}
 }
