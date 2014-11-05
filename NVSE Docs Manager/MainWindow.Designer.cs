@@ -38,6 +38,7 @@
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.outputReadableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.convertWikiPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
@@ -98,7 +99,7 @@
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
-			this.convertWikiPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
@@ -181,6 +182,13 @@
 			this.outputReadableFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.outputReadableFileToolStripMenuItem.Text = "Output Readable File";
 			this.outputReadableFileToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
+			// 
+			// convertWikiPagesToolStripMenuItem
+			// 
+			this.convertWikiPagesToolStripMenuItem.Name = "convertWikiPagesToolStripMenuItem";
+			this.convertWikiPagesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.convertWikiPagesToolStripMenuItem.Text = "Convert Wiki Pages";
+			this.convertWikiPagesToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -360,6 +368,8 @@
 			// 
 			// comboBoxReturnTypeName
 			// 
+			this.comboBoxReturnTypeName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.comboBoxReturnTypeName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.comboBoxReturnTypeName.Enabled = false;
 			this.comboBoxReturnTypeName.FormattingEnabled = true;
 			this.comboBoxReturnTypeName.Location = new System.Drawing.Point(323, 32);
@@ -419,6 +429,8 @@
 			// 
 			// comboBoxReturnTypeType
 			// 
+			this.comboBoxReturnTypeType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.comboBoxReturnTypeType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.comboBoxReturnTypeType.Enabled = false;
 			this.comboBoxReturnTypeType.FormattingEnabled = true;
 			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(177, 32);
@@ -686,17 +698,18 @@
 			// 
 			// groupBoxParameterTemplate
 			// 
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBox1);
 			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateName);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateName);
 			this.groupBoxParameterTemplate.Controls.Add(this.buttonParameterTemplateRemove);
-			this.groupBoxParameterTemplate.Controls.Add(this.checkBoxParameterTemplateOptional);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateName);
 			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateType);
+			this.groupBoxParameterTemplate.Controls.Add(this.checkBoxParameterTemplateOptional);
+			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
+			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
 			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(3, 7);
 			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
-			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(525, 59);
+			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(525, 133);
 			this.groupBoxParameterTemplate.TabIndex = 31;
 			this.groupBoxParameterTemplate.TabStop = false;
 			this.groupBoxParameterTemplate.Text = "Parameter 1";
@@ -705,7 +718,7 @@
 			// labelParameterTemplateName
 			// 
 			this.labelParameterTemplateName.AutoSize = true;
-			this.labelParameterTemplateName.Location = new System.Drawing.Point(325, 16);
+			this.labelParameterTemplateName.Location = new System.Drawing.Point(179, 56);
 			this.labelParameterTemplateName.Name = "labelParameterTemplateName";
 			this.labelParameterTemplateName.Size = new System.Drawing.Size(35, 13);
 			this.labelParameterTemplateName.TabIndex = 29;
@@ -714,7 +727,7 @@
 			// comboBoxParameterTemplateName
 			// 
 			this.comboBoxParameterTemplateName.FormattingEnabled = true;
-			this.comboBoxParameterTemplateName.Location = new System.Drawing.Point(328, 32);
+			this.comboBoxParameterTemplateName.Location = new System.Drawing.Point(182, 72);
 			this.comboBoxParameterTemplateName.Name = "comboBoxParameterTemplateName";
 			this.comboBoxParameterTemplateName.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxParameterTemplateName.TabIndex = 30;
@@ -752,7 +765,7 @@
 			// labelParameterTemplateType
 			// 
 			this.labelParameterTemplateType.AutoSize = true;
-			this.labelParameterTemplateType.Location = new System.Drawing.Point(179, 16);
+			this.labelParameterTemplateType.Location = new System.Drawing.Point(33, 56);
 			this.labelParameterTemplateType.Name = "labelParameterTemplateType";
 			this.labelParameterTemplateType.Size = new System.Drawing.Size(31, 13);
 			this.labelParameterTemplateType.TabIndex = 2;
@@ -786,7 +799,7 @@
 			// comboBoxParameterTemplateType
 			// 
 			this.comboBoxParameterTemplateType.FormattingEnabled = true;
-			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(182, 32);
+			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(36, 72);
 			this.comboBoxParameterTemplateType.Name = "comboBoxParameterTemplateType";
 			this.comboBoxParameterTemplateType.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxParameterTemplateType.TabIndex = 3;
@@ -828,7 +841,7 @@
 			this.panel1.Controls.Add(this.groupBoxParameterTemplate);
 			this.panel1.Location = new System.Drawing.Point(294, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(531, 69);
+			this.panel1.Size = new System.Drawing.Size(531, 143);
 			this.panel1.TabIndex = 506;
 			this.panel1.Visible = false;
 			// 
@@ -864,12 +877,13 @@
 			this.LeftToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.LeftToolStripPanel.Size = new System.Drawing.Size(0, 0);
 			// 
-			// convertWikiPagesToolStripMenuItem
+			// comboBox1
 			// 
-			this.convertWikiPagesToolStripMenuItem.Name = "convertWikiPagesToolStripMenuItem";
-			this.convertWikiPagesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-			this.convertWikiPagesToolStripMenuItem.Text = "Convert Wiki Pages";
-			this.convertWikiPagesToolStripMenuItem.Click += new System.EventHandler(this.checkToolStripMenuItem_Click);
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(182, 33);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(140, 21);
+			this.comboBox1.TabIndex = 31;
 			// 
 			// MainWindow
 			// 
@@ -981,6 +995,7 @@
 		private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
 		private System.Windows.Forms.ToolStripMenuItem outputReadableFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem convertWikiPagesToolStripMenuItem;
+		private System.Windows.Forms.ComboBox comboBox1;
 	}
 }
 

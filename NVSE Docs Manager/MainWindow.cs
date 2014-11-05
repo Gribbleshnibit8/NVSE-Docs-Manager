@@ -120,7 +120,7 @@ namespace NVSE_Docs_Manager
 								param.Optional = "True";
 
 					}
-					param.Type = typeString.ToString();
+					param.Type = typeString[0] + typeString[1] + typeString[2];
 					Variables.ParametersList.Add(new Parameter(param));
 				}
 			}
