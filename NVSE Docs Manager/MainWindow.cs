@@ -71,8 +71,9 @@ namespace NVSE_Docs_Manager
 			// fill text boxes in form
 			if (functionParts.Find(s => s.ToLower().Contains("name")).Split('=').Length > 1)
 				textBoxName.Text = functionParts.Find(s => s.ToLower().Contains("name")).Split('=')[1].Trim();
-			if (functionParts.Find(s => s.ToLower().Contains("alias")).Split('=').Length > 1)
-				textBoxAlias.Text = functionParts.Find(s => s.ToLower().Contains("alias")).Split('=')[1].Trim();
+			if (!string.IsNullOrEmpty(functionParts.Find(s => s.ToLower().Contains("alias"))))
+				if (functionParts.Find(s => s.ToLower().Contains("alias")).Split('=').Length > 1)
+					textBoxAlias.Text = functionParts.Find(s => s.ToLower().Contains("alias")).Split('=')[1].Trim();
 			if (functionParts.Find(s => s.ToLower().Contains("origin")).Split('=').Length > 1)
 			{
 				string t = functionParts.Find(s => s.ToLower().Contains("origin")).Split('=')[1].Trim();
@@ -114,14 +115,18 @@ namespace NVSE_Docs_Manager
 						if (functionParts[index2].ToLower().Contains("value"))
 							param.Value = functionParts[index2].Split('=')[1].Trim();
 
-						if (functionParts[index2].ToLower().Contains("optional") && functionParts[index2].Split('=')[1].Equals("y"))
-							param.Optional = "True";
+						if (functionParts[index2].ToLower().Contains("optional"))
+							if (functionParts[index2].Split('=')[1].Equals(" y"))
+								param.Optional = "True";
 
 					}
 					param.Type = typeString.ToString();
-					Variables.ParametersList.Add();
+					Variables.ParametersList.Add(new Parameter(param));
 				}
 			}
+			UpdateParameterTypeLists();
+			foreach (var f in Variables.ParametersList) { flowLayoutPanelParameters.Controls.Add(f); }
+			RebuildParamaterPanel();
 
 
 
@@ -131,10 +136,6 @@ namespace NVSE_Docs_Manager
 			//}
 
 		}
-
-
-
-
 
 		/// <summary>
 		/// Outputs a string to the statusbar
@@ -240,7 +241,7 @@ namespace NVSE_Docs_Manager
 
 			private void buttonNewParameter_Click(object sender, EventArgs e)
 			{
-				Control c = new Parameter(Variables.ParameterUrlList.ToArray(), Variables.ParameterTypesList.ToArray(), Variables.ParameterNamesList.ToArray());
+				Control c = new Parameter();
 				Variables.ParametersList.Add(c);
 				flowLayoutPanelParameters.Controls.Add(c);
 				RebuildParamaterPanel();
@@ -424,14 +425,7 @@ namespace NVSE_Docs_Manager
 					foreach (ParameterDef parameter in parameterList)
 					{
 						//Control c = new Parameter(Variables.parameterURLList.ToArray(), Variables.parameterTypesList.ToArray(), Variables.parameterNamesList.ToArray());
-						Control c = new Parameter(
-							parameter.Url,
-							parameter.Type,
-							parameter.Optional,
-							Variables.ParameterUrlList.ToArray(),
-							Variables.ParameterTypesList.ToArray(),
-							Variables.ParameterNamesList.ToArray()
-						);
+						Control c = new Parameter(parameter);
 
 						Variables.ParametersList.Add(c);
 						flowLayoutPanelParameters.Controls.Add(c);

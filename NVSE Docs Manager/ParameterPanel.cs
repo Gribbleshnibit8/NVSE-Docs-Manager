@@ -29,46 +29,22 @@ namespace NVSE_Docs_Manager
 			Url = "";
 			Type = ":";
 			Optional = "False";
-			UrlBoxContents = new object[1] { "" };
-			TypeBoxContents = new object[1] { "" };
-			NameBoxContents = new object[1] { "" };
+			Value = "";
+			SetArrayValues();
 			_panel = BuildNewParameterForm();
 		}
 
 		/// <summary>
-		/// Represents a groupbox of default controls consistent with the Parameter data type
+		/// Create a new parameter from a ParameterDef object
 		/// </summary>
-		/// <param name="urlArray">A list of url hash strings</param>
-		/// <param name="typeArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
-		/// <param name="nameArray">A list of all values that can be a name</param>
-		public Parameter(object[] urlArray, object[] typeArray, object[] nameArray)
+		/// <param name="parameter">The new parameter from which to make a parameter panel</param>
+		public Parameter(ParameterDef parameter)
 		{
-			Url = "";
-			Type = ":";
-			Optional = "False";
-			UrlBoxContents = urlArray;
-			TypeBoxContents = typeArray;
-			NameBoxContents = nameArray;
-			_panel = BuildNewParameterForm();
-		}
-
-		/// <summary>
-		/// Represents a groupbox of default controls consistent with the Parameter data type
-		/// </summary>
-		/// <param name="url">The page hash with information of this data type</param>
-		/// <param name="type">The data represented by this parameter</param>
-		/// <param name="optional">Is an optional parameter</param>
-		/// <param name="urlArray">A list of url hash strings</param>
-		/// <param name="typeArray">A list of all values that can be of type type (Ex. integer, boolean, string)</param>
-		/// <param name="nameArray">A list of all values that can be a name</param>
-		public Parameter(string url, string type, string optional, object[] urlArray, object[] typeArray, object[] nameArray)
-		{
-			Url = url;
-			Type = type;
-			Optional = optional;
-			UrlBoxContents = urlArray;
-			TypeBoxContents = typeArray;
-			NameBoxContents = nameArray;
+			Url = parameter.Url;
+			Type = parameter.Type;
+			Optional = parameter.Optional;
+			Value = parameter.Value;
+			SetArrayValues();
 			_panel = BuildNewParameterForm();
 		}
 
@@ -87,6 +63,16 @@ namespace NVSE_Docs_Manager
 			_panel = BuildNewParameterForm();
 		}
 		#endregion
+
+		/// <summary>
+		/// Gets the combo box value arrays from the variables class.
+		/// </summary>
+		private void SetArrayValues()
+		{
+			UrlBoxContents = Variables.ParameterUrlList != null ? Variables.ParameterUrlList.ToArray() : new object[1] { "" };
+			TypeBoxContents = Variables.ParameterTypesList != null ? Variables.ParameterTypesList.ToArray() : new object[1] { "" };
+			NameBoxContents = Variables.ParameterNamesList != null ? Variables.ParameterNamesList.ToArray() : new object[1] { "" };
+		}
 
 		#region Getters/Setters
 			private static string GetTypeType(string type)
