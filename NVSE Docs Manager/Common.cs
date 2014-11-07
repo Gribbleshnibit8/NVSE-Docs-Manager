@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NVSE_Docs_Manager
@@ -15,21 +11,48 @@ namespace NVSE_Docs_Manager
 		/// Shows a message box asking if the user wants to delete an item or selection.
 		/// </summary>
 		/// <param name="typeToDelete">The name of the item or selection that will be deleted</param>
-		/// <returns>DialogResult Yes or No depending on selection</returns>
-		public static DialogResult ConfirmDelete(string typeToDelete)
+		/// <returns>Returns true if Yes</returns>
+		public static bool ConfirmDelete(string typeToDelete)
 		{
-			return MessageBox.Show("Are you sure you want to delete the selected " + typeToDelete + "?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			return MessageBox.Show("Are you sure you want to delete the selected " + typeToDelete + "?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+		}
+
+		/// /// <summary>
+		/// Presents a Yes/No dialog option asking if the user has saved.
+		/// </summary>
+		/// <returns>Returns true if Yes</returns>
+		public static bool ConfirmCloseForm()
+		{
+			return MessageBox.Show("Have you saved?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes;
 		}
 
 		/// <summary>
-		/// Presents a Yes/No dialog option asking if the user has saved.
-		/// Returns Yes or No
+		/// Presents a Yes/No dialog option asking if the user would like to update a function.
 		/// </summary>
-		public static DialogResult ConfirmCloseForm()
+		/// <returnsReturns true if Yes</returns>
+		public static bool ConfirmUpdateFunction()
 		{
-			var d = MessageBox.Show("Have you saved?", "Close Application", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
-			if (d != DialogResult.Yes) return DialogResult.No;
-			return DialogResult.Yes;
+			return MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes;
+		}
+
+		/// <summary>
+		/// Presents a Yes/No dialog option asking if the user is sure they want to discard chagnes.
+		/// </summary>
+		/// <returns>Returns true if Yes</returns>
+		public static bool ConfirmDiscardChanges()
+		{
+			return MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
+		}
+
+		/// <summary>
+		/// Presents a Yes/No dialog option asking if the user is sure they want to discard chagnes.
+		/// </summary>
+		/// <returns>Returns true if Yes</returns>
+		public static bool ConfirmClearForm()
+		{
+			return MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
 		}
 
 		/// <summary>
@@ -38,7 +61,7 @@ namespace NVSE_Docs_Manager
 		/// <param name="title">Title of the form.</param>
 		/// <param name="promptText">Text prompt to inform what the entered string is for.</param>
 		/// <param name="value">String variable to hold the entered text.</param>
-		public static DialogResult InputBox(string title, string promptText, ref string value)
+		public static bool InputBox(string title, string promptText, ref string value)
 		{
 			var form = new Form
 			{
@@ -80,9 +103,8 @@ namespace NVSE_Docs_Manager
 			form.AcceptButton = buttonOk;
 			form.CancelButton = buttonCancel;
 
-			var dialogResult = form.ShowDialog();
 			value = textBox.Text;
-			return dialogResult;
+			return form.ShowDialog() == DialogResult.OK;
 		}
 
 	}

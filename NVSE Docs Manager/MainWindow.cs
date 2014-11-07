@@ -1,25 +1,26 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web.Configuration;
 using System.Windows.Forms;
-
 using Newtonsoft.Json;
 
 namespace NVSE_Docs_Manager
 {
 	public partial class MainWindow : Form
 	{
-
+		/// <summary>
+		/// Instance of the Exampel Window used to ensure only one window exists.
+		/// </summary>
 		ExamplesWindow _exampleWindowInstance = null;
+
+		/// <summary>
+		/// The name of the first file we opened.
+		/// </summary>
 		string _fileName;
+
+		Variables _instanceVariables = new Variables();
 
 		public MainWindow()
 		{
@@ -93,7 +94,7 @@ namespace NVSE_Docs_Manager
 
 
 
-			// get the parameters, and build the parameter list
+			// get the parameters, and add them to the flowLayoutPanel
 			for (int index = 0; index < functionParts.Count; index++)
 			{
 				if (functionParts[index].ToLower().Contains("functionargument"))
@@ -121,20 +122,12 @@ namespace NVSE_Docs_Manager
 
 					}
 					param.Type = typeString[0] + typeString[1] + typeString[2];
-					Variables.ParametersList.Add(new Parameter(param));
+					flowLayoutPanelParameters.Controls.Add(new ParameterBox(param, _instanceVariables));
+					//_instanceVariables.ParametersList.Add(new ParameterBox(param));
 				}
 			}
-			UpdateParameterTypeLists();
-			foreach (var f in Variables.ParametersList) { flowLayoutPanelParameters.Controls.Add(f); }
+			UpdateParameterLists();
 			RebuildParamaterPanel();
-
-
-
-			//foreach (var str in parts)
-			//{
-			//	MessageBox.Show(str);
-			//}
-
 		}
 
 		/// <summary>
@@ -153,25 +146,23 @@ namespace NVSE_Docs_Manager
 		private void ParseLoadedFile(StreamReader file)
 		{
 			PopulateFunctionListBox(JsonConvert.DeserializeObject<List<FunctionDef>>(file.ReadToEnd()));
-			UpdateParameterTypeLists();
+			UpdateParameterLists();
 		}
 
 		/// <summary>
 		/// Updates the ParameterDef type and name lists from all parameters
 		/// </summary>
-		private void UpdateParameterTypeLists()
+		public void UpdateParameterLists()
 		{
-			foreach (var s in from f in Variables.LoadedFunctionsList where f.Parameters != null from p in f.Parameters where p.Type != null select p.Type.Split(':'))
-			{
-				if (!Variables.ParameterTypesList.Contains(s[0]) && !String.IsNullOrEmpty(s[0])) { Variables.ParameterTypesList.Add(s[0]); }
-				if (s.Length >= 2 && !Variables.ParameterNamesList.Contains(s[1]) && !String.IsNullOrEmpty(s[1])) { Variables.ParameterNamesList.Add(s[1]); }
-			}
+			_instanceVariables.UpdateParameterLists();
 			comboBoxReturnTypeURL.Items.Clear();
-			comboBoxReturnTypeURL.Items.AddRange(Variables.ParameterUrlList.ToArray());
+			comboBoxReturnTypeURL.Items.AddRange(_instanceVariables.GetUrlObjectArray());
 			comboBoxReturnTypeType.Items.Clear();
-			comboBoxReturnTypeType.Items.AddRange(Variables.ParameterTypesList.ToArray());
+			comboBoxReturnTypeType.Items.AddRange(_instanceVariables.GetTypeObjectArray());
 			comboBoxReturnTypeName.Items.Clear();
-			comboBoxReturnTypeName.Items.AddRange(Variables.ParameterNamesList.ToArray());
+			comboBoxReturnTypeName.Items.AddRange(_instanceVariables.GetNameObjectArray());
+			comboBoxReturnTypeValue.Items.Clear();
+			comboBoxReturnTypeValue.Items.AddRange(_instanceVariables.GetValueObjectArray());
 		}
 
 		/// <summary>
@@ -192,11 +183,9 @@ namespace NVSE_Docs_Manager
 		/// <param name="functionToAdd">A function to add to the list of loaded functions</param>
 		private void AddToFunctionListBox(FunctionDef functionToAdd)
 		{
-			if (!Variables.LoadedFunctionsList.Exists(n => n.Name == functionToAdd.Name))
-			{
-				listboxFunctionList.Items.Add(functionToAdd.Name);
-				Variables.LoadedFunctionsList.Add(functionToAdd);
-			}
+			if (_instanceVariables.FunctionExists(functionToAdd)) return;
+			listboxFunctionList.Items.Add(functionToAdd.Name);
+			_instanceVariables.AddFunction(functionToAdd);
 		}
 
 		/// <summary>
@@ -204,12 +193,7 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		private void ClearEntireForm()
 		{
-			Variables.LoadedFunctionsList.Clear();
-			Variables.ParameterNamesList.Clear();
-			Variables.ParameterTypesList.Clear();
-			Variables.ParametersList.Clear();
-			Variables.ParametersList.Clear();
-			Variables.CurrentEditingBackup = new FunctionDef();
+			_instanceVariables = new Variables();
 			listboxFunctionList.Items.Clear();
 			flowLayoutPanelParameters.Controls.Clear();
 			textBoxName.Clear();
@@ -232,7 +216,7 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void textBoxName_TextChanged(object sender, EventArgs e)
 			{
-				System.Windows.Forms.TextBox t = (System.Windows.Forms.TextBox)sender;
+				var t = (TextBox)sender;
 				if (String.IsNullOrEmpty(t.Text) || String.IsNullOrWhiteSpace(t.Text))
 					buttonSaveCurrentChanges.Enabled = false;
 				else
@@ -241,22 +225,7 @@ namespace NVSE_Docs_Manager
 
 			private void buttonNewParameter_Click(object sender, EventArgs e)
 			{
-				Control c = new Parameter();
-				Variables.ParametersList.Add(c);
-				flowLayoutPanelParameters.Controls.Add(c);
-				RebuildParamaterPanel();
-			}
-
-			/// <summary>
-			/// Copy a Parameter and add it to the panel. Then recalculate the numbers of all Parameters
-			/// </summary>
-			/// <param name="sender"></param>
-			/// <param name="e"></param>
-			private void buttonCopyParameter_Click(object sender, EventArgs e)
-			{
-				Control newParam = new Parameter((Parameter)(System.Windows.Forms.GroupBox)Variables.ParametersList.Last());
-				Variables.ParametersList.Add(newParam);
-				flowLayoutPanelParameters.Controls.Add(newParam);
+				flowLayoutPanelParameters.Controls.Add(new ParameterBox(_instanceVariables));
 				RebuildParamaterPanel();
 			}
 
@@ -265,17 +234,11 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void checkBoxReturnType_CheckedChanged(object sender, EventArgs e)
 			{
-				System.Windows.Forms.CheckBox box = (System.Windows.Forms.CheckBox)sender;
+				var box = (CheckBox)sender;
 
-				foreach (Control c in box.Parent.Controls)
+				foreach (Control c in from Control c in box.Parent.Controls where c != box select c)
 				{
-					if (c != box)
-					{
-						if (c.Enabled == true)
-							c.Enabled = false;
-						else
-							c.Enabled = true;
-					}
+					c.Enabled = c.Enabled != true;
 				}
 			}
 
@@ -284,19 +247,14 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
 			{
-				if (!Variables.LoadedFunctionsList.Exists(f => f.Name == textBoxName.Text))
-				{
+				if (_instanceVariables.FunctionExists(textBoxName.Text))
 					SaveNewFunction();
-				}
 				else
-				{
-					// Update existing function
-					DialogResult d = MessageBox.Show("This function already exists. Would you like to update it with the new information?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-					if (d == DialogResult.Yes)
+					if (Common.ConfirmUpdateFunction())
 						UpdateCurrentFunction(); // Update existing function
-				} // end else
-				UpdateParameterTypeLists();
-			} // end buttonSaveCurrentChanges_Click
+
+				UpdateParameterLists();
+			}
 
 			/// <summary>
 			/// Reverts changes to the state when the form was loaded
@@ -305,12 +263,11 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void buttonDiscardChanges_Click(object sender, EventArgs e)
 			{
-				DialogResult d = MessageBox.Show("Are you sure you want to discard the changes?", "Discard Changes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (d == DialogResult.Yes)
-					if (Variables.CurrentEditingBackup == null)
+				if (Common.ConfirmDiscardChanges())
+					if (_instanceVariables.IsBackupNull())
 						PopulateFunctionForm(new FunctionDef());
 					else
-						PopulateFunctionForm(Variables.CurrentEditingBackup);
+						PopulateFunctionForm(_instanceVariables.GetBackup());
 			}
 
 			/// <summary>
@@ -322,8 +279,7 @@ namespace NVSE_Docs_Manager
 					WikiParser();
 				else
 				{
-					DialogResult d = MessageBox.Show("Are you sure you want to clear the form?", "New Functions", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (d == DialogResult.Yes)
+					if (Common.ConfirmClearForm())
 						PopulateFunctionForm(new FunctionDef());
 				}
 				
@@ -332,11 +288,25 @@ namespace NVSE_Docs_Manager
 			private void buttonShowExamples_Click(object sender, EventArgs e)
 			{
 				if (_exampleWindowInstance == null || _exampleWindowInstance.IsDisposed)
+				{
 					_exampleWindowInstance = new ExamplesWindow();
+					_exampleWindowInstance.SetInstanceVariable(ref _instanceVariables);
+					_exampleWindowInstance.PopulateForm();
+				}
 				_exampleWindowInstance.Show();
 
 				if (_exampleWindowInstance.Focused == false)
 					_exampleWindowInstance.Focus();
+			}
+
+			private void flowLayoutPanelParameters_ControlAdded(object sender, ControlEventArgs e)
+			{
+				RebuildParamaterPanel();
+			}
+
+			private void flowLayoutPanelParameters_ControlRemoved(object sender, ControlEventArgs e)
+			{
+				RebuildParamaterPanel();
 			}
 		#endregion Events
 
@@ -347,7 +317,6 @@ namespace NVSE_Docs_Manager
 		public void PopulateFunctionForm(FunctionDef func)
 		{
 			flowLayoutPanelParameters.Controls.Clear();
-			Variables.ParametersList.Clear();
 			textBoxName.Clear();
 			textBoxAlias.Clear();
 			textBoxVersion.Clear();
@@ -360,8 +329,8 @@ namespace NVSE_Docs_Manager
 			checkBoxConditional.Checked = false;
 
 			// save the settings to a global first, so we can revert if a bad change is made
-			Variables.CurrentEditingBackup = func;
-			Variables.ExampleList = func.ExampleList;
+			_instanceVariables.SetBackup(func);
+			_instanceVariables.SetExampleList(func.ExampleList);
 
 			if (_exampleWindowInstance != null)
 				_exampleWindowInstance.PopulateForm();
@@ -373,7 +342,8 @@ namespace NVSE_Docs_Manager
 			textBoxCategory.Text = func.Category;
 
 			if (func.Tags != null)
-				foreach (string s in func.Tags) { textBoxTags.Text += s + System.Environment.NewLine; }
+				foreach (string s in func.Tags) 
+					textBoxTags.Text += s + System.Environment.NewLine;
 
 			switch (func.Convention)
 			{
@@ -398,13 +368,15 @@ namespace NVSE_Docs_Manager
 					comboBoxReturnTypeURL.Text = "";
 					comboBoxReturnTypeType.Text = "";
 					comboBoxReturnTypeName.Text = "";
+					comboBoxReturnTypeValue.Text = "";
 					checkBoxReturnType.Checked = false;
 					break;
 				default:
 					comboBoxReturnTypeURL.Text = func.ReturnType[0].Type;
-					string[] s = func.ReturnType[0].Type.Split(':');
+					var s = func.ReturnType[0].Type.Split(':');
 					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
 					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
+					comboBoxReturnTypeValue.Text = func.ReturnType[0].Value;
 					checkBoxReturnType.Checked = true;
 					break;
 			}
@@ -424,10 +396,9 @@ namespace NVSE_Docs_Manager
 				{
 					foreach (ParameterDef parameter in parameterList)
 					{
-						//Control c = new Parameter(Variables.parameterURLList.ToArray(), Variables.parameterTypesList.ToArray(), Variables.parameterNamesList.ToArray());
-						Control c = new Parameter(parameter);
+						Control c = new ParameterBox(parameter, _instanceVariables);
 
-						Variables.ParametersList.Add(c);
+						//Variables.ParametersList.Add(c);
 						flowLayoutPanelParameters.Controls.Add(c);
 					}
 					RebuildParamaterPanel();
@@ -437,27 +408,49 @@ namespace NVSE_Docs_Manager
 		/// <summary>
 		/// Renumbers the groupbox text on all groupboxes in the ParameterDef list
 		/// </summary>
-		private void RebuildParamaterPanel()
+		public void RebuildParamaterPanel()
 		{
 			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
-			{
-				flowLayoutPanelParameters.Controls[i].Text = "Parameter " + (i + 1).ToString();
-			}
+				flowLayoutPanelParameters.Controls[i].Text = "ParameterBox " + (i + 1).ToString();
 		}
 
 		/// <summary>
 		/// Converts the window data into a function object
 		/// </summary>
-		/// <param name="functionToAdd">A function that will be returned filled with the data in the window.</param>
+		/// <param name="function">A function that will be returned filled with the data in the window.</param>
 		private FunctionDef WindowToFunction(FunctionDef function)
 		{
-			if (!String.IsNullOrEmpty(textBoxName.Text)) { function.Name = textBoxName.Text; }
-			function.Alias = !String.IsNullOrEmpty(textBoxAlias.Text) ? textBoxAlias.Text : null;
-			function.Version = !String.IsNullOrEmpty(textBoxVersion.Text) ? textBoxVersion.Text : null;
-			function.FromPlugin = !String.IsNullOrEmpty(textBoxOrigin.Text) ? textBoxOrigin.Text : null;
-			function.Category = !String.IsNullOrEmpty(textBoxCategory.Text) ? textBoxCategory.Text : null;
+			// ReSharper disable ConvertIfStatementToConditionalTernaryExpression
+		// NAME
+			if (!String.IsNullOrEmpty(textBoxName.Text))
+				function.Name = textBoxName.Text;
 
+		// ALIAS
+			if (String.IsNullOrEmpty(textBoxAlias.Text))
+				function.Alias = null;
+			else
+				function.Alias = textBoxAlias.Text;
 
+		// VERSION 
+			if (String.IsNullOrEmpty(textBoxVersion.Text))
+				function.Version = null;
+			else
+				function.Version = textBoxVersion.Text;
+
+		// ORIGIN
+			if (String.IsNullOrEmpty(textBoxOrigin.Text))
+				function.FromPlugin = null;
+			else
+				function.FromPlugin = textBoxOrigin.Text;
+
+		// CATEGORY
+			if (String.IsNullOrEmpty(textBoxCategory.Text))
+				function.Category = null;
+			else
+				function.Category = textBoxCategory.Text;
+			// ReSharper restore ConvertIfStatementToConditionalTernaryExpression
+
+		// TAGS
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
 			{
 				// if the tag variable is null, and there are tags to put in it, create a new list
@@ -466,65 +459,76 @@ namespace NVSE_Docs_Manager
 
 				// step through each line in the text box, each line is a tag, and store each one
 				// in the list. If there is an empty line, or the line exists already, skip it.
-				foreach (var line in textBoxTags.Lines)
+				foreach (var line in textBoxTags.Lines.Where(line => function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line)))
 				{
-					if (function.Tags.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
-					{
-						function.Tags.Add(line);
-					}
+					function.Tags.Add(line);
 				}
 			}
 
-			if (radioButtonCallingConventionBase.Checked == true) { function.Convention = "B"; }
-			else if (radioButtonCallingConventionEither.Checked == true) { function.Convention = "E"; }
-			else if (radioButtonCallingConventionRef.Checked == true) { function.Convention = "R"; }
+		// CALLING CONVENTION
+			if (radioButtonCallingConventionBase.Checked == true) 
+				function.Convention = "B";
+			else if (radioButtonCallingConventionEither.Checked == true)
+				function.Convention = "E";
+			else if (radioButtonCallingConventionRef.Checked == true)
+				function.Convention = "R";
 
 
 			// TODO: Update javascript to handle true/false
-			function.Condition = checkBoxConditional.Checked == true ? checkBoxConditional.Checked.ToString() : null;
-
-			if (Variables.ParametersList.Count > 0)
+			switch (checkBoxConditional.Checked)
 			{
-				function.Parameters = new List<ParameterDef>();
+				case true:
+					function.Condition = checkBoxConditional.Checked.ToString();
+					break;
+				default:
+					function.Condition = null;
+					break;
+			}
+
+		// PARAMETERS
+			if (flowLayoutPanelParameters.Controls.Count > 0)
+			{
+				if (function.Parameters == null)
+					function.Parameters = new List<ParameterDef>();
+
 				function.Parameters.Clear();
-				foreach (Parameter c in Variables.ParametersList)
-				{
-					var newParam = new ParameterDef();
 
-					if (!String.IsNullOrEmpty(c.Url)) { newParam.Url = c.Url; }
-					if (!String.IsNullOrEmpty(c.Type) && c.Type != ":") { newParam.Type = c.Type; }
-					if (!String.IsNullOrEmpty(c.Optional))
-						if(c.Optional.ToLower().Equals("true"))
-							newParam.Optional = c.Optional;
-
-					function.Parameters.Add(newParam);
-				}
+				// ReSharper disable PossibleInvalidCastExceptionInForeachLoop
+				foreach (ParameterBox c in Variables.ParametersList)
+					function.Parameters.Add(c.ToParameterDef());
 			}
 			else { function.Parameters = null; }
+				// ReSharper restore PossibleInvalidCastExceptionInForeachLoop
 
+		// RETURN TYPE
 			if (checkBoxReturnType.Checked)
 			{
-				if (function.ReturnType == null) { function.ReturnType = new List<ReturnTypeDef>(); function.ReturnType.Add(new ReturnTypeDef()); }
-				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) { function.ReturnType[0].Type = comboBoxReturnTypeURL.Text; }
-				string s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
-				if (!String.IsNullOrEmpty(s)) { function.ReturnType[0].Type = s; }
-			}
-
-			if (Variables.ExampleList != null)
-			{
-				foreach(Example e in Variables.ExampleList)
+				if (function.ReturnType == null)
 				{
-					if (e.Contents == null)
-						Variables.ExampleList.Remove(e);
+					function.ReturnType = new List<ReturnTypeDef>(); 
+					function.ReturnType.Add(new ReturnTypeDef());
 				}
-				function.ExampleList = Variables.ExampleList;
+
+				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) 
+					function.ReturnType[0].Type = comboBoxReturnTypeURL.Text;
+
+				var s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
+				if (!String.IsNullOrEmpty(s))
+					function.ReturnType[0].Type = s;
 			}
 
+		// EXAMPLES
+			if (!_instanceVariables.IsExampleListNull())
+				function.ExampleList = _instanceVariables.GetExampleList();
+
+		// DESCRIPTION
 			if (!String.IsNullOrEmpty(richTextBoxDescription.Text))
 			{
-				if (function.Description == null) { function.Description = new List<string>(); }
+				if (function.Description == null) 
+					function.Description = new List<string>();
+
 				function.Description.Clear();
-				foreach (string line in richTextBoxDescription.Lines)
+				foreach (var line in richTextBoxDescription.Lines)
 				{
 					if (function.Description.IndexOf(line) == -1 && !String.IsNullOrEmpty(line))
 						function.Description.Add(System.Web.HttpUtility.HtmlEncode(line));
@@ -540,7 +544,7 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		private void SaveNewFunction()
 		{
-			FunctionDef func = WindowToFunction(new FunctionDef());
+			var func = WindowToFunction(new FunctionDef());
 			AddToFunctionListBox(func);
 		}
 
@@ -549,7 +553,7 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		private void UpdateCurrentFunction()
 		{
-			WindowToFunction(Variables.LoadedFunctionsList.Find(f => f.Name == textBoxName.Text));
+			WindowToFunction(_instanceVariables.GetFunctionList().Find(f => f.Name == textBoxName.Text));
 		}
 
 	#endregion
@@ -558,8 +562,8 @@ namespace NVSE_Docs_Manager
 
 		#region Events
 			/// <summary>
-		/// Uses MouseUp event to catch when the selcted count changes.
-		/// Checks how many are selected and enables the editing buttons.
+			/// Uses MouseUp event to catch when the selcted count changes.
+			/// Checks how many are selected and enables the editing buttons.
 			/// </summary>
 			private void listboxFunctionList_MouseUp(object sender, MouseEventArgs e)
 			{
@@ -593,13 +597,11 @@ namespace NVSE_Docs_Manager
 			{
 				if (listboxFunctionList.SelectedItems.Count > 0)
 				{
-					if (Common.ConfirmDelete("function(s)") == DialogResult.Yes)
+					if (Common.ConfirmDelete("function(s)"))
 					{
+						_instanceVariables.RemoveFunction(listboxFunctionList.SelectedItems);
 						for (int i = listboxFunctionList.SelectedItems.Count - 1; i >= 0; i--)
-						{
-							Variables.LoadedFunctionsList.Remove(Variables.LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItems[i].ToString()));
 							listboxFunctionList.Items.Remove(listboxFunctionList.SelectedItems[i]);
-						}
 					}
 				}
 			}
@@ -610,16 +612,11 @@ namespace NVSE_Docs_Manager
 			private void buttonListBoxChangeCategory_Click(object sender, EventArgs e)
 			{
 				string input = "";
-				DialogResult d = Common.InputBox("Change Category", "Enter the new Category", ref input);
+				bool d = Common.InputBox("Change Category", "Enter the new Category", ref input);
 
 				// decided to bulk change category on selected functions
-				if (d == DialogResult.OK)
-				{
-					foreach (string s in listboxFunctionList.SelectedItems)
-					{
-						Variables.LoadedFunctionsList.Find(f => f.Name == s).Category = input;
-					}
-				}
+				if (d)
+					_instanceVariables.UpdateCategoryField(listboxFunctionList.SelectedItems, input);
 			}
 
 			/// <summary>
@@ -647,11 +644,8 @@ namespace NVSE_Docs_Manager
 		private void LoadSelectedFunction()
 		{
 			if (listboxFunctionList.SelectedItem != null)
-			{
-				PopulateFunctionForm(Variables.LoadedFunctionsList.Find(f => f.Name == listboxFunctionList.SelectedItem.ToString()));
-			}
+				PopulateFunctionForm(_instanceVariables.GetFunctionByName(listboxFunctionList.SelectedItem.ToString()));
 		}
-
 
 	#endregion Function List
 
@@ -759,11 +753,8 @@ namespace NVSE_Docs_Manager
 					if (outputReadableFileToolStripMenuItem.Checked == true)
 						settings.Formatting = Formatting.Indented;
 
-					foreach (var f in Variables.LoadedFunctionsList)
-					{
-						f.CleanFunctionDef();
-					}
-					sw.Write(JsonConvert.SerializeObject(Variables.LoadedFunctionsList, settings));
+					_instanceVariables.CleanFunctionList();
+					sw.Write(JsonConvert.SerializeObject(_instanceVariables.GetFunctionList(), settings));
 					sw.Close();
 				}
 					break;
@@ -777,8 +768,8 @@ namespace NVSE_Docs_Manager
 
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (Common.ConfirmCloseForm() == DialogResult.Yes)
-				System.Windows.Forms.Application.Exit();
+			if (Common.ConfirmCloseForm())
+				Application.Exit();
 		}
 
 		private void checkToolStripMenuItem_Click(object sender, EventArgs e)
@@ -807,6 +798,8 @@ namespace NVSE_Docs_Manager
 		#endregion
 
 	#endregion Events
+
+		
 
 	}
 }

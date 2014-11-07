@@ -47,10 +47,23 @@
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
+			this.groupBoxParameterTemplate = new System.Windows.Forms.GroupBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.label1 = new System.Windows.Forms.Label();
+			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.labelParameterTemplateName = new System.Windows.Forms.Label();
+			this.buttonParameterTemplateRemove = new System.Windows.Forms.Button();
+			this.comboBoxParameterTemplateName = new System.Windows.Forms.ComboBox();
+			this.comboBoxParameterTemplateType = new System.Windows.Forms.ComboBox();
+			this.checkBoxParameterTemplateOptional = new System.Windows.Forms.CheckBox();
+			this.labelParameterTemplateType = new System.Windows.Forms.Label();
+			this.labelParameterTemplateURL = new System.Windows.Forms.Label();
+			this.comboBoxParameterTemplateURL = new System.Windows.Forms.ComboBox();
 			this.buttonShowExamples = new System.Windows.Forms.Button();
-			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
 			this.buttonNewFunction = new System.Windows.Forms.Button();
 			this.groupBoxReturnType = new System.Windows.Forms.GroupBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.comboBoxReturnTypeValue = new System.Windows.Forms.ComboBox();
 			this.labelReturnTypeName = new System.Windows.Forms.Label();
 			this.checkBoxReturnType = new System.Windows.Forms.CheckBox();
 			this.comboBoxReturnTypeName = new System.Windows.Forms.ComboBox();
@@ -61,7 +74,6 @@
 			this.buttonDiscardChanges = new System.Windows.Forms.Button();
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
 			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
-			this.buttonParameterCopy = new System.Windows.Forms.Button();
 			this.buttonParametersNew = new System.Windows.Forms.Button();
 			this.textBoxCategory = new System.Windows.Forms.TextBox();
 			this.labelCategory = new System.Windows.Forms.Label();
@@ -81,16 +93,7 @@
 			this.labelAlias = new System.Windows.Forms.Label();
 			this.labelName = new System.Windows.Forms.Label();
 			this.checkBoxConditional = new System.Windows.Forms.CheckBox();
-			this.groupBoxParameterTemplate = new System.Windows.Forms.GroupBox();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.labelParameterTemplateName = new System.Windows.Forms.Label();
-			this.buttonParameterTemplateRemove = new System.Windows.Forms.Button();
-			this.comboBoxParameterTemplateName = new System.Windows.Forms.ComboBox();
-			this.comboBoxParameterTemplateType = new System.Windows.Forms.ComboBox();
-			this.checkBoxParameterTemplateOptional = new System.Windows.Forms.CheckBox();
-			this.labelParameterTemplateType = new System.Windows.Forms.Label();
-			this.labelParameterTemplateURL = new System.Windows.Forms.Label();
-			this.comboBoxParameterTemplateURL = new System.Windows.Forms.ComboBox();
+			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
 			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -98,16 +101,12 @@
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
-			this.groupBoxReturnType.SuspendLayout();
-			this.flowLayoutPanelParameters.SuspendLayout();
-			this.groupBoxCallingConvention.SuspendLayout();
 			this.groupBoxParameterTemplate.SuspendLayout();
+			this.groupBoxReturnType.SuspendLayout();
+			this.groupBoxCallingConvention.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -251,13 +250,13 @@
 			this.groupSelectionEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.groupSelectionEditor.Controls.Add(this.groupBoxParameterTemplate);
 			this.groupSelectionEditor.Controls.Add(this.buttonShowExamples);
 			this.groupSelectionEditor.Controls.Add(this.buttonNewFunction);
 			this.groupSelectionEditor.Controls.Add(this.groupBoxReturnType);
 			this.groupSelectionEditor.Controls.Add(this.buttonDiscardChanges);
 			this.groupSelectionEditor.Controls.Add(this.buttonSaveCurrentChanges);
 			this.groupSelectionEditor.Controls.Add(this.flowLayoutPanelParameters);
-			this.groupSelectionEditor.Controls.Add(this.buttonParameterCopy);
 			this.groupSelectionEditor.Controls.Add(this.buttonParametersNew);
 			this.groupSelectionEditor.Controls.Add(this.textBoxCategory);
 			this.groupSelectionEditor.Controls.Add(this.labelCategory);
@@ -281,11 +280,145 @@
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
 			// 
+			// groupBoxParameterTemplate
+			// 
+			this.groupBoxParameterTemplate.Controls.Add(this.button1);
+			this.groupBoxParameterTemplate.Controls.Add(this.label1);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBox1);
+			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateName);
+			this.groupBoxParameterTemplate.Controls.Add(this.buttonParameterTemplateRemove);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateName);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateType);
+			this.groupBoxParameterTemplate.Controls.Add(this.checkBoxParameterTemplateOptional);
+			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
+			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
+			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
+			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(6, 585);
+			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
+			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(435, 70);
+			this.groupBoxParameterTemplate.TabIndex = 31;
+			this.groupBoxParameterTemplate.TabStop = false;
+			this.groupBoxParameterTemplate.Text = "ParameterBox 1";
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(30, 13);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(23, 21);
+			this.button1.TabIndex = 33;
+			this.button1.Text = "C";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(243, 16);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(34, 13);
+			this.label1.TabIndex = 32;
+			this.label1.Text = "Value";
+			// 
+			// comboBox1
+			// 
+			this.comboBox1.FormattingEnabled = true;
+			this.comboBox1.Location = new System.Drawing.Point(283, 13);
+			this.comboBox1.Name = "comboBox1";
+			this.comboBox1.Size = new System.Drawing.Size(140, 21);
+			this.comboBox1.TabIndex = 31;
+			// 
+			// labelParameterTemplateName
+			// 
+			this.labelParameterTemplateName.AutoSize = true;
+			this.labelParameterTemplateName.Location = new System.Drawing.Point(243, 43);
+			this.labelParameterTemplateName.Name = "labelParameterTemplateName";
+			this.labelParameterTemplateName.Size = new System.Drawing.Size(35, 13);
+			this.labelParameterTemplateName.TabIndex = 29;
+			this.labelParameterTemplateName.Text = "Name";
+			// 
+			// buttonParameterTemplateRemove
+			// 
+			this.buttonParameterTemplateRemove.Location = new System.Drawing.Point(5, 13);
+			this.buttonParameterTemplateRemove.Name = "buttonParameterTemplateRemove";
+			this.buttonParameterTemplateRemove.Size = new System.Drawing.Size(23, 21);
+			this.buttonParameterTemplateRemove.TabIndex = 28;
+			this.buttonParameterTemplateRemove.Text = "X";
+			this.buttonParameterTemplateRemove.UseVisualStyleBackColor = true;
+			// 
+			// comboBoxParameterTemplateName
+			// 
+			this.comboBoxParameterTemplateName.FormattingEnabled = true;
+			this.comboBoxParameterTemplateName.Location = new System.Drawing.Point(284, 40);
+			this.comboBoxParameterTemplateName.Name = "comboBoxParameterTemplateName";
+			this.comboBoxParameterTemplateName.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxParameterTemplateName.TabIndex = 30;
+			// 
+			// comboBoxParameterTemplateType
+			// 
+			this.comboBoxParameterTemplateType.FormattingEnabled = true;
+			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(96, 40);
+			this.comboBoxParameterTemplateType.Name = "comboBoxParameterTemplateType";
+			this.comboBoxParameterTemplateType.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxParameterTemplateType.TabIndex = 3;
+			// 
+			// checkBoxParameterTemplateOptional
+			// 
+			this.checkBoxParameterTemplateOptional.AutoSize = true;
+			this.checkBoxParameterTemplateOptional.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
+			this.checkBoxParameterTemplateOptional.Location = new System.Drawing.Point(6, 35);
+			this.checkBoxParameterTemplateOptional.Name = "checkBoxParameterTemplateOptional";
+			this.checkBoxParameterTemplateOptional.Size = new System.Drawing.Size(50, 31);
+			this.checkBoxParameterTemplateOptional.TabIndex = 1;
+			this.checkBoxParameterTemplateOptional.Text = "Optional";
+			this.checkBoxParameterTemplateOptional.UseVisualStyleBackColor = true;
+			// 
+			// labelParameterTemplateType
+			// 
+			this.labelParameterTemplateType.AutoSize = true;
+			this.labelParameterTemplateType.Location = new System.Drawing.Point(59, 43);
+			this.labelParameterTemplateType.Name = "labelParameterTemplateType";
+			this.labelParameterTemplateType.Size = new System.Drawing.Size(31, 13);
+			this.labelParameterTemplateType.TabIndex = 2;
+			this.labelParameterTemplateType.Text = "Type";
+			// 
+			// labelParameterTemplateURL
+			// 
+			this.labelParameterTemplateURL.AutoSize = true;
+			this.labelParameterTemplateURL.Location = new System.Drawing.Point(59, 16);
+			this.labelParameterTemplateURL.Name = "labelParameterTemplateURL";
+			this.labelParameterTemplateURL.Size = new System.Drawing.Size(29, 13);
+			this.labelParameterTemplateURL.TabIndex = 0;
+			this.labelParameterTemplateURL.Text = "URL";
+			// 
+			// comboBoxParameterTemplateURL
+			// 
+			this.comboBoxParameterTemplateURL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.comboBoxParameterTemplateURL.FormattingEnabled = true;
+			this.comboBoxParameterTemplateURL.Items.AddRange(new object[] {
+            "Actor_Flags",
+            "Actor_Value_Codes",
+            "Attack_Animations",
+            "Biped_Path_Codes",
+            "Control_Codes",
+            "DirectX_Scancodes",
+            "Equip_Type",
+            "Equipment_Slot_IDs",
+            "Form_Type_IDs",
+            "Reload_Animations",
+            "Weapon_Flags",
+            "Weapon_Hand_Grips",
+            "Weapon_Mod",
+            "Weapon_Type"});
+			this.comboBoxParameterTemplateURL.Location = new System.Drawing.Point(97, 13);
+			this.comboBoxParameterTemplateURL.Name = "comboBoxParameterTemplateURL";
+			this.comboBoxParameterTemplateURL.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxParameterTemplateURL.Sorted = true;
+			this.comboBoxParameterTemplateURL.TabIndex = 1;
+			// 
 			// buttonShowExamples
 			// 
-			this.buttonShowExamples.Location = new System.Drawing.Point(186, 340);
+			this.buttonShowExamples.Location = new System.Drawing.Point(190, 519);
 			this.buttonShowExamples.Name = "buttonShowExamples";
-			this.buttonShowExamples.Size = new System.Drawing.Size(158, 23);
+			this.buttonShowExamples.Size = new System.Drawing.Size(158, 105);
 			this.buttonShowExamples.TabIndex = 12;
 			this.buttonShowExamples.Text = "Edit Examples";
 			this.buttonShowExamples.UseVisualStyleBackColor = true;
@@ -293,22 +426,9 @@
 			this.buttonShowExamples.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.buttonShowExamples.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
-			// richTextBoxDescription
-			// 
-			this.richTextBoxDescription.AcceptsTab = true;
-			this.richTextBoxDescription.EnableAutoDragDrop = true;
-			this.richTextBoxDescription.Location = new System.Drawing.Point(6, 448);
-			this.richTextBoxDescription.Name = "richTextBoxDescription";
-			this.richTextBoxDescription.Size = new System.Drawing.Size(822, 176);
-			this.richTextBoxDescription.TabIndex = 13;
-			this.richTextBoxDescription.Text = "";
-			this.richTextBoxDescription.ZoomFactor = 1.201F;
-			this.richTextBoxDescription.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.richTextBoxDescription.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			// 
 			// buttonNewFunction
 			// 
-			this.buttonNewFunction.Location = new System.Drawing.Point(116, 340);
+			this.buttonNewFunction.Location = new System.Drawing.Point(107, 519);
 			this.buttonNewFunction.Name = "buttonNewFunction";
 			this.buttonNewFunction.Size = new System.Drawing.Size(60, 50);
 			this.buttonNewFunction.TabIndex = 502;
@@ -321,7 +441,7 @@
 			// groupBoxReturnType
 			// 
 			this.groupBoxReturnType.Controls.Add(this.label2);
-			this.groupBoxReturnType.Controls.Add(this.comboBox2);
+			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeValue);
 			this.groupBoxReturnType.Controls.Add(this.labelReturnTypeName);
 			this.groupBoxReturnType.Controls.Add(this.checkBoxReturnType);
 			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeName);
@@ -335,6 +455,27 @@
 			this.groupBoxReturnType.TabIndex = 12;
 			this.groupBoxReturnType.TabStop = false;
 			this.groupBoxReturnType.Text = "Return Type";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Enabled = false;
+			this.label2.Location = new System.Drawing.Point(174, 16);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(34, 13);
+			this.label2.TabIndex = 37;
+			this.label2.Text = "Value";
+			// 
+			// comboBoxReturnTypeValue
+			// 
+			this.comboBoxReturnTypeValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.comboBoxReturnTypeValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.comboBoxReturnTypeValue.Enabled = false;
+			this.comboBoxReturnTypeValue.FormattingEnabled = true;
+			this.comboBoxReturnTypeValue.Location = new System.Drawing.Point(177, 32);
+			this.comboBoxReturnTypeValue.Name = "comboBoxReturnTypeValue";
+			this.comboBoxReturnTypeValue.Size = new System.Drawing.Size(140, 21);
+			this.comboBoxReturnTypeValue.TabIndex = 38;
 			// 
 			// labelReturnTypeName
 			// 
@@ -434,7 +575,7 @@
 			// 
 			// buttonDiscardChanges
 			// 
-			this.buttonDiscardChanges.Location = new System.Drawing.Point(116, 395);
+			this.buttonDiscardChanges.Location = new System.Drawing.Point(107, 574);
 			this.buttonDiscardChanges.Name = "buttonDiscardChanges";
 			this.buttonDiscardChanges.Size = new System.Drawing.Size(60, 50);
 			this.buttonDiscardChanges.TabIndex = 501;
@@ -447,7 +588,7 @@
 			// buttonSaveCurrentChanges
 			// 
 			this.buttonSaveCurrentChanges.Enabled = false;
-			this.buttonSaveCurrentChanges.Location = new System.Drawing.Point(18, 340);
+			this.buttonSaveCurrentChanges.Location = new System.Drawing.Point(9, 519);
 			this.buttonSaveCurrentChanges.Name = "buttonSaveCurrentChanges";
 			this.buttonSaveCurrentChanges.Size = new System.Drawing.Size(92, 105);
 			this.buttonSaveCurrentChanges.TabIndex = 500;
@@ -462,24 +603,12 @@
 			this.flowLayoutPanelParameters.AllowDrop = true;
 			this.flowLayoutPanelParameters.AutoScroll = true;
 			this.flowLayoutPanelParameters.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.flowLayoutPanelParameters.Controls.Add(this.groupBoxParameterTemplate);
 			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(354, 35);
 			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
-			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(474, 407);
+			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(474, 589);
 			this.flowLayoutPanelParameters.TabIndex = 11;
-			// 
-			// buttonParameterCopy
-			// 
-			this.buttonParameterCopy.AutoSize = true;
-			this.buttonParameterCopy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonParameterCopy.Location = new System.Drawing.Point(513, 11);
-			this.buttonParameterCopy.Name = "buttonParameterCopy";
-			this.buttonParameterCopy.Size = new System.Drawing.Size(64, 23);
-			this.buttonParameterCopy.TabIndex = 11;
-			this.buttonParameterCopy.TabStop = false;
-			this.buttonParameterCopy.Text = "Copy Last";
-			this.buttonParameterCopy.UseVisualStyleBackColor = true;
-			this.buttonParameterCopy.Click += new System.EventHandler(this.buttonCopyParameter_Click);
+			this.flowLayoutPanelParameters.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlAdded);
+			this.flowLayoutPanelParameters.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlRemoved);
 			// 
 			// buttonParametersNew
 			// 
@@ -489,7 +618,7 @@
 			this.buttonParametersNew.Name = "buttonParametersNew";
 			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
 			this.buttonParametersNew.TabIndex = 10;
-			this.buttonParametersNew.Text = "New Parameter";
+			this.buttonParametersNew.Text = "New ParameterBox";
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
 			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
 			// 
@@ -678,120 +807,18 @@
 			this.checkBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
 			this.checkBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
-			// groupBoxParameterTemplate
+			// richTextBoxDescription
 			// 
-			this.groupBoxParameterTemplate.Controls.Add(this.label1);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBox1);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateName);
-			this.groupBoxParameterTemplate.Controls.Add(this.buttonParameterTemplateRemove);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateName);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateType);
-			this.groupBoxParameterTemplate.Controls.Add(this.checkBoxParameterTemplateOptional);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
-			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(3, 3);
-			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
-			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(435, 70);
-			this.groupBoxParameterTemplate.TabIndex = 31;
-			this.groupBoxParameterTemplate.TabStop = false;
-			this.groupBoxParameterTemplate.Text = "Parameter 1";
-			// 
-			// comboBox1
-			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(283, 13);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(140, 21);
-			this.comboBox1.TabIndex = 31;
-			// 
-			// labelParameterTemplateName
-			// 
-			this.labelParameterTemplateName.AutoSize = true;
-			this.labelParameterTemplateName.Location = new System.Drawing.Point(243, 43);
-			this.labelParameterTemplateName.Name = "labelParameterTemplateName";
-			this.labelParameterTemplateName.Size = new System.Drawing.Size(35, 13);
-			this.labelParameterTemplateName.TabIndex = 29;
-			this.labelParameterTemplateName.Text = "Name";
-			// 
-			// buttonParameterTemplateRemove
-			// 
-			this.buttonParameterTemplateRemove.Location = new System.Drawing.Point(5, 13);
-			this.buttonParameterTemplateRemove.Name = "buttonParameterTemplateRemove";
-			this.buttonParameterTemplateRemove.Size = new System.Drawing.Size(47, 21);
-			this.buttonParameterTemplateRemove.TabIndex = 28;
-			this.buttonParameterTemplateRemove.Text = "X";
-			this.buttonParameterTemplateRemove.UseVisualStyleBackColor = true;
-			// 
-			// comboBoxParameterTemplateName
-			// 
-			this.comboBoxParameterTemplateName.FormattingEnabled = true;
-			this.comboBoxParameterTemplateName.Location = new System.Drawing.Point(284, 40);
-			this.comboBoxParameterTemplateName.Name = "comboBoxParameterTemplateName";
-			this.comboBoxParameterTemplateName.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateName.TabIndex = 30;
-			// 
-			// comboBoxParameterTemplateType
-			// 
-			this.comboBoxParameterTemplateType.FormattingEnabled = true;
-			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(96, 40);
-			this.comboBoxParameterTemplateType.Name = "comboBoxParameterTemplateType";
-			this.comboBoxParameterTemplateType.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateType.TabIndex = 3;
-			// 
-			// checkBoxParameterTemplateOptional
-			// 
-			this.checkBoxParameterTemplateOptional.AutoSize = true;
-			this.checkBoxParameterTemplateOptional.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.checkBoxParameterTemplateOptional.Location = new System.Drawing.Point(6, 35);
-			this.checkBoxParameterTemplateOptional.Name = "checkBoxParameterTemplateOptional";
-			this.checkBoxParameterTemplateOptional.Size = new System.Drawing.Size(50, 31);
-			this.checkBoxParameterTemplateOptional.TabIndex = 1;
-			this.checkBoxParameterTemplateOptional.Text = "Optional";
-			this.checkBoxParameterTemplateOptional.UseVisualStyleBackColor = true;
-			// 
-			// labelParameterTemplateType
-			// 
-			this.labelParameterTemplateType.AutoSize = true;
-			this.labelParameterTemplateType.Location = new System.Drawing.Point(59, 43);
-			this.labelParameterTemplateType.Name = "labelParameterTemplateType";
-			this.labelParameterTemplateType.Size = new System.Drawing.Size(31, 13);
-			this.labelParameterTemplateType.TabIndex = 2;
-			this.labelParameterTemplateType.Text = "Type";
-			// 
-			// labelParameterTemplateURL
-			// 
-			this.labelParameterTemplateURL.AutoSize = true;
-			this.labelParameterTemplateURL.Location = new System.Drawing.Point(59, 16);
-			this.labelParameterTemplateURL.Name = "labelParameterTemplateURL";
-			this.labelParameterTemplateURL.Size = new System.Drawing.Size(29, 13);
-			this.labelParameterTemplateURL.TabIndex = 0;
-			this.labelParameterTemplateURL.Text = "URL";
-			// 
-			// comboBoxParameterTemplateURL
-			// 
-			this.comboBoxParameterTemplateURL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxParameterTemplateURL.FormattingEnabled = true;
-			this.comboBoxParameterTemplateURL.Items.AddRange(new object[] {
-            "Actor_Flags",
-            "Actor_Value_Codes",
-            "Attack_Animations",
-            "Biped_Path_Codes",
-            "Control_Codes",
-            "DirectX_Scancodes",
-            "Equip_Type",
-            "Equipment_Slot_IDs",
-            "Form_Type_IDs",
-            "Reload_Animations",
-            "Weapon_Flags",
-            "Weapon_Hand_Grips",
-            "Weapon_Mod",
-            "Weapon_Type"});
-			this.comboBoxParameterTemplateURL.Location = new System.Drawing.Point(97, 13);
-			this.comboBoxParameterTemplateURL.Name = "comboBoxParameterTemplateURL";
-			this.comboBoxParameterTemplateURL.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateURL.Sorted = true;
-			this.comboBoxParameterTemplateURL.TabIndex = 1;
+			this.richTextBoxDescription.AcceptsTab = true;
+			this.richTextBoxDescription.EnableAutoDragDrop = true;
+			this.richTextBoxDescription.Location = new System.Drawing.Point(9, 340);
+			this.richTextBoxDescription.Name = "richTextBoxDescription";
+			this.richTextBoxDescription.Size = new System.Drawing.Size(339, 173);
+			this.richTextBoxDescription.TabIndex = 13;
+			this.richTextBoxDescription.Text = "";
+			this.richTextBoxDescription.ZoomFactor = 1.201F;
+			this.richTextBoxDescription.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
+			this.richTextBoxDescription.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonListBoxDeleteItem
 			// 
@@ -865,36 +892,6 @@
 			this.LeftToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.LeftToolStripPanel.Size = new System.Drawing.Size(0, 0);
 			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(243, 16);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(34, 13);
-			this.label1.TabIndex = 32;
-			this.label1.Text = "Value";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Enabled = false;
-			this.label2.Location = new System.Drawing.Point(174, 16);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(34, 13);
-			this.label2.TabIndex = 37;
-			this.label2.Text = "Value";
-			// 
-			// comboBox2
-			// 
-			this.comboBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-			this.comboBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.comboBox2.Enabled = false;
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(177, 32);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(140, 21);
-			this.comboBox2.TabIndex = 38;
-			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -922,13 +919,12 @@
 			this.statusStrip1.PerformLayout();
 			this.groupSelectionEditor.ResumeLayout(false);
 			this.groupSelectionEditor.PerformLayout();
-			this.groupBoxReturnType.ResumeLayout(false);
-			this.groupBoxReturnType.PerformLayout();
-			this.flowLayoutPanelParameters.ResumeLayout(false);
-			this.groupBoxCallingConvention.ResumeLayout(false);
-			this.groupBoxCallingConvention.PerformLayout();
 			this.groupBoxParameterTemplate.ResumeLayout(false);
 			this.groupBoxParameterTemplate.PerformLayout();
+			this.groupBoxReturnType.ResumeLayout(false);
+			this.groupBoxReturnType.PerformLayout();
+			this.groupBoxCallingConvention.ResumeLayout(false);
+			this.groupBoxCallingConvention.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -968,7 +964,6 @@
 		private System.Windows.Forms.TextBox textBoxCategory;
 		private System.Windows.Forms.Label labelCategory;
 		private System.Windows.Forms.Button buttonParametersNew;
-		private System.Windows.Forms.Button buttonParameterCopy;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
 		private System.Windows.Forms.Button buttonDiscardChanges;
@@ -1006,7 +1001,8 @@
 		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.ComboBox comboBoxReturnTypeValue;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

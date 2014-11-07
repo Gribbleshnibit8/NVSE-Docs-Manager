@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 using Newtonsoft.Json;
-using Newtonsoft;
 
 namespace NVSE_Docs_Manager
 {
@@ -118,6 +113,9 @@ namespace NVSE_Docs_Manager
 
 		[JsonProperty(PropertyName = "type")]
 		public string Type { get; set; }
+
+		[JsonProperty(PropertyName = "value")]
+		public string Value { get; set; }
 	}
 
 	public class Example

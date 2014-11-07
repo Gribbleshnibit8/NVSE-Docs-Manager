@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NVSE_Docs_Manager
@@ -13,20 +8,26 @@ namespace NVSE_Docs_Manager
 	public partial class ExamplesWindow : Form
 	{
 
-		List<string> _exampleText;
+		private List<string> _exampleText;
+
+		private Variables _instanceVariables;
 
 		public ExamplesWindow()
 		{
 			InitializeComponent();
-			PopulateForm();
+		}
+
+		public void SetInstanceVariable(ref Variables instance)
+		{
+			_instanceVariables = instance;
 		}
 
 		public void PopulateForm()
 		{
 			listBoxExamples.Items.Clear();
 			richTextBoxExampleEditor.Clear();
-			if (Variables.ExampleList != null)
-				for (int i = 0; i < Variables.ExampleList.Count; i++)
+			if (!_instanceVariables.IsExampleListNull())
+				for (int i = 0; i < _instanceVariables.GetExampleList().Count; i++)
 				{
 					listBoxExamples.Items.Add("Example " + (i+1));
 				}
@@ -40,8 +41,8 @@ namespace NVSE_Docs_Manager
 				{
 					richTextBoxExampleEditor.Clear();
 					richTextBoxExampleEditor.Enabled = true;
-					_exampleText = Variables.ExampleList[listBoxExamples.SelectedIndex].Contents;
-					foreach (var s in Variables.ExampleList[listBoxExamples.SelectedIndex].Contents)
+					_exampleText = _instanceVariables.GetExampleList()[listBoxExamples.SelectedIndex].Contents;
+					foreach (var s in _instanceVariables.GetExampleList()[listBoxExamples.SelectedIndex].Contents)
 					{
 						richTextBoxExampleEditor.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine;
 					}
@@ -57,15 +58,11 @@ namespace NVSE_Docs_Manager
 			/// </summary>
 			private void ExampleEditor_KeyUp(object sender, KeyEventArgs e)
 			{
-				int index = listBoxExamples.SelectedIndex;
 				if (listBoxExamples.SelectedItem != null)
 				{
-					Variables.ExampleList[index].Contents.Clear();
-
-					foreach (var line in richTextBoxExampleEditor.Lines)
-					{
-						Variables.ExampleList[index].Contents.Add(System.Web.HttpUtility.HtmlEncode(line));
-					}
+					var index = listBoxExamples.SelectedIndex;
+					var lines = richTextBoxExampleEditor.Lines.ToArray();
+					_instanceVariables.UpdateExampleAtIndex(index, lines);
 				}
 			}
 
@@ -74,14 +71,18 @@ namespace NVSE_Docs_Manager
 				switch (e.KeyCode)
 				{
 					case Keys.Delete:
-						if (listBoxExamples.SelectedItems.Count > 0 && Common.ConfirmDelete("Example(s)") == DialogResult.Yes)
+						if (listBoxExamples.SelectedItems.Count > 0 && Common.ConfirmDelete("Example(s)"))
 						{
-							for (int i = listBoxExamples.SelectedItems.Count - 1; i >= 0; i--)
+							var index = listBoxExamples.SelectedItems.Count;
+
+							for (int i = index - 1; i >= 0; i--)
 							{
-								Variables.ExampleList.RemoveAt(listBoxExamples.SelectedIndices[i]);
+								_instanceVariables.RemoveExample(index);
 								listBoxExamples.Items.Remove(listBoxExamples.SelectedItems[i]);
 							}
 						}
+						if (listBoxExamples.Items.Count == 0)
+							richTextBoxExampleEditor.Enabled = false;
 						break;
 
 					default:
@@ -94,10 +95,7 @@ namespace NVSE_Docs_Manager
 				int i = listBoxExamples.Items.Count + 1;
 				listBoxExamples.Items.Add("Example " + i);
 
-				if (Variables.ExampleList == null)
-					Variables.ExampleList = new List<Example>();
-
-				Variables.ExampleList.Add(new Example());
+				_instanceVariables.AddExample();
 
 				// set the first item selected and enable the editing field
 				if (listBoxExamples.SelectedIndex == -1)
