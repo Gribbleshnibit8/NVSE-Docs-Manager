@@ -230,8 +230,6 @@
 			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listboxFunctionList.FormattingEnabled = true;
 			this.listboxFunctionList.ItemHeight = 16;
-			this.listboxFunctionList.Items.AddRange(new object[] {
-            "GetPlayerCurrentAmmoRounds"});
 			this.listboxFunctionList.Location = new System.Drawing.Point(12, 33);
 			this.listboxFunctionList.Name = "listboxFunctionList";
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
@@ -299,6 +297,7 @@
 			this.groupBoxParameterTemplate.TabIndex = 31;
 			this.groupBoxParameterTemplate.TabStop = false;
 			this.groupBoxParameterTemplate.Text = "ParameterBox 1";
+			this.groupBoxParameterTemplate.Visible = false;
 			// 
 			// button1
 			// 
@@ -616,7 +615,7 @@
 			this.buttonParametersNew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonParametersNew.Location = new System.Drawing.Point(417, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
-			this.buttonParametersNew.Size = new System.Drawing.Size(90, 23);
+			this.buttonParametersNew.Size = new System.Drawing.Size(108, 23);
 			this.buttonParametersNew.TabIndex = 10;
 			this.buttonParametersNew.Text = "New ParameterBox";
 			this.buttonParametersNew.UseVisualStyleBackColor = true;

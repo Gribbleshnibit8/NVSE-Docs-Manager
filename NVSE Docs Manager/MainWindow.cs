@@ -3,8 +3,11 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using CheckBox = System.Windows.Forms.CheckBox;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace NVSE_Docs_Manager
 {
@@ -28,104 +31,12 @@ namespace NVSE_Docs_Manager
 		}
 
 
-		private void WikiParser()
+		private void CreateFunctionFromWiki()
 		{
-			string rawFunction = richTextBoxDescription.Text;
+			var newParameter = new WikiParser(richTextBoxDescription.Text).GetFunction();
 
-			// removes the "See Also" section and anything below it
-			var seeAlso = new Regex(@"(==[']*See Also[']*==.*)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			rawFunction = seeAlso.Replace(rawFunction, "");
-
-			// for pages without the "See Also" section, remove the block of additional links
-			var linkBreaker = new Regex(@"^((\[\[)(\w*):(\w*)([\s\w\W]*?)(\]\]))$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-			rawFunction = linkBreaker.Replace(rawFunction, "");
-
-			// sets instances of double curlies to a single brace with a line break between
-			var replaceCurlies = new Regex(@"}}{{", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			rawFunction = replaceCurlies.Replace(rawFunction, "}\n{");
-
-			// gets each section of the page under any headings
-			var dataGrabber = new Regex(@"([=]{2,5}[']*[\w\s]*[']*[=]{2,5})(.*?)([=]{2,5}[']*[\w\s]*[']*[=]{2,5})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			string[] parts = dataGrabber.Split(rawFunction);
-
-			// get the function definition data out for further parsing
-			var functionParts = new List<string>(parts[0].Split('|','}'));
-
-			// clear all new
-			for (int index = 0; index < functionParts.Count; index++)
-			{
-				// remove excess spaces and newlines
-				functionParts[index] = functionParts[index].Trim();
-
-				// remove inline newlines except in summary
-				if (functionParts[index].Contains("\n") && !functionParts[index].Contains("summary"))
-					functionParts[index] = functionParts[index].Replace("\n", "");
-
-				// remove empty lines or lines that are only newlines
-				if (String.IsNullOrEmpty(functionParts[index]) || functionParts[index] == "\n")
-				{
-					functionParts.RemoveAt(index);
-					index--;
-				}
-			}
-
-			// fill text boxes in form
-			if (functionParts.Find(s => s.ToLower().Contains("name")).Split('=').Length > 1)
-				textBoxName.Text = functionParts.Find(s => s.ToLower().Contains("name")).Split('=')[1].Trim();
-			if (!string.IsNullOrEmpty(functionParts.Find(s => s.ToLower().Contains("alias"))))
-				if (functionParts.Find(s => s.ToLower().Contains("alias")).Split('=').Length > 1)
-					textBoxAlias.Text = functionParts.Find(s => s.ToLower().Contains("alias")).Split('=')[1].Trim();
-			if (functionParts.Find(s => s.ToLower().Contains("origin")).Split('=').Length > 1)
-			{
-				string t = functionParts.Find(s => s.ToLower().Contains("origin")).Split('=')[1].Trim();
-				textBoxVersion.Text = t;
-				textBoxOrigin.Text = t;
-				textBoxTags.Text = t;
-			}
-
-			// TODO: Remove triple apostrophe groups
-			if (functionParts.Find(s => s.ToLower().Contains("summary")).Split('=').Length > 1)
-				richTextBoxDescription.Text = functionParts.Find(s => s.ToLower().Contains("summary")).Split('=')[1].Trim();
-			richTextBoxDescription.AppendText("\n\n");
-
-			// TODO: write extra function to parse multiline examples into separate example lists
-			//Variables.ExampleList = new List<Example>();
-			//Variables.ExampleList.Add(new Example(functionParts.Find(s => s.ToLower().Contains("origin")).Split('=')[1].Trim()));
-
-
-
-			// get the parameters, and add them to the flowLayoutPanel
-			for (int index = 0; index < functionParts.Count; index++)
-			{
-				if (functionParts[index].ToLower().Contains("functionargument"))
-				{
-					int nextIndex = functionParts.FindIndex(index + 1, f => f.ToLower().Contains("functionargument"));
-					if (nextIndex == -1) nextIndex = functionParts.Count;
-
-					var param = new ParameterDef();
-					var typeString = new string[3]{"", ":", ""};
-
-					for (int index2 = index + 1; index2 < nextIndex; index2++)
-					{
-						if (functionParts[index2].ToLower().Contains("name"))
-							typeString[2] = functionParts[index2].Split('=')[1].Trim();
-
-						if (functionParts[index2].ToLower().Contains("type"))
-							typeString[0] = functionParts[index2].Split('=')[1].Trim();
-
-						if (functionParts[index2].ToLower().Contains("value"))
-							param.Value = functionParts[index2].Split('=')[1].Trim();
-
-						if (functionParts[index2].ToLower().Contains("optional"))
-							if (functionParts[index2].Split('=')[1].Equals(" y"))
-								param.Optional = "True";
-
-					}
-					param.Type = typeString[0] + typeString[1] + typeString[2];
-					flowLayoutPanelParameters.Controls.Add(new ParameterBox(param, _instanceVariables));
-					//_instanceVariables.ParametersList.Add(new ParameterBox(param));
-				}
-			}
+			PopulateFunctionForm(new FunctionDef());
+			PopulateFunctionForm(newParameter);
 			UpdateParameterLists();
 			RebuildParamaterPanel();
 		}
@@ -168,7 +79,7 @@ namespace NVSE_Docs_Manager
 		/// <summary>
 		/// Takes a list of function objects and adds their names to the listbox form.
 		/// </summary>
-		/// <param name="functionList">A List&lt;T&gt; of FunctionDefs that will be added to the working list of functions.</param>
+		/// <param name="functionList">A List of FunctionDefs that will be added to the working list of functions.</param>
 		private void PopulateFunctionListBox(List<FunctionDef> functionList)
 		{
 			if (functionList != null)
@@ -248,15 +159,17 @@ namespace NVSE_Docs_Manager
 			private void buttonSaveCurrentChanges_Click(object sender, EventArgs e)
 			{
 				if (_instanceVariables.FunctionExists(textBoxName.Text))
-					SaveNewFunction();
-				else
+				{
 					if (Common.ConfirmUpdateFunction())
-						UpdateCurrentFunction(); // Update existing function
+						UpdateCurrentFunction();
+				}
+				else
+					SaveNewFunction();
 
 				UpdateParameterLists();
 			}
 
-			/// <summary>
+		/// <summary>
 			/// Reverts changes to the state when the form was loaded
 			/// If working at start, will produce a clean form
 			/// If working on an existing function will revert to pre-edit
@@ -276,7 +189,7 @@ namespace NVSE_Docs_Manager
 			private void buttonNewFunction_Click(object sender, EventArgs e)
 			{
 				if (convertWikiPagesToolStripMenuItem.Checked == true)
-					WikiParser();
+					CreateFunctionFromWiki();
 				else
 				{
 					if (Common.ConfirmClearForm())
@@ -382,7 +295,9 @@ namespace NVSE_Docs_Manager
 			}
 
 			if (func.Description != null)
-				foreach (string s in func.Description) { richTextBoxDescription.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine + System.Environment.NewLine; }
+				foreach (var s in func.Description)
+					richTextBoxDescription.Text += System.Web.HttpUtility.HtmlDecode(s) + System.Environment.NewLine +
+					                               System.Environment.NewLine;
 		}
 
 		/// <summary>
@@ -420,35 +335,21 @@ namespace NVSE_Docs_Manager
 		/// <param name="function">A function that will be returned filled with the data in the window.</param>
 		private FunctionDef WindowToFunction(FunctionDef function)
 		{
-			// ReSharper disable ConvertIfStatementToConditionalTernaryExpression
 		// NAME
 			if (!String.IsNullOrEmpty(textBoxName.Text))
 				function.Name = textBoxName.Text;
 
 		// ALIAS
-			if (String.IsNullOrEmpty(textBoxAlias.Text))
-				function.Alias = null;
-			else
-				function.Alias = textBoxAlias.Text;
+			function.Alias = String.IsNullOrEmpty(textBoxAlias.Text) ? null : textBoxAlias.Text;
 
 		// VERSION 
-			if (String.IsNullOrEmpty(textBoxVersion.Text))
-				function.Version = null;
-			else
-				function.Version = textBoxVersion.Text;
+			function.Version = String.IsNullOrEmpty(textBoxVersion.Text) ? null : textBoxVersion.Text;
 
 		// ORIGIN
-			if (String.IsNullOrEmpty(textBoxOrigin.Text))
-				function.FromPlugin = null;
-			else
-				function.FromPlugin = textBoxOrigin.Text;
+			function.FromPlugin = String.IsNullOrEmpty(textBoxOrigin.Text) ? null : textBoxOrigin.Text;
 
 		// CATEGORY
-			if (String.IsNullOrEmpty(textBoxCategory.Text))
-				function.Category = null;
-			else
-				function.Category = textBoxCategory.Text;
-			// ReSharper restore ConvertIfStatementToConditionalTernaryExpression
+			function.Category = String.IsNullOrEmpty(textBoxCategory.Text) ? null : textBoxCategory.Text;
 
 		// TAGS
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
@@ -475,39 +376,16 @@ namespace NVSE_Docs_Manager
 
 
 			// TODO: Update javascript to handle true/false
-			switch (checkBoxConditional.Checked)
-			{
-				case true:
-					function.Condition = checkBoxConditional.Checked.ToString();
-					break;
-				default:
-					function.Condition = null;
-					break;
-			}
+			function.Condition = checkBoxConditional.Checked == true ? checkBoxConditional.Checked.ToString() : null;
 
 		// PARAMETERS
-			if (flowLayoutPanelParameters.Controls.Count > 0)
-			{
-				if (function.Parameters == null)
-					function.Parameters = new List<ParameterDef>();
-
-				function.Parameters.Clear();
-
-				// ReSharper disable PossibleInvalidCastExceptionInForeachLoop
-				foreach (ParameterBox c in Variables.ParametersList)
-					function.Parameters.Add(c.ToParameterDef());
-			}
-			else { function.Parameters = null; }
-				// ReSharper restore PossibleInvalidCastExceptionInForeachLoop
+			function.Parameters = MakeParameterList();
 
 		// RETURN TYPE
 			if (checkBoxReturnType.Checked)
 			{
 				if (function.ReturnType == null)
-				{
-					function.ReturnType = new List<ReturnTypeDef>(); 
-					function.ReturnType.Add(new ReturnTypeDef());
-				}
+					function.ReturnType = new List<ReturnTypeDef> {new ReturnTypeDef()};
 
 				if (!String.IsNullOrEmpty(comboBoxReturnTypeURL.Text)) 
 					function.ReturnType[0].Type = comboBoxReturnTypeURL.Text;
@@ -515,6 +393,9 @@ namespace NVSE_Docs_Manager
 				var s = comboBoxReturnTypeType.Text + ":" + comboBoxReturnTypeName.Text;
 				if (!String.IsNullOrEmpty(s))
 					function.ReturnType[0].Type = s;
+
+				if (!String.IsNullOrEmpty(comboBoxReturnTypeValue.Text))
+					function.ReturnType[0].Value = comboBoxReturnTypeValue.Text;
 			}
 
 		// EXAMPLES
@@ -536,6 +417,17 @@ namespace NVSE_Docs_Manager
 			}
 
 			return function;
+		}
+
+		/// <summary>
+		/// Builds a list of parameter defs from the flowLayoutPanelParameters
+		/// </summary>
+		/// <returns>Returns a list of ParameterDefs</returns>
+		private List<ParameterDef> MakeParameterList()
+		{
+			if (flowLayoutPanelParameters.Controls.Count > 0)
+				return (from ParameterBox c in flowLayoutPanelParameters.Controls select c.ToParameterDef()).ToList();
+			return null;
 		}
 
 		/// <summary>
@@ -798,8 +690,5 @@ namespace NVSE_Docs_Manager
 		#endregion
 
 	#endregion Events
-
-		
-
 	}
 }
