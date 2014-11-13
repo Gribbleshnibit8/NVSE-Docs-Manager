@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
@@ -282,6 +284,7 @@ namespace NVSE_Docs_Manager
 					comboBoxReturnTypeType.Text = "";
 					comboBoxReturnTypeName.Text = "";
 					comboBoxReturnTypeValue.Text = "";
+					comboBoxReturnTypeReturnValue.Text = "";
 					checkBoxReturnType.Checked = false;
 					break;
 				default:
@@ -290,6 +293,7 @@ namespace NVSE_Docs_Manager
 					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
 					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
 					comboBoxReturnTypeValue.Text = func.ReturnType[0].Value;
+					comboBoxReturnTypeReturnValue.Text = func.ReturnType[0].ReferenceType;
 					checkBoxReturnType.Checked = true;
 					break;
 			}
@@ -396,6 +400,9 @@ namespace NVSE_Docs_Manager
 
 				if (!String.IsNullOrEmpty(comboBoxReturnTypeValue.Text))
 					function.ReturnType[0].Value = comboBoxReturnTypeValue.Text;
+
+				if (!String.IsNullOrEmpty(comboBoxReturnTypeReturnValue.Text))
+					function.ReturnType[0].ReferenceType = comboBoxReturnTypeReturnValue.Text;
 			}
 
 		// EXAMPLES
@@ -689,6 +696,13 @@ namespace NVSE_Docs_Manager
 		}
 		#endregion
 
+		private void labelReturnTypeURL_Click(object sender, EventArgs e)
+		{
+
+		}
+
 	#endregion Events
+
 	}
 }
+

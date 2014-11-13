@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace NVSE_Docs_Manager
 {
 	class WikiParser
 	{
+
+		WikiParserDisplay _windoWikiParserDisplay = null;
 
 		private readonly string _rawFunction = "";
 
@@ -34,6 +37,8 @@ namespace NVSE_Docs_Manager
 
 			// Split the rest of the data into a list of type Head, Data
 			var infoSections = GetInfoSections(linkLess);
+
+			ShowExtraData(infoSections);
 
 			function = FillFunctionFields(function, functionDefData);
 
@@ -68,7 +73,7 @@ namespace NVSE_Docs_Manager
 		{
 			// get the function definition data out for further parsing
 			var getFunction = new Regex(@"(\{\{.*\}\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			var functionParts = new List<string>(getFunction.Split(data)[1].Split(new string[] { "|", "}\n{" }, StringSplitOptions.RemoveEmptyEntries));
+			var functionParts = new List<string>(getFunction.Split(data)[1].Split(new string[] { "|", "}", "{", "}{" }, StringSplitOptions.RemoveEmptyEntries));
 
 			// clean the list
 			for (int index = 0; index < functionParts.Count; index++)
@@ -143,16 +148,37 @@ namespace NVSE_Docs_Manager
 			}
 
 			// Get the first part of the description from the summary
+			List<string> description = null;
 			if (functionDefData.Find(s => s.ToLower().Contains("summary")).Split('=').Length > 1)
-				function.Description = new List<string>() { functionDefData.Find(s => s.ToLower().Contains("summary")).Split('=')[1].Trim() }; ;
-			function.Description.Add("\n\n");
+				description = new List<string>() { functionDefData.Find(s => s.ToLower().Contains("summary")).Split('=')[1].Trim() };
 
-			// get the parameters, and add them to the flowLayoutPanel
+			if (description != null)
+				for (int index = 0; index < description.Count; index++)
+				{
+					description[index] = description[index].Replace("'''", "");
+				}
+			function.Description = description;
+
+			// Get return type data
+			if (functionDefData.Find(s => s.ToLower().Contains("returntype")).Split('=').Length > 1)
+			{
+				function.ReturnType = new List<ReturnTypeDef>();
+				function.ReturnType[0].Type = functionDefData.Find(s => s.ToLower().Contains("returntype")).Split('=')[1].Trim();
+
+				if (functionDefData.Find(s => s.ToLower().Contains("returnval")).Split('=').Length > 1)
+					function.ReturnType[0].Value = functionDefData.Find(s => s.ToLower().Contains("returnval")).Split('=')[1].Trim();
+
+				if (functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=').Length > 1)
+					function.ReturnType[0].ReferenceType = functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=')[1].Trim();
+			}
+				
+
+			// Get the parameters
 			for (int index = 0; index < functionDefData.Count; index++)
 			{
 				if (functionDefData[index].ToLower().Contains("functionargument"))
 				{
-					int nextIndex = GetFunctionLength(functionDefData, index);
+					int nextIndex = GetFunctionLength(functionDefData, index+1);
 					//int nextIndex = functionDefData.FindIndex(index + 1, f => f.ToLower().Contains("functionargument"));
 					//if (nextIndex == -1) nextIndex = functionDefData.Count;
 					
@@ -167,17 +193,21 @@ namespace NVSE_Docs_Manager
 							functionDefData[index2] = functionDefData[index2].Remove(functionDefData[index2].IndexOf("}", System.StringComparison.Ordinal));
 
 						if (functionDefData[index2].ToLower().Contains("name"))
-							typeString[2] = functionDefData[index2].Split('=')[1].Trim();
+							if (functionDefData[index2].Split('=')[0].Trim().ToLower().Contains("name"))
+								typeString[2] = functionDefData[index2].Split('=')[1].Trim();
 
 						if (functionDefData[index2].ToLower().Contains("type"))
-							typeString[0] = functionDefData[index2].Split('=')[1].Trim();
+							if (functionDefData[index2].Split('=')[0].Trim().ToLower().Contains("type"))
+								typeString[0] = functionDefData[index2].Split('=')[1].Trim();
 
 						if (functionDefData[index2].ToLower().Contains("value"))
-							param.Value = functionDefData[index2].Split('=')[1].Trim();
+							if (functionDefData[index2].Split('=')[0].Trim().ToLower().Contains("value"))
+								param.Value = functionDefData[index2].Split('=')[1].Trim();
 
 						if (functionDefData[index2].ToLower().Contains("optional"))
-							if (functionDefData[index2].Split('=')[1].Equals(" y"))
-								param.Optional = "True";
+							if (functionDefData[index2].Split('=')[0].Trim().ToLower().Contains("optional"))
+								if (functionDefData[index2].Split('=')[1].Equals(" y"))
+									param.Optional = "True";
 
 					}
 					param.Type = typeString[0] + typeString[1] + typeString[2];
@@ -198,7 +228,7 @@ namespace NVSE_Docs_Manager
 			// startIndex is first occurrence of FunctionArgument
 			for (int i = startIndex; i < data.Count; i++)
 			{
-				if (data[i].Contains("}}"))
+				if (data[i].ToLower().Contains("functionargument") || data[i].ToLower().Contains("example"))
 					return i;
 			}
 
@@ -206,6 +236,22 @@ namespace NVSE_Docs_Manager
 			return 0;
 		}
 
+
+
+
+
+		private void ShowExtraData(List<string> list)
+		{
+			if (_windoWikiParserDisplay == null || _windoWikiParserDisplay.IsDisposed)
+			{
+				_windoWikiParserDisplay = new WikiParserDisplay();
+				_windoWikiParserDisplay.PopulateForm(list);
+			}
+			_windoWikiParserDisplay.Show();
+
+			if (_windoWikiParserDisplay.Focused == false)
+				_windoWikiParserDisplay.Focus();
+		}
 
 
 		/*private void holder()

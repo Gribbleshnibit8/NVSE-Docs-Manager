@@ -116,6 +116,9 @@ namespace NVSE_Docs_Manager
 
 		[JsonProperty(PropertyName = "value")]
 		public string Value { get; set; }
+
+		[JsonProperty(PropertyName = "reftype")]
+		public string ReferenceType { get; set; }
 	}
 
 	public class Example

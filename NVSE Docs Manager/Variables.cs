@@ -55,7 +55,7 @@ namespace NVSE_Docs_Manager
 			ParameterNamesList = new List<string>();
 			ParameterValuesList = new List<string>();
 			ParameterUrlList = new List<string>() { 
-			"Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
+			" ", "Actor_Flags", "Actor_Value_Codes", "Attack_Animations", "Biped_Path_Codes", "Control_Codes", "DirectX_Scancodes", 
 			"Equip_Type", "Equipment_Slot_IDs", "Form_Type_IDs", "Format_Specifiers", "Reload_Animations", "Weapon_Flags", "Weapon_Hand_Grips", 
 			"Weapon_Mod", "Weapon_Type"
 			};
@@ -237,10 +237,11 @@ namespace NVSE_Docs_Manager
 
 			public void AddExample()
 			{
-				ExampleList.Add(new Example());
+				if (ExampleList != null) ExampleList.Add(new Example());
+				else ExampleList = new List<Example>() {new Example()};
 			}
 
-			public void RemoveExample(int index)
+		public void RemoveExample(int index)
 			{
 				ExampleList.RemoveAt(index);
 			}
