@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace NVSE_Docs_Manager
@@ -27,7 +20,7 @@ namespace NVSE_Docs_Manager
 			foreach (var s in list)
 			{
 				richTextBox1.AppendText(s);
-				richTextBox1.AppendText("\n");
+				richTextBox1.AppendText("\n\n");
 			}
 		}
 	}

@@ -17,6 +17,11 @@ namespace NVSE_Docs_Manager
 		public object[] TypeBoxContents { get; set; }
 		public object[] NameBoxContents { get; set; }
 
+		private readonly ToolTip _ttip = new ToolTip()
+		{
+			InitialDelay = 100
+		};
+
 		#region Constructors
 			public ParameterBox()
 			{
@@ -208,9 +213,10 @@ namespace NVSE_Docs_Manager
 			{
 				Text = "X",
 				Location = new Point(5,13),
-				Size = new Size(23, 21)
+				Size = new Size(23, 21),
 			};
 			removeButton.Click += removeParameter_Click;
+			_ttip.SetToolTip(removeButton, "Remove this parameter");
 			Controls.Add(removeButton);
 
 			// create the copy button
@@ -221,6 +227,7 @@ namespace NVSE_Docs_Manager
 				Size = new Size(23, 21)
 			};
 			copyButton.Click += copyParameter_Click;
+			_ttip.SetToolTip(copyButton, "Copy this parameter");
 			Controls.Add(copyButton);
 
 			// URL
@@ -244,6 +251,7 @@ namespace NVSE_Docs_Manager
 			urlCombobox.SelectedIndexChanged += this.urlBox_SelectedIndexChanged;
 			urlCombobox.Items.AddRange(UrlBoxContents);
 			urlCombobox.Text = Url;
+			_ttip.SetToolTip(urlCombobox, "Optional\nURL to more information about\nspecific types of return values");
 			Controls.Add(urlCombobox);
 
 			// Value
@@ -266,6 +274,7 @@ namespace NVSE_Docs_Manager
 			valueCombobox.KeyUp += this.valueBox_KeyUp;
 			valueCombobox.Items.AddRange(ValueBoxContents);
 			valueCombobox.Text = Value;
+			_ttip.SetToolTip(valueCombobox, "Optional\nThe values that this parameter takes");
 			Controls.Add(valueCombobox);
 
 			// Type
@@ -290,6 +299,7 @@ namespace NVSE_Docs_Manager
 			typeCombobox.KeyUp += this.typeBox_KeyUp;
 			typeCombobox.Items.AddRange(TypeBoxContents);
 			typeCombobox.Text = GetTypeType(Type);
+			_ttip.SetToolTip(typeCombobox, "The value type of this parameter");
 			Controls.Add(typeCombobox);
 
 			// Name
@@ -314,6 +324,7 @@ namespace NVSE_Docs_Manager
 			nameCombobox.KeyUp += this.nameBox_KeyUp;
 			nameCombobox.Items.AddRange(NameBoxContents);
 			nameCombobox.Text = GetTypeName(Type);
+			_ttip.SetToolTip(nameCombobox, "The name of the value of this parameter");
 			Controls.Add(nameCombobox);
 
 			// Optional
@@ -327,6 +338,7 @@ namespace NVSE_Docs_Manager
 			};
 			optionalCheckbox.CheckedChanged += this.optionalBox_CheckedChanged;
 			optionalCheckbox.Checked = !String.IsNullOrEmpty(Optional) && Optional.ToLower().Equals("true");
+			_ttip.SetToolTip(nameCombobox, "Is this parameter optional");
 			Controls.Add(optionalCheckbox);
 
 			return this;

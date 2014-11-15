@@ -28,10 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.listBoxExamples = new System.Windows.Forms.ListBox();
 			this.richTextBoxExampleEditor = new System.Windows.Forms.RichTextBox();
 			this.buttonAddExample = new System.Windows.Forms.Button();
 			this.buttonDone = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// listBoxExamples
@@ -43,6 +45,7 @@
 			this.listBoxExamples.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.listBoxExamples.Size = new System.Drawing.Size(135, 147);
 			this.listBoxExamples.TabIndex = 0;
+			this.toolTip1.SetToolTip(this.listBoxExamples, "Click an example to edit");
 			this.listBoxExamples.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBoxExamples_MouseClick);
 			this.listBoxExamples.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxExamples_KeyUp);
 			// 
@@ -57,6 +60,7 @@
 			this.richTextBoxExampleEditor.Size = new System.Drawing.Size(619, 342);
 			this.richTextBoxExampleEditor.TabIndex = 1;
 			this.richTextBoxExampleEditor.Text = "";
+			this.toolTip1.SetToolTip(this.richTextBoxExampleEditor, "Type the example here");
 			this.richTextBoxExampleEditor.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ExampleEditor_KeyUp);
 			// 
 			// buttonAddExample
@@ -66,6 +70,7 @@
 			this.buttonAddExample.Size = new System.Drawing.Size(135, 47);
 			this.buttonAddExample.TabIndex = 2;
 			this.buttonAddExample.Text = "Add Example";
+			this.toolTip1.SetToolTip(this.buttonAddExample, "Add a new example");
 			this.buttonAddExample.UseVisualStyleBackColor = true;
 			this.buttonAddExample.Click += new System.EventHandler(this.buttonAddExample_Click);
 			// 
@@ -76,8 +81,15 @@
 			this.buttonDone.Size = new System.Drawing.Size(135, 28);
 			this.buttonDone.TabIndex = 3;
 			this.buttonDone.Text = "Done";
+			this.toolTip1.SetToolTip(this.buttonDone, "Finished editing, close this window");
 			this.buttonDone.UseVisualStyleBackColor = true;
 			this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
+			// 
+			// toolTip1
+			// 
+			this.toolTip1.AutoPopDelay = 5000;
+			this.toolTip1.InitialDelay = 100;
+			this.toolTip1.ReshowDelay = 100;
 			// 
 			// ExamplesWindow
 			// 
@@ -102,5 +114,6 @@
 		private System.Windows.Forms.RichTextBox richTextBoxExampleEditor;
 		private System.Windows.Forms.Button buttonAddExample;
 		private System.Windows.Forms.Button buttonDone;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }

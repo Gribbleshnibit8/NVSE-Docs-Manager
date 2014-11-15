@@ -8,17 +8,22 @@ namespace NVSE_Docs_Manager
 	public class Variables
 	{
 
-		private List<Example> ExampleList { get; set; } 
+		private List<Example> ExampleList { get; set; }
+
+		/// <summary>
+		/// List of all loaded functions
+		/// </summary>
+		private List<FunctionDef> LoadedFunctionsList { get; set; } 
 
 		/// <summary>
 		/// Stores the current function prior to any changes
 		/// </summary>
-		private FunctionDef CurrentEditingBackup { get; set; } 
+		private FunctionDef CurrentEditingBackup { get; set; }
 
 		/// <summary>
-		/// A list of ParameterBox Control objects displayed in the current form
+		/// A list of all the reference types used by the loaded functions
 		/// </summary>
-		private List<Control> ParametersList { get; set; } 
+		private List<string> ReferenceTypesList { get; set; }
 
 		/// <summary>
 		/// A list of all the names from the left-hand side of the ParameterDef type
@@ -35,22 +40,19 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		private List<string> ParameterValuesList { get; set; } 
 
-		/// <summary>
-		/// List of all loaded functions
-		/// </summary>
-		private List<FunctionDef> LoadedFunctionsList { get; set; } 
 
 		/// <summary>
 		/// A list of the URLs as used on the NVSE site page.
 		/// </summary>
 		private List<string> ParameterUrlList { get; set; }
 
+
 		public Variables()
 		{
 			CurrentEditingBackup = new FunctionDef();
 			LoadedFunctionsList = new List<FunctionDef>();
+			ReferenceTypesList = new List<string>();
 			ExampleList = new List<Example>();
-			//ParametersList = new List<Control>();
 			ParameterTypesList = new List<string>();
 			ParameterNamesList = new List<string>();
 			ParameterValuesList = new List<string>();
@@ -65,10 +67,16 @@ namespace NVSE_Docs_Manager
 		/// <summary>
 		/// Updates the ParameterDef type and name lists from all parameters
 		/// </summary>
-		public void UpdateParameterLists()
+		public void UpdateLists()
 		{
 			foreach (FunctionDef f in LoadedFunctionsList)
 			{
+				// Reference Types
+				if (f.ReferenceType != null)
+					if (!ReferenceTypesList.Contains(f.ReferenceType))
+						ReferenceTypesList.Add(f.ReferenceType);
+
+				// Parameters
 				if (f.Parameters != null)
 				{
 					foreach (ParameterDef p in f.Parameters)
@@ -154,12 +162,12 @@ namespace NVSE_Docs_Manager
 				}
 			}
 
-			public void UpdateCategoryField(object toUpdate, string newValue)
+			public void UpdateTags(object toUpdate, string newValue)
 			{
 				dynamic d = toUpdate;
 				foreach (string s in d)
 				{
-					LoadedFunctionsList.Find(f => f.Name == s).Category = newValue;
+					LoadedFunctionsList.Find(f => f.Name == s).Tags.Add(s);
 				}
 
 

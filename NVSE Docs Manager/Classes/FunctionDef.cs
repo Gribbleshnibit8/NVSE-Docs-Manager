@@ -24,6 +24,9 @@ namespace NVSE_Docs_Manager
 		[JsonProperty(PropertyName = "ReturnType")]
 		public List<ReturnTypeDef> ReturnType;
 
+		[JsonProperty(PropertyName = "ReferenceType")]
+		public string ReferenceType { get; set; }
+
 		[JsonProperty(PropertyName = "Version")]
 		public string Version { get; set; }
 
@@ -45,9 +48,6 @@ namespace NVSE_Docs_Manager
 		[JsonProperty(PropertyName = "FromPlugin")]
 		public string FromPlugin { get; set; }
 
-		[JsonProperty(PropertyName = "Category")]
-		public string Category { get; set; }
-
 		public void CleanFunctionDef()
 		{
 			if (String.IsNullOrEmpty(Alias))
@@ -66,9 +66,6 @@ namespace NVSE_Docs_Manager
 
 			if (String.IsNullOrEmpty(FromPlugin))
 				FromPlugin = null;
-
-			if (String.IsNullOrEmpty(Category))
-				Category = null;
 
 			if (Parameters != null && Parameters.Count == 0)
 				Parameters = null;
@@ -116,9 +113,6 @@ namespace NVSE_Docs_Manager
 
 		[JsonProperty(PropertyName = "value")]
 		public string Value { get; set; }
-
-		[JsonProperty(PropertyName = "reftype")]
-		public string ReferenceType { get; set; }
 	}
 
 	public class Example

@@ -43,18 +43,17 @@ namespace NVSE_Docs_Manager
 			this.outputReadableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.convertWikiPagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.howToUseThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.listboxFunctionList = new System.Windows.Forms.ListBox();
 			this.groupSelectionEditor = new System.Windows.Forms.GroupBox();
+			this.comboBoxReferenceType = new System.Windows.Forms.ComboBox();
 			this.buttonShowExamples = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
 			this.buttonNewFunction = new System.Windows.Forms.Button();
 			this.groupBoxReturnType = new System.Windows.Forms.GroupBox();
-			this.comboBoxReturnTypeReturnValue = new System.Windows.Forms.ComboBox();
-			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.comboBoxReturnTypeValue = new System.Windows.Forms.ComboBox();
 			this.labelReturnTypeName = new System.Windows.Forms.Label();
@@ -68,8 +67,6 @@ namespace NVSE_Docs_Manager
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
 			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
 			this.buttonParametersNew = new System.Windows.Forms.Button();
-			this.textBoxCategory = new System.Windows.Forms.TextBox();
-			this.labelCategory = new System.Windows.Forms.Label();
 			this.textBoxOrigin = new System.Windows.Forms.TextBox();
 			this.labelOrigin = new System.Windows.Forms.Label();
 			this.labelTags = new System.Windows.Forms.Label();
@@ -100,15 +97,14 @@ namespace NVSE_Docs_Manager
 			this.labelParameterTemplateURL = new System.Windows.Forms.Label();
 			this.comboBoxParameterTemplateURL = new System.Windows.Forms.ComboBox();
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
-			this.buttonListBoxChangeCategory = new System.Windows.Forms.Button();
+			this.buttonListBoxAddTag = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.toolTipShortDelay = new System.Windows.Forms.ToolTip(this.components);
 			this.menuStrip1.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
 			this.groupBoxReturnType.SuspendLayout();
 			this.groupBoxCallingConvention.SuspendLayout();
@@ -198,33 +194,27 @@ namespace NVSE_Docs_Manager
 			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToUseThisToolStripMenuItem,
+            this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.H)));
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "Help";
 			// 
-			// statusStrip1
+			// howToUseThisToolStripMenuItem
 			// 
-			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar1,
-            this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 660);
-			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1084, 22);
-			this.statusStrip1.SizingGrip = false;
-			this.statusStrip1.TabIndex = 1;
-			this.statusStrip1.Text = "statusStrip1";
+			this.howToUseThisToolStripMenuItem.Name = "howToUseThisToolStripMenuItem";
+			this.howToUseThisToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.howToUseThisToolStripMenuItem.Text = "How to use this";
+			this.howToUseThisToolStripMenuItem.Click += new System.EventHandler(this.howToUseThisToolStripMenuItem_Click);
 			// 
-			// toolStripProgressBar1
+			// aboutToolStripMenuItem
 			// 
-			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
-			this.toolStripProgressBar1.Visible = false;
-			// 
-			// toolStripStatusLabel1
-			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+			this.aboutToolStripMenuItem.Text = "About";
+			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
 			// 
 			// openFileDialog1
 			// 
@@ -245,8 +235,7 @@ namespace NVSE_Docs_Manager
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxFuctionList_KeyUp);
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
-			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.listboxFunctionList.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.listboxFunctionList_MouseLeave);
 			this.listboxFunctionList.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseUp);
 			// 
 			// groupSelectionEditor
@@ -254,16 +243,15 @@ namespace NVSE_Docs_Manager
 			this.groupSelectionEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.groupSelectionEditor.Controls.Add(this.groupBoxParameterTemplate);
+			this.groupSelectionEditor.Controls.Add(this.comboBoxReferenceType);
 			this.groupSelectionEditor.Controls.Add(this.buttonShowExamples);
+			this.groupSelectionEditor.Controls.Add(this.label3);
 			this.groupSelectionEditor.Controls.Add(this.buttonNewFunction);
 			this.groupSelectionEditor.Controls.Add(this.groupBoxReturnType);
 			this.groupSelectionEditor.Controls.Add(this.buttonDiscardChanges);
 			this.groupSelectionEditor.Controls.Add(this.buttonSaveCurrentChanges);
 			this.groupSelectionEditor.Controls.Add(this.flowLayoutPanelParameters);
 			this.groupSelectionEditor.Controls.Add(this.buttonParametersNew);
-			this.groupSelectionEditor.Controls.Add(this.textBoxCategory);
-			this.groupSelectionEditor.Controls.Add(this.labelCategory);
 			this.groupSelectionEditor.Controls.Add(this.textBoxOrigin);
 			this.groupSelectionEditor.Controls.Add(this.labelOrigin);
 			this.groupSelectionEditor.Controls.Add(this.labelTags);
@@ -284,17 +272,36 @@ namespace NVSE_Docs_Manager
 			this.groupSelectionEditor.TabIndex = 3;
 			this.groupSelectionEditor.TabStop = false;
 			// 
+			// comboBoxReferenceType
+			// 
+			this.comboBoxReferenceType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.comboBoxReferenceType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.comboBoxReferenceType.FormattingEnabled = true;
+			this.comboBoxReferenceType.Location = new System.Drawing.Point(9, 186);
+			this.comboBoxReferenceType.Name = "comboBoxReferenceType";
+			this.comboBoxReferenceType.Size = new System.Drawing.Size(158, 21);
+			this.comboBoxReferenceType.TabIndex = 40;
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReferenceType, "The return value of the function");
+			// 
 			// buttonShowExamples
 			// 
 			this.buttonShowExamples.Location = new System.Drawing.Point(198, 534);
 			this.buttonShowExamples.Name = "buttonShowExamples";
 			this.buttonShowExamples.Size = new System.Drawing.Size(150, 90);
-			this.buttonShowExamples.TabIndex = 12;
+			this.buttonShowExamples.TabIndex = 13;
 			this.buttonShowExamples.Text = "Edit Examples";
+			this.toolTipShortDelay.SetToolTip(this.buttonShowExamples, "Add examples to this function");
 			this.buttonShowExamples.UseVisualStyleBackColor = true;
 			this.buttonShowExamples.Click += new System.EventHandler(this.buttonShowExamples_Click);
-			this.buttonShowExamples.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonShowExamples.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(6, 172);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(84, 13);
+			this.label3.TabIndex = 39;
+			this.label3.Text = "Reference Type";
 			// 
 			// buttonNewFunction
 			// 
@@ -303,15 +310,12 @@ namespace NVSE_Docs_Manager
 			this.buttonNewFunction.Size = new System.Drawing.Size(60, 43);
 			this.buttonNewFunction.TabIndex = 502;
 			this.buttonNewFunction.Text = "New Function";
+			this.toolTipShortDelay.SetToolTip(this.buttonNewFunction, "Create a new function, clearing the form");
 			this.buttonNewFunction.UseVisualStyleBackColor = true;
 			this.buttonNewFunction.Click += new System.EventHandler(this.buttonNewFunction_Click);
-			this.buttonNewFunction.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonNewFunction.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// groupBoxReturnType
 			// 
-			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeReturnValue);
-			this.groupBoxReturnType.Controls.Add(this.label3);
 			this.groupBoxReturnType.Controls.Add(this.label2);
 			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeValue);
 			this.groupBoxReturnType.Controls.Add(this.labelReturnTypeName);
@@ -323,38 +327,16 @@ namespace NVSE_Docs_Manager
 			this.groupBoxReturnType.Controls.Add(this.comboBoxReturnTypeType);
 			this.groupBoxReturnType.Location = new System.Drawing.Point(9, 214);
 			this.groupBoxReturnType.Name = "groupBoxReturnType";
-			this.groupBoxReturnType.Size = new System.Drawing.Size(340, 142);
-			this.groupBoxReturnType.TabIndex = 12;
+			this.groupBoxReturnType.Size = new System.Drawing.Size(340, 126);
+			this.groupBoxReturnType.TabIndex = 10;
 			this.groupBoxReturnType.TabStop = false;
 			this.groupBoxReturnType.Text = "Return Type";
-			// 
-			// comboBoxReturnTypeReturnValue
-			// 
-			this.comboBoxReturnTypeReturnValue.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-			this.comboBoxReturnTypeReturnValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-			this.comboBoxReturnTypeReturnValue.Enabled = false;
-			this.comboBoxReturnTypeReturnValue.FormattingEnabled = true;
-			this.comboBoxReturnTypeReturnValue.Location = new System.Drawing.Point(184, 32);
-			this.comboBoxReturnTypeReturnValue.Name = "comboBoxReturnTypeReturnValue";
-			this.comboBoxReturnTypeReturnValue.Size = new System.Drawing.Size(150, 21);
-			this.comboBoxReturnTypeReturnValue.TabIndex = 40;
-			this.toolTip1.SetToolTip(this.comboBoxReturnTypeReturnValue, "The return value of the function");
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Enabled = false;
-			this.label3.Location = new System.Drawing.Point(181, 16);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(69, 13);
-			this.label3.TabIndex = 39;
-			this.label3.Text = "Return Value";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Enabled = false;
-			this.label2.Location = new System.Drawing.Point(181, 56);
+			this.label2.Location = new System.Drawing.Point(179, 39);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(34, 13);
 			this.label2.TabIndex = 37;
@@ -366,17 +348,17 @@ namespace NVSE_Docs_Manager
 			this.comboBoxReturnTypeValue.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.comboBoxReturnTypeValue.Enabled = false;
 			this.comboBoxReturnTypeValue.FormattingEnabled = true;
-			this.comboBoxReturnTypeValue.Location = new System.Drawing.Point(184, 72);
+			this.comboBoxReturnTypeValue.Location = new System.Drawing.Point(182, 55);
 			this.comboBoxReturnTypeValue.Name = "comboBoxReturnTypeValue";
-			this.comboBoxReturnTypeValue.Size = new System.Drawing.Size(150, 21);
+			this.comboBoxReturnTypeValue.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeValue.TabIndex = 38;
-			this.toolTip1.SetToolTip(this.comboBoxReturnTypeValue, "The return value of the function");
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReturnTypeValue, "The return value of the function");
 			// 
 			// labelReturnTypeName
 			// 
 			this.labelReturnTypeName.AutoSize = true;
 			this.labelReturnTypeName.Enabled = false;
-			this.labelReturnTypeName.Location = new System.Drawing.Point(181, 96);
+			this.labelReturnTypeName.Location = new System.Drawing.Point(179, 79);
 			this.labelReturnTypeName.Name = "labelReturnTypeName";
 			this.labelReturnTypeName.Size = new System.Drawing.Size(35, 13);
 			this.labelReturnTypeName.TabIndex = 35;
@@ -385,15 +367,14 @@ namespace NVSE_Docs_Manager
 			// checkBoxReturnType
 			// 
 			this.checkBoxReturnType.AutoSize = true;
-			this.checkBoxReturnType.Location = new System.Drawing.Point(8, 32);
+			this.checkBoxReturnType.Location = new System.Drawing.Point(6, 19);
 			this.checkBoxReturnType.Name = "checkBoxReturnType";
 			this.checkBoxReturnType.Size = new System.Drawing.Size(110, 17);
 			this.checkBoxReturnType.TabIndex = 11;
 			this.checkBoxReturnType.Text = "Has Return Value";
+			this.toolTipShortDelay.SetToolTip(this.checkBoxReturnType, "Does the function have a return value");
 			this.checkBoxReturnType.UseVisualStyleBackColor = true;
 			this.checkBoxReturnType.CheckedChanged += new System.EventHandler(this.checkBoxReturnType_CheckedChanged);
-			this.checkBoxReturnType.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.checkBoxReturnType.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// comboBoxReturnTypeName
 			// 
@@ -401,30 +382,27 @@ namespace NVSE_Docs_Manager
 			this.comboBoxReturnTypeName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.comboBoxReturnTypeName.Enabled = false;
 			this.comboBoxReturnTypeName.FormattingEnabled = true;
-			this.comboBoxReturnTypeName.Location = new System.Drawing.Point(184, 112);
+			this.comboBoxReturnTypeName.Location = new System.Drawing.Point(182, 95);
 			this.comboBoxReturnTypeName.Name = "comboBoxReturnTypeName";
-			this.comboBoxReturnTypeName.Size = new System.Drawing.Size(150, 21);
+			this.comboBoxReturnTypeName.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeName.TabIndex = 36;
-			this.toolTip1.SetToolTip(this.comboBoxReturnTypeName, "The name of the value");
-			this.comboBoxReturnTypeName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.comboBoxReturnTypeName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReturnTypeName, "The name of the value");
 			// 
 			// labelReturnTypeURL
 			// 
 			this.labelReturnTypeURL.AutoSize = true;
 			this.labelReturnTypeURL.Enabled = false;
-			this.labelReturnTypeURL.Location = new System.Drawing.Point(8, 56);
+			this.labelReturnTypeURL.Location = new System.Drawing.Point(6, 39);
 			this.labelReturnTypeURL.Name = "labelReturnTypeURL";
 			this.labelReturnTypeURL.Size = new System.Drawing.Size(29, 13);
 			this.labelReturnTypeURL.TabIndex = 31;
 			this.labelReturnTypeURL.Text = "URL";
-			this.labelReturnTypeURL.Click += new System.EventHandler(this.labelReturnTypeURL_Click);
 			// 
 			// labelReturnTypeType
 			// 
 			this.labelReturnTypeType.AutoSize = true;
 			this.labelReturnTypeType.Enabled = false;
-			this.labelReturnTypeType.Location = new System.Drawing.Point(8, 96);
+			this.labelReturnTypeType.Location = new System.Drawing.Point(6, 79);
 			this.labelReturnTypeType.Name = "labelReturnTypeType";
 			this.labelReturnTypeType.Size = new System.Drawing.Size(31, 13);
 			this.labelReturnTypeType.TabIndex = 33;
@@ -450,14 +428,12 @@ namespace NVSE_Docs_Manager
             "Weapon_Hand_Grips",
             "Weapon_Mod",
             "Weapon_Type"});
-			this.comboBoxReturnTypeURL.Location = new System.Drawing.Point(8, 72);
+			this.comboBoxReturnTypeURL.Location = new System.Drawing.Point(6, 55);
 			this.comboBoxReturnTypeURL.Name = "comboBoxReturnTypeURL";
-			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(150, 21);
+			this.comboBoxReturnTypeURL.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeURL.Sorted = true;
 			this.comboBoxReturnTypeURL.TabIndex = 32;
-			this.toolTip1.SetToolTip(this.comboBoxReturnTypeURL, "URL to more information about\r\nspecific types of return values");
-			this.comboBoxReturnTypeURL.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.comboBoxReturnTypeURL.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReturnTypeURL, "URL to more information about\r\nspecific types of return values");
 			// 
 			// comboBoxReturnTypeType
 			// 
@@ -465,13 +441,11 @@ namespace NVSE_Docs_Manager
 			this.comboBoxReturnTypeType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.comboBoxReturnTypeType.Enabled = false;
 			this.comboBoxReturnTypeType.FormattingEnabled = true;
-			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(8, 112);
+			this.comboBoxReturnTypeType.Location = new System.Drawing.Point(6, 95);
 			this.comboBoxReturnTypeType.Name = "comboBoxReturnTypeType";
-			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(150, 21);
+			this.comboBoxReturnTypeType.Size = new System.Drawing.Size(140, 21);
 			this.comboBoxReturnTypeType.TabIndex = 34;
-			this.toolTip1.SetToolTip(this.comboBoxReturnTypeType, "The value type returned by the function");
-			this.comboBoxReturnTypeType.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.comboBoxReturnTypeType.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReturnTypeType, "The value type returned by the function");
 			// 
 			// buttonDiscardChanges
 			// 
@@ -480,10 +454,10 @@ namespace NVSE_Docs_Manager
 			this.buttonDiscardChanges.Size = new System.Drawing.Size(60, 43);
 			this.buttonDiscardChanges.TabIndex = 501;
 			this.buttonDiscardChanges.Text = " Discard Changes";
+			this.toolTipShortDelay.SetToolTip(this.buttonDiscardChanges, "Discard all changes\r\nClears if working on a new function\r\nResets to loaded state " +
+        "if editing a function");
 			this.buttonDiscardChanges.UseVisualStyleBackColor = true;
 			this.buttonDiscardChanges.Click += new System.EventHandler(this.buttonDiscardChanges_Click);
-			this.buttonDiscardChanges.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonDiscardChanges.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// buttonSaveCurrentChanges
 			// 
@@ -495,8 +469,6 @@ namespace NVSE_Docs_Manager
 			this.buttonSaveCurrentChanges.Text = "Save\r\nChanges";
 			this.buttonSaveCurrentChanges.UseVisualStyleBackColor = true;
 			this.buttonSaveCurrentChanges.Click += new System.EventHandler(this.buttonSaveCurrentChanges_Click);
-			this.buttonSaveCurrentChanges.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonSaveCurrentChanges.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// flowLayoutPanelParameters
 			// 
@@ -509,6 +481,7 @@ namespace NVSE_Docs_Manager
 			this.flowLayoutPanelParameters.TabIndex = 11;
 			this.flowLayoutPanelParameters.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlAdded);
 			this.flowLayoutPanelParameters.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlRemoved);
+			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.flowLayoutPanelParameter_MouseEnter);
 			// 
 			// buttonParametersNew
 			// 
@@ -517,38 +490,19 @@ namespace NVSE_Docs_Manager
 			this.buttonParametersNew.Location = new System.Drawing.Point(417, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
 			this.buttonParametersNew.Size = new System.Drawing.Size(108, 23);
-			this.buttonParametersNew.TabIndex = 10;
+			this.buttonParametersNew.TabIndex = 11;
 			this.buttonParametersNew.Text = "New ParameterBox";
+			this.toolTipShortDelay.SetToolTip(this.buttonParametersNew, "Add a new parameter at the end of the list");
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
 			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
-			// 
-			// textBoxCategory
-			// 
-			this.textBoxCategory.Location = new System.Drawing.Point(9, 188);
-			this.textBoxCategory.Name = "textBoxCategory";
-			this.textBoxCategory.Size = new System.Drawing.Size(158, 20);
-			this.textBoxCategory.TabIndex = 9;
-			this.textBoxCategory.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxCategory.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
-			// 
-			// labelCategory
-			// 
-			this.labelCategory.AutoSize = true;
-			this.labelCategory.Location = new System.Drawing.Point(6, 172);
-			this.labelCategory.Name = "labelCategory";
-			this.labelCategory.Size = new System.Drawing.Size(49, 13);
-			this.labelCategory.TabIndex = 25;
-			this.labelCategory.Text = "Category";
 			// 
 			// textBoxOrigin
 			// 
 			this.textBoxOrigin.Location = new System.Drawing.Point(9, 149);
 			this.textBoxOrigin.Name = "textBoxOrigin";
 			this.textBoxOrigin.Size = new System.Drawing.Size(158, 20);
-			this.textBoxOrigin.TabIndex = 8;
-			this.toolTip1.SetToolTip(this.textBoxOrigin, "Where the function comes from");
-			this.textBoxOrigin.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxOrigin.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.textBoxOrigin.TabIndex = 5;
+			this.toolTipShortDelay.SetToolTip(this.textBoxOrigin, "Where the function comes from");
 			// 
 			// labelOrigin
 			// 
@@ -575,10 +529,8 @@ namespace NVSE_Docs_Manager
 			this.textBoxTags.Name = "textBoxTags";
 			this.textBoxTags.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.textBoxTags.Size = new System.Drawing.Size(159, 59);
-			this.textBoxTags.TabIndex = 7;
-			this.toolTip1.SetToolTip(this.textBoxTags, "Alternative methods of\r\nsearching for this function");
-			this.textBoxTags.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxTags.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.textBoxTags.TabIndex = 9;
+			this.toolTipShortDelay.SetToolTip(this.textBoxTags, "Alternative methods of\r\nsearching for this function");
 			// 
 			// labelParameters
 			// 
@@ -594,12 +546,12 @@ namespace NVSE_Docs_Manager
 			this.groupBoxCallingConvention.Controls.Add(this.radioButtonCallingConventionEither);
 			this.groupBoxCallingConvention.Controls.Add(this.radioButtonCallingConventionBase);
 			this.groupBoxCallingConvention.Controls.Add(this.radioButtonCallingConventionRef);
-			this.groupBoxCallingConvention.Location = new System.Drawing.Point(190, 16);
+			this.groupBoxCallingConvention.Location = new System.Drawing.Point(189, 16);
 			this.groupBoxCallingConvention.Margin = new System.Windows.Forms.Padding(0);
 			this.groupBoxCallingConvention.Name = "groupBoxCallingConvention";
 			this.groupBoxCallingConvention.Padding = new System.Windows.Forms.Padding(0);
 			this.groupBoxCallingConvention.Size = new System.Drawing.Size(159, 92);
-			this.groupBoxCallingConvention.TabIndex = 5;
+			this.groupBoxCallingConvention.TabIndex = 7;
 			this.groupBoxCallingConvention.TabStop = false;
 			this.groupBoxCallingConvention.Text = "Calling Convention";
 			// 
@@ -613,9 +565,8 @@ namespace NVSE_Docs_Manager
 			this.radioButtonCallingConventionEither.TabIndex = 14;
 			this.radioButtonCallingConventionEither.TabStop = true;
 			this.radioButtonCallingConventionEither.Text = "By Either";
+			this.toolTipShortDelay.SetToolTip(this.radioButtonCallingConventionEither, "Is the function called in\r\neither of the above ways");
 			this.radioButtonCallingConventionEither.UseVisualStyleBackColor = true;
-			this.radioButtonCallingConventionEither.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionEither.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// radioButtonCallingConventionBase
 			// 
@@ -625,9 +576,8 @@ namespace NVSE_Docs_Manager
 			this.radioButtonCallingConventionBase.Size = new System.Drawing.Size(64, 17);
 			this.radioButtonCallingConventionBase.TabIndex = 13;
 			this.radioButtonCallingConventionBase.Text = "By Base";
+			this.toolTipShortDelay.SetToolTip(this.radioButtonCallingConventionBase, "Is the function called by base form");
 			this.radioButtonCallingConventionBase.UseVisualStyleBackColor = true;
-			this.radioButtonCallingConventionBase.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionBase.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// radioButtonCallingConventionRef
 			// 
@@ -637,9 +587,8 @@ namespace NVSE_Docs_Manager
 			this.radioButtonCallingConventionRef.Size = new System.Drawing.Size(90, 17);
 			this.radioButtonCallingConventionRef.TabIndex = 12;
 			this.radioButtonCallingConventionRef.Text = "By Reference";
+			this.toolTipShortDelay.SetToolTip(this.radioButtonCallingConventionRef, "Is the function called by reference");
 			this.radioButtonCallingConventionRef.UseVisualStyleBackColor = true;
-			this.radioButtonCallingConventionRef.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.radioButtonCallingConventionRef.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelVersion
 			// 
@@ -656,9 +605,7 @@ namespace NVSE_Docs_Manager
 			this.textBoxVersion.Name = "textBoxVersion";
 			this.textBoxVersion.Size = new System.Drawing.Size(158, 20);
 			this.textBoxVersion.TabIndex = 4;
-			this.toolTip1.SetToolTip(this.textBoxVersion, "The version in which this function was added");
-			this.textBoxVersion.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxVersion.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.toolTipShortDelay.SetToolTip(this.textBoxVersion, "The version in which this function was added");
 			// 
 			// textBoxAlias
 			// 
@@ -666,9 +613,7 @@ namespace NVSE_Docs_Manager
 			this.textBoxAlias.Name = "textBoxAlias";
 			this.textBoxAlias.Size = new System.Drawing.Size(158, 20);
 			this.textBoxAlias.TabIndex = 3;
-			this.toolTip1.SetToolTip(this.textBoxAlias, "An alternate name for the function");
-			this.textBoxAlias.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxAlias.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.toolTipShortDelay.SetToolTip(this.textBoxAlias, "An alternate name for the function");
 			// 
 			// textBoxName
 			// 
@@ -676,10 +621,8 @@ namespace NVSE_Docs_Manager
 			this.textBoxName.Name = "textBoxName";
 			this.textBoxName.Size = new System.Drawing.Size(158, 20);
 			this.textBoxName.TabIndex = 2;
-			this.toolTip1.SetToolTip(this.textBoxName, "The name of the function");
+			this.toolTipShortDelay.SetToolTip(this.textBoxName, "The name of the function");
 			this.textBoxName.TextChanged += new System.EventHandler(this.textBoxName_TextChanged);
-			this.textBoxName.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.textBoxName.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// labelAlias
 			// 
@@ -706,24 +649,22 @@ namespace NVSE_Docs_Manager
 			this.checkBoxConditional.Location = new System.Drawing.Point(190, 112);
 			this.checkBoxConditional.Name = "checkBoxConditional";
 			this.checkBoxConditional.Size = new System.Drawing.Size(122, 17);
-			this.checkBoxConditional.TabIndex = 6;
+			this.checkBoxConditional.TabIndex = 8;
 			this.checkBoxConditional.Text = "Conditional Function";
+			this.toolTipShortDelay.SetToolTip(this.checkBoxConditional, "Does this function appear\r\nin the conditional dialog");
 			this.checkBoxConditional.UseVisualStyleBackColor = true;
-			this.checkBoxConditional.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.checkBoxConditional.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// richTextBoxDescription
 			// 
 			this.richTextBoxDescription.AcceptsTab = true;
 			this.richTextBoxDescription.EnableAutoDragDrop = true;
-			this.richTextBoxDescription.Location = new System.Drawing.Point(9, 362);
+			this.richTextBoxDescription.Location = new System.Drawing.Point(9, 346);
 			this.richTextBoxDescription.Name = "richTextBoxDescription";
-			this.richTextBoxDescription.Size = new System.Drawing.Size(340, 166);
-			this.richTextBoxDescription.TabIndex = 13;
+			this.richTextBoxDescription.Size = new System.Drawing.Size(340, 182);
+			this.richTextBoxDescription.TabIndex = 12;
 			this.richTextBoxDescription.Text = "";
+			this.toolTipShortDelay.SetToolTip(this.richTextBoxDescription, "Description about the function, extra notes, and other information");
 			this.richTextBoxDescription.ZoomFactor = 1.201F;
-			this.richTextBoxDescription.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.richTextBoxDescription.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
 			// groupBoxParameterTemplate
 			// 
@@ -738,7 +679,7 @@ namespace NVSE_Docs_Manager
 			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
 			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
 			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
-			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(49, 607);
+			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(238, 635);
 			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
 			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(435, 70);
 			this.groupBoxParameterTemplate.TabIndex = 31;
@@ -872,23 +813,19 @@ namespace NVSE_Docs_Manager
 			this.buttonListBoxDeleteItem.Text = "Delete Function";
 			this.buttonListBoxDeleteItem.UseVisualStyleBackColor = true;
 			this.buttonListBoxDeleteItem.Click += new System.EventHandler(this.buttonListBoxDeleteItem_Click);
-			this.buttonListBoxDeleteItem.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonListBoxDeleteItem.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
 			// 
-			// buttonListBoxChangeCategory
+			// buttonListBoxAddTag
 			// 
-			this.buttonListBoxChangeCategory.AutoSize = true;
-			this.buttonListBoxChangeCategory.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonListBoxChangeCategory.Enabled = false;
-			this.buttonListBoxChangeCategory.Location = new System.Drawing.Point(110, 634);
-			this.buttonListBoxChangeCategory.Name = "buttonListBoxChangeCategory";
-			this.buttonListBoxChangeCategory.Size = new System.Drawing.Size(99, 23);
-			this.buttonListBoxChangeCategory.TabIndex = 505;
-			this.buttonListBoxChangeCategory.Text = "Change Category";
-			this.buttonListBoxChangeCategory.UseVisualStyleBackColor = true;
-			this.buttonListBoxChangeCategory.Click += new System.EventHandler(this.buttonListBoxChangeCategory_Click);
-			this.buttonListBoxChangeCategory.MouseEnter += new System.EventHandler(this.formMouseEventHandler_MouseEnter);
-			this.buttonListBoxChangeCategory.MouseLeave += new System.EventHandler(this.formMouseEventHandler_MouseLeave);
+			this.buttonListBoxAddTag.AutoSize = true;
+			this.buttonListBoxAddTag.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonListBoxAddTag.Enabled = false;
+			this.buttonListBoxAddTag.Location = new System.Drawing.Point(144, 634);
+			this.buttonListBoxAddTag.Name = "buttonListBoxAddTag";
+			this.buttonListBoxAddTag.Size = new System.Drawing.Size(89, 23);
+			this.buttonListBoxAddTag.TabIndex = 505;
+			this.buttonListBoxAddTag.Text = "Batch Add Tag";
+			this.buttonListBoxAddTag.UseVisualStyleBackColor = true;
+			this.buttonListBoxAddTag.Click += new System.EventHandler(this.buttonListBatchAddTag_Click);
 			// 
 			// panel1
 			// 
@@ -932,17 +869,23 @@ namespace NVSE_Docs_Manager
 			this.LeftToolStripPanel.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.LeftToolStripPanel.Size = new System.Drawing.Size(0, 0);
 			// 
+			// toolTipShortDelay
+			// 
+			this.toolTipShortDelay.AutoPopDelay = 5000;
+			this.toolTipShortDelay.InitialDelay = 100;
+			this.toolTipShortDelay.ReshowDelay = 100;
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1084, 682);
+			this.Controls.Add(this.groupBoxParameterTemplate);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.buttonListBoxChangeCategory);
+			this.Controls.Add(this.buttonListBoxAddTag);
 			this.Controls.Add(this.buttonListBoxDeleteItem);
 			this.Controls.Add(this.groupSelectionEditor);
 			this.Controls.Add(this.listboxFunctionList);
-			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.menuStrip1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MainMenuStrip = this.menuStrip1;
@@ -955,8 +898,6 @@ namespace NVSE_Docs_Manager
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainMenu_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
 			this.groupSelectionEditor.ResumeLayout(false);
 			this.groupSelectionEditor.PerformLayout();
 			this.groupBoxReturnType.ResumeLayout(false);
@@ -976,9 +917,6 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -1000,8 +938,6 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.Label labelOrigin;
 		private System.Windows.Forms.Label labelTags;
 		private System.Windows.Forms.TextBox textBoxTags;
-		private System.Windows.Forms.TextBox textBoxCategory;
-		private System.Windows.Forms.Label labelCategory;
 		private System.Windows.Forms.Button buttonParametersNew;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
@@ -1010,7 +946,7 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.CheckBox checkBoxReturnType;
 		private System.Windows.Forms.Button buttonNewFunction;
 		private System.Windows.Forms.Button buttonListBoxDeleteItem;
-		private System.Windows.Forms.Button buttonListBoxChangeCategory;
+		private System.Windows.Forms.Button buttonListBoxAddTag;
 		private System.Windows.Forms.RichTextBox richTextBoxDescription;
 		private System.Windows.Forms.ToolStripMenuItem resetEverythingToolStripMenuItem;
 		private System.Windows.Forms.GroupBox groupBoxParameterTemplate;
@@ -1042,10 +978,12 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeValue;
 		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.ComboBox comboBoxReturnTypeReturnValue;
+		private System.Windows.Forms.ComboBox comboBoxReferenceType;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox textBoxAlias;
-		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.ToolTip toolTipShortDelay;
+		private System.Windows.Forms.ToolStripMenuItem howToUseThisToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 	}
 }
 

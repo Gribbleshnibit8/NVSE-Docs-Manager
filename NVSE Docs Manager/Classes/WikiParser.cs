@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace NVSE_Docs_Manager
 {
@@ -38,7 +35,7 @@ namespace NVSE_Docs_Manager
 			// Split the rest of the data into a list of type Head, Data
 			var infoSections = GetInfoSections(linkLess);
 
-			ShowExtraData(infoSections);
+			ShowExtraData(functionDefData, infoSections);
 
 			function = FillFunctionFields(function, functionDefData);
 
@@ -73,7 +70,9 @@ namespace NVSE_Docs_Manager
 		{
 			// get the function definition data out for further parsing
 			var getFunction = new Regex(@"(\{\{.*\}\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			var functionParts = new List<string>(getFunction.Split(data)[1].Split(new string[] { "|", "}", "{", "}{" }, StringSplitOptions.RemoveEmptyEntries));
+			var functionParts = new List<string>();
+			foreach (string s in getFunction.Split(data)[1].Split(new string[] {"|", "}", "{", "}{"}, StringSplitOptions.RemoveEmptyEntries))
+				functionParts.Add(s);
 
 			// clean the list
 			for (int index = 0; index < functionParts.Count; index++)
@@ -102,6 +101,7 @@ namespace NVSE_Docs_Manager
 			var getFunction = new Regex(@"(\{\{.*\}\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 			return getFunction.Replace(data, "");
 		}
+
 
 		private static List<string> GetInfoSections(string data)
 		{
@@ -135,6 +135,11 @@ namespace NVSE_Docs_Manager
 				if (functionDefData.Find(s => s.ToLower().Contains("alias")).Split('=').Length > 1)
 					function.Alias = functionDefData.Find(s => s.ToLower().Contains("alias")).Split('=')[1].Trim();
 
+			// Check if the function has a reference return type
+			if (!String.IsNullOrEmpty(functionDefData.Find(s => s.ToLower().Contains("referencetype"))))
+				if (functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=').Length > 1)
+					function.ReferenceType = functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=')[1].Trim();
+
 			// Check for origin and fill appropriate fields
 			if (functionDefData.Find(s => s.ToLower().Contains("origin")).Split('=').Length > 1)
 			{
@@ -150,7 +155,13 @@ namespace NVSE_Docs_Manager
 			// Get the first part of the description from the summary
 			List<string> description = null;
 			if (functionDefData.Find(s => s.ToLower().Contains("summary")).Split('=').Length > 1)
-				description = new List<string>() { functionDefData.Find(s => s.ToLower().Contains("summary")).Split('=')[1].Trim() };
+			{
+				description = new List<string>
+				{
+					functionDefData.Find(s => s.ToLower().Contains("summary")).Split(new char[] {'='}, 2)[1].Trim()
+				};
+			}
+
 
 			if (description != null)
 				for (int index = 0; index < description.Count; index++)
@@ -162,14 +173,12 @@ namespace NVSE_Docs_Manager
 			// Get return type data
 			if (functionDefData.Find(s => s.ToLower().Contains("returntype")).Split('=').Length > 1)
 			{
-				function.ReturnType = new List<ReturnTypeDef>();
+				function.ReturnType = new List<ReturnTypeDef>() {new ReturnTypeDef()};
 				function.ReturnType[0].Type = functionDefData.Find(s => s.ToLower().Contains("returntype")).Split('=')[1].Trim();
 
+				if (Convert.ToBoolean(functionDefData.Find(s => s.ToLower().Contains("returnval"))))
 				if (functionDefData.Find(s => s.ToLower().Contains("returnval")).Split('=').Length > 1)
 					function.ReturnType[0].Value = functionDefData.Find(s => s.ToLower().Contains("returnval")).Split('=')[1].Trim();
-
-				if (functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=').Length > 1)
-					function.ReturnType[0].ReferenceType = functionDefData.Find(s => s.ToLower().Contains("referencetype")).Split('=')[1].Trim();
 			}
 				
 
@@ -179,10 +188,7 @@ namespace NVSE_Docs_Manager
 				if (functionDefData[index].ToLower().Contains("functionargument"))
 				{
 					int nextIndex = GetFunctionLength(functionDefData, index+1);
-					//int nextIndex = functionDefData.FindIndex(index + 1, f => f.ToLower().Contains("functionargument"));
-					//if (nextIndex == -1) nextIndex = functionDefData.Count;
 					
-
 					var param = new ParameterDef();
 					var typeString = new string[3] { "", ":", "" };
 
@@ -225,27 +231,26 @@ namespace NVSE_Docs_Manager
 
 		private static int GetFunctionLength(List<string> data, int startIndex)
 		{
+			int i = 0;
 			// startIndex is first occurrence of FunctionArgument
-			for (int i = startIndex; i < data.Count; i++)
+			for (i = startIndex; i < data.Count; i++)
 			{
 				if (data[i].ToLower().Contains("functionargument") || data[i].ToLower().Contains("example"))
 					return i;
 			}
-
-
+			if (data.Count == i)
+				return i - 1;
 			return 0;
 		}
 
 
-
-
-
-		private void ShowExtraData(List<string> list)
+		private void ShowExtraData(object functionDefData, object list)
 		{
 			if (_windoWikiParserDisplay == null || _windoWikiParserDisplay.IsDisposed)
 			{
 				_windoWikiParserDisplay = new WikiParserDisplay();
-				_windoWikiParserDisplay.PopulateForm(list);
+				_windoWikiParserDisplay.PopulateForm((List<string>) functionDefData);
+				_windoWikiParserDisplay.PopulateForm((List<string>) list);
 			}
 			_windoWikiParserDisplay.Show();
 

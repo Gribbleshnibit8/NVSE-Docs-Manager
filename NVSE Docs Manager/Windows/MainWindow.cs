@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using CheckBox = System.Windows.Forms.CheckBox;
-using TextBox = System.Windows.Forms.TextBox;
 
 namespace NVSE_Docs_Manager
 {
@@ -44,15 +38,6 @@ namespace NVSE_Docs_Manager
 		}
 
 		/// <summary>
-		/// Outputs a string to the statusbar
-		/// </summary>
-		/// <param name="outString">A string of text to explain what the current action is.</param>
-		private void OutputToStatusbar(string outString)
-		{
-			toolStripStatusLabel1.Text = outString;
-		}
-
-		/// <summary>
 		/// Turns a json encoded StreamReader file object into a list of FunctionDef objects.
 		/// </summary>
 		/// <param name="file">An input file object formatted in json.</param>
@@ -67,7 +52,7 @@ namespace NVSE_Docs_Manager
 		/// </summary>
 		public void UpdateParameterLists()
 		{
-			_instanceVariables.UpdateParameterLists();
+			_instanceVariables.UpdateLists();
 			comboBoxReturnTypeURL.Items.Clear();
 			comboBoxReturnTypeURL.Items.AddRange(_instanceVariables.GetUrlObjectArray());
 			comboBoxReturnTypeType.Items.Clear();
@@ -113,7 +98,7 @@ namespace NVSE_Docs_Manager
 			textBoxAlias.Clear();
 			textBoxVersion.Clear();
 			textBoxOrigin.Clear();
-			textBoxCategory.Clear();
+			comboBoxReferenceType.SelectedIndex = -1;
 			textBoxTags.Clear();
 			richTextBoxDescription.Clear();
 			radioButtonCallingConventionEither.Checked = true;
@@ -236,8 +221,8 @@ namespace NVSE_Docs_Manager
 			textBoxAlias.Clear();
 			textBoxVersion.Clear();
 			textBoxOrigin.Clear();
-			textBoxCategory.Clear();
 			textBoxTags.Clear();
+			comboBoxReferenceType.SelectedIndex = -1;
 			richTextBoxDescription.Clear();
 			radioButtonCallingConventionEither.Checked = true;
 			checkBoxReturnType.Checked = false;
@@ -254,7 +239,7 @@ namespace NVSE_Docs_Manager
 			textBoxAlias.Text = func.Alias;
 			textBoxVersion.Text = func.Version;
 			textBoxOrigin.Text = func.FromPlugin;
-			textBoxCategory.Text = func.Category;
+			comboBoxReferenceType.Text = func.ReferenceType;
 
 			if (func.Tags != null)
 				foreach (string s in func.Tags) 
@@ -284,7 +269,7 @@ namespace NVSE_Docs_Manager
 					comboBoxReturnTypeType.Text = "";
 					comboBoxReturnTypeName.Text = "";
 					comboBoxReturnTypeValue.Text = "";
-					comboBoxReturnTypeReturnValue.Text = "";
+					comboBoxReferenceType.Text = "";
 					checkBoxReturnType.Checked = false;
 					break;
 				default:
@@ -293,7 +278,6 @@ namespace NVSE_Docs_Manager
 					if (s.Length >= 1) { comboBoxReturnTypeType.Text = s[0]; }
 					if (s.Length >= 2) { comboBoxReturnTypeName.Text = s[1]; }
 					comboBoxReturnTypeValue.Text = func.ReturnType[0].Value;
-					comboBoxReturnTypeReturnValue.Text = func.ReturnType[0].ReferenceType;
 					checkBoxReturnType.Checked = true;
 					break;
 			}
@@ -352,8 +336,8 @@ namespace NVSE_Docs_Manager
 		// ORIGIN
 			function.FromPlugin = String.IsNullOrEmpty(textBoxOrigin.Text) ? null : textBoxOrigin.Text;
 
-		// CATEGORY
-			function.Category = String.IsNullOrEmpty(textBoxCategory.Text) ? null : textBoxCategory.Text;
+		// REFERENCE TYPE
+			function.ReferenceType = String.IsNullOrEmpty(comboBoxReferenceType.Text) ? null : comboBoxReferenceType.Text;
 
 		// TAGS
 			if (!String.IsNullOrEmpty(textBoxTags.Text))
@@ -400,9 +384,6 @@ namespace NVSE_Docs_Manager
 
 				if (!String.IsNullOrEmpty(comboBoxReturnTypeValue.Text))
 					function.ReturnType[0].Value = comboBoxReturnTypeValue.Text;
-
-				if (!String.IsNullOrEmpty(comboBoxReturnTypeReturnValue.Text))
-					function.ReturnType[0].ReferenceType = comboBoxReturnTypeReturnValue.Text;
 			}
 
 		// EXAMPLES
@@ -471,12 +452,12 @@ namespace NVSE_Docs_Manager
 					if (listboxFunctionList.SelectedItems.Count > 1)
 					{
 						buttonListBoxDeleteItem.Enabled = true;
-						buttonListBoxChangeCategory.Enabled = true;
+						buttonListBoxAddTag.Enabled = true;
 					}
 					else
 					{
 						buttonListBoxDeleteItem.Enabled = true;
-						buttonListBoxChangeCategory.Enabled = false;
+						buttonListBoxAddTag.Enabled = false;
 					}
 				}
 			}
@@ -506,16 +487,16 @@ namespace NVSE_Docs_Manager
 			}
 
 			/// <summary>
-			/// Bulk change the category of all selected functions.
+			/// Bulk add a new tag of all selected functions.
 			/// </summary>
-			private void buttonListBoxChangeCategory_Click(object sender, EventArgs e)
+			private void buttonListBatchAddTag_Click(object sender, EventArgs e)
 			{
 				string input = "";
-				bool d = Common.InputBox("Change Category", "Enter the new Category", ref input);
+				bool d = Common.InputBox("Add Tag", "Enter ONE tag to add:", ref input);
 
-				// decided to bulk change category on selected functions
+				// decided to add a new tag on selected functions
 				if (d)
-					_instanceVariables.UpdateCategoryField(listboxFunctionList.SelectedItems, input);
+					_instanceVariables.UpdateTags(listboxFunctionList.SelectedItems, input);
 			}
 
 			/// <summary>
@@ -549,71 +530,19 @@ namespace NVSE_Docs_Manager
 	#endregion Function List
 
 	#region Events
+		#region Mouse Event Handlers
+			private void flowLayoutPanelParameter_MouseEnter(object sender, EventArgs e)
+			{
+				flowLayoutPanelParameters.Focus();
+			}
 
-	#region Mouse Event Handlers
-		// Update the mouse event label to indicate the MouseEnter event occurred.
-		private void formMouseEventHandler_MouseEnter(object sender, System.EventArgs e)
-		{
-			var s = "";
-			if (sender == textBoxName)
-				s = "Enter the name of the function";
-
-			else if (sender == textBoxAlias)
-				s = "Enter the alternate name of the function. Leave blank if none";
-
-			else if (sender == textBoxVersion)
-				s = "The version of NVSE this funtion was added in";
-
-			else if (sender == radioButtonCallingConventionRef)
-				s = "A function called by reference: ref.Function";
-
-			else if (sender == radioButtonCallingConventionBase)
-				s = "A function called by base form: Function Object";
-
-			else if (sender == radioButtonCallingConventionEither)
-				s = "A function called by either of the above. Most functions work this way";
-
-			else if (sender == checkBoxConditional)
-				s = "If this function can be used as a conditional in the condition dialog";
-
-			else if (sender == textBoxTags)
-				s = "Any other means of searching this function. Ex. Array, String, Inventory";
-
-			else if (sender == textBoxOrigin)
-				s = "The plugin of origin of the function. Leave blank if it is an NVSE function";
-
-			else if (sender == textBoxCategory)
-				s = "The class type of the function";
-
-			else if (sender == groupSelectionEditor)
-				s = "";
-
-			else
-				s = "";
-
-			OutputToStatusbar(s);
-		}
-
-		// Update the mouse event label to indicate the MouseHover event occurred.
-		private void formMouseEventHandler_MouseHover(object sender, System.EventArgs e)
-		{
-
-		}
-
-		// Update the mouse event label to indicate the MouseLeave event occurred.
-		private void formMouseEventHandler_MouseLeave(object sender, System.EventArgs e)
-		{
-			OutputToStatusbar("");
-		}
-
-		// When mouse enters flowLayout panel, set focus so scroll wheel works
-		private void flowLayoutPanelParameters_MouseEnter(object sender, EventArgs e)
-		{
-			flowLayoutPanelParameters.Focus();
-		}
+			private void listboxFunctionList_MouseLeave(object sender, EventArgs e)
+			{
+				listboxFunctionList.Focus();
+			}
 		#endregion
 
-	#region Tool Strip Handlers
+		#region Tool Strip Handlers
 
 		private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -695,13 +624,20 @@ namespace NVSE_Docs_Manager
 #endif
 		}
 		#endregion
+	#endregion Events
 
-		private void labelReturnTypeURL_Click(object sender, EventArgs e)
+		
+
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var aw = new AboutWindow();
+			aw.ShowDialog();
+		}
+
+		private void howToUseThisToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
 		}
-
-	#endregion Events
 
 	}
 }
