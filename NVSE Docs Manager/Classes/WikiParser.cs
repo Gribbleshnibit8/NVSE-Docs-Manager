@@ -35,7 +35,9 @@ namespace NVSE_Docs_Manager
 			// Split the rest of the data into a list of type Head, Data
 			var infoSections = GetInfoSections(linkLess);
 
-			ShowExtraData(functionDefData, infoSections);
+			ShowExtraData();
+			_windoWikiParserDisplay.PopulateForm(functionDefData);
+			_windoWikiParserDisplay.PopulateForm(infoSections);
 
 			function = FillFunctionFields(function, functionDefData);
 
@@ -51,13 +53,20 @@ namespace NVSE_Docs_Manager
 		/// <returns>Returns a string with the parts removed</returns>
 		private static string RemoveLinks(string removeFrom)
 		{
-			// removes the "See Also" section and anything below it
-			var seeAlso = new Regex(@"(==[']*See Also[']*==.*)", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			var removed = seeAlso.Replace(removeFrom, "");
+			// Removes the "See Also" section and anything below it
+			var removed = Regex.Replace(removeFrom, @"(==[']*See Also[']*==.*)", "", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
-			// for pages without the "See Also" section, remove the block of additional links
-			var linkBreaker = new Regex(@"^((\[\[)(\w*):(\w*)([\s\w\W]*?)(\]\]))$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-			removed = linkBreaker.Replace(removed, "");
+			// For pages without the "See Also" section, remove the block of additional links
+			removed = Regex.Replace(removed, @"^((\[\[)(\w*):(\w*)([\s\w\W]*?)(\]\]))$", "", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+			// Replace all in-text links with corrected markup syntax
+			removed = Regex.Replace(removed, @"(\[\[)((\w*?)(\s?)(\w*?))\|(.*?)(\]\])", @"[#$3$5,$6]", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			removed = Regex.Replace(removed, @"(\[\[)calling reference(\]\])", @"[#Function_Calling_Conventions,$2]", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+			// Replaces in-text links with corrected markup syntax for in-site links
+			removed = Regex.Replace(removed, @"(\[\[)((\w*?)(\s?)(\w*?))(\]\])", @"[#$3$5,$2]", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+			
+
 			return removed;
 		}
 
@@ -70,9 +79,8 @@ namespace NVSE_Docs_Manager
 		{
 			// get the function definition data out for further parsing
 			var getFunction = new Regex(@"(\{\{.*\}\})", RegexOptions.IgnoreCase | RegexOptions.Singleline);
-			var functionParts = new List<string>();
-			foreach (string s in getFunction.Split(data)[1].Split(new string[] {"|", "}", "{", "}{"}, StringSplitOptions.RemoveEmptyEntries))
-				functionParts.Add(s);
+
+			var functionParts = getFunction.Split(data)[1].Split(new string[] {" |", "}", "{", "}{"}, StringSplitOptions.RemoveEmptyEntries).ToList();
 
 			// clean the list
 			for (int index = 0; index < functionParts.Count; index++)
@@ -81,8 +89,9 @@ namespace NVSE_Docs_Manager
 				functionParts[index] = functionParts[index].Trim();
 
 				// remove inline newlines except in summary and example
-				if (functionParts[index].Contains("\n") && !functionParts[index].Contains("summary") || !functionParts[index].Contains("example"))
-					functionParts[index] = functionParts[index].Replace("\n", "");
+				//if (functionParts[index].Contains("\n"))
+				//	if (!functionParts[index].ToLower().Contains("summary") || !functionParts[index].Contains("example"))
+				//	functionParts[index] = functionParts[index].Replace("\n", "");
 
 				// remove empty lines or lines that are only newlines
 				if (String.IsNullOrEmpty(functionParts[index]) || functionParts[index] == "\n")
@@ -244,13 +253,11 @@ namespace NVSE_Docs_Manager
 		}
 
 
-		private void ShowExtraData(object functionDefData, object list)
+		private void ShowExtraData()
 		{
 			if (_windoWikiParserDisplay == null || _windoWikiParserDisplay.IsDisposed)
 			{
 				_windoWikiParserDisplay = new WikiParserDisplay();
-				_windoWikiParserDisplay.PopulateForm((List<string>) functionDefData);
-				_windoWikiParserDisplay.PopulateForm((List<string>) list);
 			}
 			_windoWikiParserDisplay.Show();
 

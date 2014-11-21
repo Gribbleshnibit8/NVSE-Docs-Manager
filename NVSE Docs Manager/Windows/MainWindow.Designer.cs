@@ -281,7 +281,8 @@ namespace NVSE_Docs_Manager
 			this.comboBoxReferenceType.Name = "comboBoxReferenceType";
 			this.comboBoxReferenceType.Size = new System.Drawing.Size(158, 21);
 			this.comboBoxReferenceType.TabIndex = 40;
-			this.toolTipShortDelay.SetToolTip(this.comboBoxReferenceType, "The return value of the function");
+			this.toolTipShortDelay.SetToolTip(this.comboBoxReferenceType, "The type returned by the function\r\nReplaces \"reference\" in the function definitio" +
+        "n");
 			// 
 			// buttonShowExamples
 			// 
@@ -489,9 +490,9 @@ namespace NVSE_Docs_Manager
 			this.buttonParametersNew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonParametersNew.Location = new System.Drawing.Point(417, 11);
 			this.buttonParametersNew.Name = "buttonParametersNew";
-			this.buttonParametersNew.Size = new System.Drawing.Size(108, 23);
+			this.buttonParametersNew.Size = new System.Drawing.Size(87, 23);
 			this.buttonParametersNew.TabIndex = 11;
-			this.buttonParametersNew.Text = "New ParameterBox";
+			this.buttonParametersNew.Text = "Add Parameter";
 			this.toolTipShortDelay.SetToolTip(this.buttonParametersNew, "Add a new parameter at the end of the list");
 			this.buttonParametersNew.UseVisualStyleBackColor = true;
 			this.buttonParametersNew.Click += new System.EventHandler(this.buttonNewParameter_Click);
@@ -658,6 +659,7 @@ namespace NVSE_Docs_Manager
 			// 
 			this.richTextBoxDescription.AcceptsTab = true;
 			this.richTextBoxDescription.EnableAutoDragDrop = true;
+			this.richTextBoxDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.richTextBoxDescription.Location = new System.Drawing.Point(9, 346);
 			this.richTextBoxDescription.Name = "richTextBoxDescription";
 			this.richTextBoxDescription.Size = new System.Drawing.Size(340, 182);
