@@ -1,6 +1,4 @@
-﻿using System.Security.AccessControl;
-
-namespace NVSE_Docs_Manager
+﻿namespace NVSE_Docs_Manager
 {
 	partial class MainWindow
 	{
@@ -37,7 +35,9 @@ namespace NVSE_Docs_Manager
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.resetEverythingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItemExportNotepadFiles = new System.Windows.Forms.ToolStripMenuItem();
+			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.outputReadableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,7 +128,8 @@ namespace NVSE_Docs_Manager
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileToolStripMenuItem,
             this.saveFileToolStripMenuItem,
-            this.resetEverythingToolStripMenuItem,
+            this.exportToolStripMenuItem,
+            this.resetToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F)));
@@ -151,14 +152,29 @@ namespace NVSE_Docs_Manager
 			this.saveFileToolStripMenuItem.Text = "Save File";
 			this.saveFileToolStripMenuItem.Click += new System.EventHandler(this.saveFileToolStripMenuItem_Click);
 			// 
-			// resetEverythingToolStripMenuItem
+			// exportToolStripMenuItem
 			// 
-			this.resetEverythingToolStripMenuItem.Name = "resetEverythingToolStripMenuItem";
-			this.resetEverythingToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+			this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemExportNotepadFiles});
+			this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+			this.exportToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.exportToolStripMenuItem.Text = "Export";
+			// 
+			// toolStripMenuItemExportNotepadFiles
+			// 
+			this.toolStripMenuItemExportNotepadFiles.Name = "toolStripMenuItemExportNotepadFiles";
+			this.toolStripMenuItemExportNotepadFiles.Size = new System.Drawing.Size(162, 22);
+			this.toolStripMenuItemExportNotepadFiles.Text = "Notepad++ Files";
+			this.toolStripMenuItemExportNotepadFiles.Click += new System.EventHandler(this.toolStripMenuItemExportNotepadFiles_Click);
+			// 
+			// resetToolStripMenuItem
+			// 
+			this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+			this.resetToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.L)));
-			this.resetEverythingToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-			this.resetEverythingToolStripMenuItem.Text = "Reset";
-			this.resetEverythingToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
+			this.resetToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+			this.resetToolStripMenuItem.Text = "Reset";
+			this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
@@ -223,6 +239,7 @@ namespace NVSE_Docs_Manager
 			// listboxFunctionList
 			// 
 			this.listboxFunctionList.AllowDrop = true;
+			this.listboxFunctionList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.listboxFunctionList.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.listboxFunctionList.FormattingEnabled = true;
 			this.listboxFunctionList.ItemHeight = 16;
@@ -233,6 +250,7 @@ namespace NVSE_Docs_Manager
 			this.listboxFunctionList.Size = new System.Drawing.Size(220, 596);
 			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
+			this.listboxFunctionList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listboxFunctionList.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listboxFuctionList_KeyUp);
 			this.listboxFunctionList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listboxFunctionList_MouseDoubleClick);
 			this.listboxFunctionList.MouseEnter += new System.EventHandler(this.listboxFunctionList_MouseLeave);
@@ -950,7 +968,7 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.Button buttonListBoxDeleteItem;
 		private System.Windows.Forms.Button buttonListBoxAddTag;
 		private System.Windows.Forms.RichTextBox richTextBoxDescription;
-		private System.Windows.Forms.ToolStripMenuItem resetEverythingToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
 		private System.Windows.Forms.GroupBox groupBoxParameterTemplate;
 		private System.Windows.Forms.Label labelParameterTemplateName;
 		private System.Windows.Forms.ComboBox comboBoxParameterTemplateName;
@@ -986,6 +1004,8 @@ namespace NVSE_Docs_Manager
 		private System.Windows.Forms.ToolTip toolTipShortDelay;
 		private System.Windows.Forms.ToolStripMenuItem howToUseThisToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExportNotepadFiles;
 	}
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -637,6 +638,39 @@ namespace NVSE_Docs_Manager
 		private void howToUseThisToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		private void toolStripMenuItemExportNotepadFiles_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			bool isSelected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
+
+			if (e.Index > -1)
+			{
+				/* If the item is selected set the background color to SystemColors.Highlight 
+				 or else set the color to either WhiteSmoke or White depending if the item index is even or odd */
+				var color = isSelected ? SystemColors.Highlight :
+					e.Index % 2 == 0 ? Color.WhiteSmoke : Color.White;
+
+				// Background item brush
+				var backgroundBrush = new SolidBrush(color);
+				// Text color brush
+				var textBrush = new SolidBrush(e.ForeColor);
+
+				// Draw the background
+				e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
+				// Draw the text
+				e.Graphics.DrawString(listboxFunctionList.Items[e.Index].ToString(), e.Font, textBrush, e.Bounds, StringFormat.GenericDefault);
+
+				// Clean up
+				backgroundBrush.Dispose();
+				textBrush.Dispose();
+			}
+			e.DrawFocusRectangle();
 		}
 
 	}
