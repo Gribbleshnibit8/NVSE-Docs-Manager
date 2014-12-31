@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Classes
 {
 	public class Variables
 	{
@@ -161,6 +161,11 @@ namespace NVSE_Docs_Manager
 				}
 			}
 
+			/// <summary>
+			/// Updates the tags of all passed items
+			/// </summary>
+			/// <param name="toUpdate">The list of objects to be updated</param>
+			/// <param name="newValue">The value to update to</param>
 			public void UpdateTags(object toUpdate, string newValue)
 			{
 				dynamic d = toUpdate;
@@ -168,8 +173,34 @@ namespace NVSE_Docs_Manager
 				{
 					LoadedFunctionsList.Find(f => f.Name == s).Tags.Add(s);
 				}
+			}
 
+			/// <summary>
+			/// Updates the version of all passed items
+			/// </summary>
+			/// <param name="toUpdate">The list of objects to be updated</param>
+			/// <param name="newValue">The value to update to</param>
+			public void UpdateVersions(object toUpdate, string newValue)
+			{
+				dynamic d = toUpdate;
+				foreach (var s in d)
+				{
+					LoadedFunctionsList.Find(f => f.Name == s).Version = newValue;
+				}
+			}
 
+			/// <summary>
+			/// Updates the origin of all passed items
+			/// </summary>
+			/// <param name="toUpdate">The list of objects to be updated</param>
+			/// <param name="newValue">The value to update to</param>
+			public void UpdateOrigins(object toUpdate, string newValue)
+			{
+				dynamic d = toUpdate;
+				foreach (var s in d)
+				{
+					LoadedFunctionsList.Find(f => f.Name == s).FromPlugin = newValue;
+				}
 			}
 
 			public void CleanFunctionList()

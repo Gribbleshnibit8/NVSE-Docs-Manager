@@ -1,4 +1,4 @@
-﻿namespace NVSE_Docs_Manager
+﻿namespace NVSE_Docs_Manager.Windows
 {
 	partial class MainWindow
 	{
@@ -65,7 +65,6 @@
 			this.comboBoxReturnTypeType = new System.Windows.Forms.ComboBox();
 			this.buttonDiscardChanges = new System.Windows.Forms.Button();
 			this.buttonSaveCurrentChanges = new System.Windows.Forms.Button();
-			this.flowLayoutPanelParameters = new System.Windows.Forms.FlowLayoutPanel();
 			this.buttonParametersNew = new System.Windows.Forms.Button();
 			this.textBoxOrigin = new System.Windows.Forms.TextBox();
 			this.labelOrigin = new System.Windows.Forms.Label();
@@ -84,31 +83,22 @@
 			this.labelName = new System.Windows.Forms.Label();
 			this.checkBoxConditional = new System.Windows.Forms.CheckBox();
 			this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
-			this.groupBoxParameterTemplate = new System.Windows.Forms.GroupBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.label1 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.labelParameterTemplateName = new System.Windows.Forms.Label();
-			this.buttonParameterTemplateRemove = new System.Windows.Forms.Button();
-			this.comboBoxParameterTemplateName = new System.Windows.Forms.ComboBox();
-			this.comboBoxParameterTemplateType = new System.Windows.Forms.ComboBox();
-			this.checkBoxParameterTemplateOptional = new System.Windows.Forms.CheckBox();
-			this.labelParameterTemplateType = new System.Windows.Forms.Label();
-			this.labelParameterTemplateURL = new System.Windows.Forms.Label();
-			this.comboBoxParameterTemplateURL = new System.Windows.Forms.ComboBox();
 			this.buttonListBoxDeleteItem = new System.Windows.Forms.Button();
-			this.buttonListBoxAddTag = new System.Windows.Forms.Button();
+			this.buttonBatchTag = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
 			this.toolTipShortDelay = new System.Windows.Forms.ToolTip(this.components);
+			this.buttonBatchVersion = new System.Windows.Forms.Button();
+			this.groupBoxBatchButtons = new System.Windows.Forms.GroupBox();
+			this.buttonBatchOrigin = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			this.groupSelectionEditor.SuspendLayout();
 			this.groupBoxReturnType.SuspendLayout();
 			this.groupBoxCallingConvention.SuspendLayout();
-			this.groupBoxParameterTemplate.SuspendLayout();
+			this.groupBoxBatchButtons.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -247,7 +237,7 @@
 			this.listboxFunctionList.Name = "listboxFunctionList";
 			this.listboxFunctionList.ScrollAlwaysVisible = true;
 			this.listboxFunctionList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.listboxFunctionList.Size = new System.Drawing.Size(220, 596);
+			this.listboxFunctionList.Size = new System.Drawing.Size(220, 532);
 			this.listboxFunctionList.Sorted = true;
 			this.listboxFunctionList.TabIndex = 1;
 			this.listboxFunctionList.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
@@ -268,7 +258,6 @@
 			this.groupSelectionEditor.Controls.Add(this.groupBoxReturnType);
 			this.groupSelectionEditor.Controls.Add(this.buttonDiscardChanges);
 			this.groupSelectionEditor.Controls.Add(this.buttonSaveCurrentChanges);
-			this.groupSelectionEditor.Controls.Add(this.flowLayoutPanelParameters);
 			this.groupSelectionEditor.Controls.Add(this.buttonParametersNew);
 			this.groupSelectionEditor.Controls.Add(this.textBoxOrigin);
 			this.groupSelectionEditor.Controls.Add(this.labelOrigin);
@@ -489,19 +478,6 @@
 			this.buttonSaveCurrentChanges.UseVisualStyleBackColor = true;
 			this.buttonSaveCurrentChanges.Click += new System.EventHandler(this.buttonSaveCurrentChanges_Click);
 			// 
-			// flowLayoutPanelParameters
-			// 
-			this.flowLayoutPanelParameters.AllowDrop = true;
-			this.flowLayoutPanelParameters.AutoScroll = true;
-			this.flowLayoutPanelParameters.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.flowLayoutPanelParameters.Location = new System.Drawing.Point(355, 35);
-			this.flowLayoutPanelParameters.Name = "flowLayoutPanelParameters";
-			this.flowLayoutPanelParameters.Size = new System.Drawing.Size(473, 589);
-			this.flowLayoutPanelParameters.TabIndex = 11;
-			this.flowLayoutPanelParameters.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlAdded);
-			this.flowLayoutPanelParameters.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.flowLayoutPanelParameters_ControlRemoved);
-			this.flowLayoutPanelParameters.MouseEnter += new System.EventHandler(this.flowLayoutPanelParameter_MouseEnter);
-			// 
 			// buttonParametersNew
 			// 
 			this.buttonParametersNew.AutoSize = true;
@@ -686,147 +662,12 @@
 			this.toolTipShortDelay.SetToolTip(this.richTextBoxDescription, "Description about the function, extra notes, and other information");
 			this.richTextBoxDescription.ZoomFactor = 1.201F;
 			// 
-			// groupBoxParameterTemplate
-			// 
-			this.groupBoxParameterTemplate.Controls.Add(this.button1);
-			this.groupBoxParameterTemplate.Controls.Add(this.label1);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBox1);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateName);
-			this.groupBoxParameterTemplate.Controls.Add(this.buttonParameterTemplateRemove);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateName);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateType);
-			this.groupBoxParameterTemplate.Controls.Add(this.checkBoxParameterTemplateOptional);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateType);
-			this.groupBoxParameterTemplate.Controls.Add(this.labelParameterTemplateURL);
-			this.groupBoxParameterTemplate.Controls.Add(this.comboBoxParameterTemplateURL);
-			this.groupBoxParameterTemplate.Location = new System.Drawing.Point(238, 635);
-			this.groupBoxParameterTemplate.Name = "groupBoxParameterTemplate";
-			this.groupBoxParameterTemplate.Size = new System.Drawing.Size(435, 70);
-			this.groupBoxParameterTemplate.TabIndex = 31;
-			this.groupBoxParameterTemplate.TabStop = false;
-			this.groupBoxParameterTemplate.Text = "ParameterBox 1";
-			this.groupBoxParameterTemplate.Visible = false;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(30, 13);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(23, 21);
-			this.button1.TabIndex = 33;
-			this.button1.Text = "C";
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(243, 16);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(34, 13);
-			this.label1.TabIndex = 32;
-			this.label1.Text = "Value";
-			// 
-			// comboBox1
-			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(283, 13);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(140, 21);
-			this.comboBox1.TabIndex = 31;
-			// 
-			// labelParameterTemplateName
-			// 
-			this.labelParameterTemplateName.AutoSize = true;
-			this.labelParameterTemplateName.Location = new System.Drawing.Point(243, 43);
-			this.labelParameterTemplateName.Name = "labelParameterTemplateName";
-			this.labelParameterTemplateName.Size = new System.Drawing.Size(35, 13);
-			this.labelParameterTemplateName.TabIndex = 29;
-			this.labelParameterTemplateName.Text = "Name";
-			// 
-			// buttonParameterTemplateRemove
-			// 
-			this.buttonParameterTemplateRemove.Location = new System.Drawing.Point(5, 13);
-			this.buttonParameterTemplateRemove.Name = "buttonParameterTemplateRemove";
-			this.buttonParameterTemplateRemove.Size = new System.Drawing.Size(23, 21);
-			this.buttonParameterTemplateRemove.TabIndex = 28;
-			this.buttonParameterTemplateRemove.Text = "X";
-			this.buttonParameterTemplateRemove.UseVisualStyleBackColor = true;
-			// 
-			// comboBoxParameterTemplateName
-			// 
-			this.comboBoxParameterTemplateName.FormattingEnabled = true;
-			this.comboBoxParameterTemplateName.Location = new System.Drawing.Point(284, 40);
-			this.comboBoxParameterTemplateName.Name = "comboBoxParameterTemplateName";
-			this.comboBoxParameterTemplateName.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateName.TabIndex = 30;
-			// 
-			// comboBoxParameterTemplateType
-			// 
-			this.comboBoxParameterTemplateType.FormattingEnabled = true;
-			this.comboBoxParameterTemplateType.Location = new System.Drawing.Point(96, 40);
-			this.comboBoxParameterTemplateType.Name = "comboBoxParameterTemplateType";
-			this.comboBoxParameterTemplateType.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateType.TabIndex = 3;
-			// 
-			// checkBoxParameterTemplateOptional
-			// 
-			this.checkBoxParameterTemplateOptional.AutoSize = true;
-			this.checkBoxParameterTemplateOptional.CheckAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.checkBoxParameterTemplateOptional.Location = new System.Drawing.Point(6, 35);
-			this.checkBoxParameterTemplateOptional.Name = "checkBoxParameterTemplateOptional";
-			this.checkBoxParameterTemplateOptional.Size = new System.Drawing.Size(50, 31);
-			this.checkBoxParameterTemplateOptional.TabIndex = 1;
-			this.checkBoxParameterTemplateOptional.Text = "Optional";
-			this.checkBoxParameterTemplateOptional.UseVisualStyleBackColor = true;
-			// 
-			// labelParameterTemplateType
-			// 
-			this.labelParameterTemplateType.AutoSize = true;
-			this.labelParameterTemplateType.Location = new System.Drawing.Point(59, 43);
-			this.labelParameterTemplateType.Name = "labelParameterTemplateType";
-			this.labelParameterTemplateType.Size = new System.Drawing.Size(31, 13);
-			this.labelParameterTemplateType.TabIndex = 2;
-			this.labelParameterTemplateType.Text = "Type";
-			// 
-			// labelParameterTemplateURL
-			// 
-			this.labelParameterTemplateURL.AutoSize = true;
-			this.labelParameterTemplateURL.Location = new System.Drawing.Point(59, 16);
-			this.labelParameterTemplateURL.Name = "labelParameterTemplateURL";
-			this.labelParameterTemplateURL.Size = new System.Drawing.Size(29, 13);
-			this.labelParameterTemplateURL.TabIndex = 0;
-			this.labelParameterTemplateURL.Text = "URL";
-			// 
-			// comboBoxParameterTemplateURL
-			// 
-			this.comboBoxParameterTemplateURL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxParameterTemplateURL.FormattingEnabled = true;
-			this.comboBoxParameterTemplateURL.Items.AddRange(new object[] {
-            "Actor_Flags",
-            "Actor_Value_Codes",
-            "Attack_Animations",
-            "Biped_Path_Codes",
-            "Control_Codes",
-            "DirectX_Scancodes",
-            "Equip_Type",
-            "Equipment_Slot_IDs",
-            "Form_Type_IDs",
-            "Reload_Animations",
-            "Weapon_Flags",
-            "Weapon_Hand_Grips",
-            "Weapon_Mod",
-            "Weapon_Type"});
-			this.comboBoxParameterTemplateURL.Location = new System.Drawing.Point(97, 13);
-			this.comboBoxParameterTemplateURL.Name = "comboBoxParameterTemplateURL";
-			this.comboBoxParameterTemplateURL.Size = new System.Drawing.Size(140, 21);
-			this.comboBoxParameterTemplateURL.Sorted = true;
-			this.comboBoxParameterTemplateURL.TabIndex = 1;
-			// 
 			// buttonListBoxDeleteItem
 			// 
 			this.buttonListBoxDeleteItem.AutoSize = true;
 			this.buttonListBoxDeleteItem.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.buttonListBoxDeleteItem.Enabled = false;
-			this.buttonListBoxDeleteItem.Location = new System.Drawing.Point(12, 634);
+			this.buttonListBoxDeleteItem.Location = new System.Drawing.Point(12, 571);
 			this.buttonListBoxDeleteItem.Name = "buttonListBoxDeleteItem";
 			this.buttonListBoxDeleteItem.Size = new System.Drawing.Size(92, 23);
 			this.buttonListBoxDeleteItem.TabIndex = 504;
@@ -834,18 +675,18 @@
 			this.buttonListBoxDeleteItem.UseVisualStyleBackColor = true;
 			this.buttonListBoxDeleteItem.Click += new System.EventHandler(this.buttonListBoxDeleteItem_Click);
 			// 
-			// buttonListBoxAddTag
+			// buttonBatchTag
 			// 
-			this.buttonListBoxAddTag.AutoSize = true;
-			this.buttonListBoxAddTag.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.buttonListBoxAddTag.Enabled = false;
-			this.buttonListBoxAddTag.Location = new System.Drawing.Point(144, 634);
-			this.buttonListBoxAddTag.Name = "buttonListBoxAddTag";
-			this.buttonListBoxAddTag.Size = new System.Drawing.Size(89, 23);
-			this.buttonListBoxAddTag.TabIndex = 505;
-			this.buttonListBoxAddTag.Text = "Batch Add Tag";
-			this.buttonListBoxAddTag.UseVisualStyleBackColor = true;
-			this.buttonListBoxAddTag.Click += new System.EventHandler(this.buttonListBatchAddTag_Click);
+			this.buttonBatchTag.AutoSize = true;
+			this.buttonBatchTag.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonBatchTag.Enabled = false;
+			this.buttonBatchTag.Location = new System.Drawing.Point(6, 18);
+			this.buttonBatchTag.Name = "buttonBatchTag";
+			this.buttonBatchTag.Size = new System.Drawing.Size(36, 23);
+			this.buttonBatchTag.TabIndex = 505;
+			this.buttonBatchTag.Text = "Tag";
+			this.buttonBatchTag.UseVisualStyleBackColor = true;
+			this.buttonBatchTag.Click += new System.EventHandler(this.buttonBatchTag_Click);
 			// 
 			// panel1
 			// 
@@ -895,14 +736,51 @@
 			this.toolTipShortDelay.InitialDelay = 100;
 			this.toolTipShortDelay.ReshowDelay = 100;
 			// 
+			// buttonBatchVersion
+			// 
+			this.buttonBatchVersion.AutoSize = true;
+			this.buttonBatchVersion.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonBatchVersion.Enabled = false;
+			this.buttonBatchVersion.Location = new System.Drawing.Point(48, 18);
+			this.buttonBatchVersion.Name = "buttonBatchVersion";
+			this.buttonBatchVersion.Size = new System.Drawing.Size(52, 23);
+			this.buttonBatchVersion.TabIndex = 507;
+			this.buttonBatchVersion.Text = "Version";
+			this.buttonBatchVersion.UseVisualStyleBackColor = true;
+			this.buttonBatchVersion.Click += new System.EventHandler(this.buttonBatchVersion_Click);
+			// 
+			// groupBoxBatchButtons
+			// 
+			this.groupBoxBatchButtons.Controls.Add(this.buttonBatchOrigin);
+			this.groupBoxBatchButtons.Controls.Add(this.buttonBatchTag);
+			this.groupBoxBatchButtons.Controls.Add(this.buttonBatchVersion);
+			this.groupBoxBatchButtons.Location = new System.Drawing.Point(12, 603);
+			this.groupBoxBatchButtons.Name = "groupBoxBatchButtons";
+			this.groupBoxBatchButtons.Size = new System.Drawing.Size(200, 54);
+			this.groupBoxBatchButtons.TabIndex = 508;
+			this.groupBoxBatchButtons.TabStop = false;
+			this.groupBoxBatchButtons.Text = "Batch Options";
+			// 
+			// buttonBatchOrigin
+			// 
+			this.buttonBatchOrigin.AutoSize = true;
+			this.buttonBatchOrigin.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.buttonBatchOrigin.Enabled = false;
+			this.buttonBatchOrigin.Location = new System.Drawing.Point(106, 18);
+			this.buttonBatchOrigin.Name = "buttonBatchOrigin";
+			this.buttonBatchOrigin.Size = new System.Drawing.Size(44, 23);
+			this.buttonBatchOrigin.TabIndex = 508;
+			this.buttonBatchOrigin.Text = "Origin";
+			this.buttonBatchOrigin.UseVisualStyleBackColor = true;
+			this.buttonBatchOrigin.Click += new System.EventHandler(this.buttonBatchOrigin_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1084, 682);
-			this.Controls.Add(this.groupBoxParameterTemplate);
+			this.Controls.Add(this.groupBoxBatchButtons);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.buttonListBoxAddTag);
 			this.Controls.Add(this.buttonListBoxDeleteItem);
 			this.Controls.Add(this.groupSelectionEditor);
 			this.Controls.Add(this.listboxFunctionList);
@@ -924,8 +802,8 @@
 			this.groupBoxReturnType.PerformLayout();
 			this.groupBoxCallingConvention.ResumeLayout(false);
 			this.groupBoxCallingConvention.PerformLayout();
-			this.groupBoxParameterTemplate.ResumeLayout(false);
-			this.groupBoxParameterTemplate.PerformLayout();
+			this.groupBoxBatchButtons.ResumeLayout(false);
+			this.groupBoxBatchButtons.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -959,25 +837,16 @@
 		private System.Windows.Forms.Label labelTags;
 		private System.Windows.Forms.TextBox textBoxTags;
 		private System.Windows.Forms.Button buttonParametersNew;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
+		public static System.Windows.Forms.FlowLayoutPanel flowLayoutPanelParameters;
 		private System.Windows.Forms.Button buttonSaveCurrentChanges;
 		private System.Windows.Forms.Button buttonDiscardChanges;
 		private System.Windows.Forms.GroupBox groupBoxReturnType;
 		private System.Windows.Forms.CheckBox checkBoxReturnType;
 		private System.Windows.Forms.Button buttonNewFunction;
 		private System.Windows.Forms.Button buttonListBoxDeleteItem;
-		private System.Windows.Forms.Button buttonListBoxAddTag;
+		private System.Windows.Forms.Button buttonBatchTag;
 		private System.Windows.Forms.RichTextBox richTextBoxDescription;
 		private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
-		private System.Windows.Forms.GroupBox groupBoxParameterTemplate;
-		private System.Windows.Forms.Label labelParameterTemplateName;
-		private System.Windows.Forms.ComboBox comboBoxParameterTemplateName;
-		private System.Windows.Forms.Button buttonParameterTemplateRemove;
-		private System.Windows.Forms.CheckBox checkBoxParameterTemplateOptional;
-		private System.Windows.Forms.Label labelParameterTemplateURL;
-		private System.Windows.Forms.Label labelParameterTemplateType;
-		private System.Windows.Forms.ComboBox comboBoxParameterTemplateURL;
-		private System.Windows.Forms.ComboBox comboBoxParameterTemplateType;
 		private System.Windows.Forms.CheckBox checkBoxConditional;
 		private System.Windows.Forms.Label labelReturnTypeName;
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeName;
@@ -993,11 +862,8 @@
 		private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
 		private System.Windows.Forms.ToolStripMenuItem outputReadableFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem convertWikiPagesToolStripMenuItem;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ComboBox comboBoxReturnTypeValue;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ComboBox comboBoxReferenceType;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox textBoxAlias;
@@ -1006,6 +872,9 @@
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExportNotepadFiles;
+		private System.Windows.Forms.Button buttonBatchVersion;
+		private System.Windows.Forms.GroupBox groupBoxBatchButtons;
+		private System.Windows.Forms.Button buttonBatchOrigin;
 	}
 }
 

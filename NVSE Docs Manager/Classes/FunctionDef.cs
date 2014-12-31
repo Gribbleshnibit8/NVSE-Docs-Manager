@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Newtonsoft.Json;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Classes
 {
 	// TODO
 	// Need a list to hold all ParameterDef and Return Type type fields

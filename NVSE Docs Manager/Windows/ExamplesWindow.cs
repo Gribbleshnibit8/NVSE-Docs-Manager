@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using NVSE_Docs_Manager.Classes;
 
 namespace NVSE_Docs_Manager.Windows
 {

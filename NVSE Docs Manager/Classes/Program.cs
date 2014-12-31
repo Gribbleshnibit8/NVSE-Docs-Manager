@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using NVSE_Docs_Manager.Windows;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Classes
 {
 	static class Program
 	{

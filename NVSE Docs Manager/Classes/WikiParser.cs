@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NVSE_Docs_Manager.Windows;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Classes
 {
 	class WikiParser
 	{

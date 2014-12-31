@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Windows
 {
 	public partial class WikiParserDisplay : Form
 	{

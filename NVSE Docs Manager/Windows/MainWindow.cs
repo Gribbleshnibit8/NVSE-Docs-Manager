@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using NVSE_Docs_Manager.Classes;
+using NVSE_Docs_Manager.Controls;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Windows
 {
 	public partial class MainWindow : Form
 	{
@@ -315,7 +317,7 @@ namespace NVSE_Docs_Manager
 		public void RebuildParamaterPanel()
 		{
 			for (int i = 0; i < flowLayoutPanelParameters.Controls.Count; i++)
-				flowLayoutPanelParameters.Controls[i].Text = "ParameterBox " + (i + 1).ToString();
+				((ParameterBox)flowLayoutPanelParameters.Controls[i]).Title = "Parameter " + (i + 1);
 		}
 
 		/// <summary>
@@ -453,12 +455,12 @@ namespace NVSE_Docs_Manager
 					if (listboxFunctionList.SelectedItems.Count > 1)
 					{
 						buttonListBoxDeleteItem.Enabled = true;
-						buttonListBoxAddTag.Enabled = true;
+						buttonBatchTag.Enabled = true;
 					}
 					else
 					{
 						buttonListBoxDeleteItem.Enabled = true;
-						buttonListBoxAddTag.Enabled = false;
+						buttonBatchTag.Enabled = false;
 					}
 				}
 			}
@@ -488,19 +490,6 @@ namespace NVSE_Docs_Manager
 			}
 
 			/// <summary>
-			/// Bulk add a new tag of all selected functions.
-			/// </summary>
-			private void buttonListBatchAddTag_Click(object sender, EventArgs e)
-			{
-				string input = "";
-				bool d = Common.InputBox("Add Tag", "Enter ONE tag to add:", ref input);
-
-				// decided to add a new tag on selected functions
-				if (d)
-					_instanceVariables.UpdateTags(listboxFunctionList.SelectedItems, input);
-			}
-
-			/// <summary>
 			/// Handles key presses for listboxFunctionList
 			/// </summary>
 			private void listboxFuctionList_KeyUp(object sender, KeyEventArgs e)
@@ -517,6 +506,39 @@ namespace NVSE_Docs_Manager
 					break;
 			}
 		}
+
+			/// <summary>
+			/// Bulk add a new tag of all selected functions.
+			/// </summary>
+			private void buttonBatchTag_Click(object sender, EventArgs e)
+			{
+				var input = "";
+				var d = Common.InputBox("Add Tag", "Enter ONE tag to add:", ref input);
+				if (d)
+					_instanceVariables.UpdateTags(listboxFunctionList.SelectedItems, input);
+			}
+			
+			/// <summary>
+			/// Bulk change the version of all selected functions
+			/// </summary>
+			private void buttonBatchVersion_Click(object sender, EventArgs e)
+			{
+				var input = "";
+				var d = Common.InputBox("Add Tag", "Enter ONE tag to add:", ref input);
+				if (d)
+					_instanceVariables.UpdateVersions(listboxFunctionList.SelectedItems, input);
+			}
+
+			/// <summary>
+			/// Bulk change the origin of all selected functions
+			/// </summary>
+			private void buttonBatchOrigin_Click(object sender, EventArgs e)
+			{
+				var input = "";
+				var d = Common.InputBox("Add Tag", "Enter ONE tag to add:", ref input);
+				if (d)
+					_instanceVariables.UpdateOrigins(listboxFunctionList.SelectedItems, input);
+			}
 		#endregion
 
 		/// <summary>
@@ -627,7 +649,6 @@ namespace NVSE_Docs_Manager
 		#endregion
 	#endregion Events
 
-		
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -672,6 +693,7 @@ namespace NVSE_Docs_Manager
 			}
 			e.DrawFocusRectangle();
 		}
+
 
 	}
 }
