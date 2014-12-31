@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using NVSE_Docs_Manager.Windows;
 
 namespace NVSE_Docs_Manager
 {

@@ -1,4 +1,4 @@
-﻿namespace NVSE_Docs_Manager
+﻿namespace NVSE_Docs_Manager.Windows
 {
 	partial class ExamplesWindow
 	{

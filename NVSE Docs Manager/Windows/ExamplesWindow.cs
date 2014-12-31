@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace NVSE_Docs_Manager
+namespace NVSE_Docs_Manager.Windows
 {
 	public partial class ExamplesWindow : Form
 	{

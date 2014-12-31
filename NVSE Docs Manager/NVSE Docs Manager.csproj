@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Common.cs" />
+    <Compile Include="Controls\ParameterBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ParameterBox.Designer.cs">
+      <DependentUpon>ParameterBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ExamplesWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,9 +72,6 @@
     <Compile Include="Windows\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParameterBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Variables.cs" />
@@ -79,6 +82,9 @@
     <Compile Include="Windows\WikiParserDisplay.Designer.cs">
       <DependentUpon>WikiParserDisplay.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\ParameterBox.resx">
+      <DependentUpon>ParameterBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ExamplesWindow.resx">
       <DependentUpon>ExamplesWindow.cs</DependentUpon>
     </EmbeddedResource>
